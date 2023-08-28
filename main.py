@@ -33,7 +33,6 @@ for i in globed:
     new_df = pd.read_csv(i, sep=';', index_col='gains_losses')
     old_df = pd.read_csv(output_path+'Full_DataFrame.csv', sep=';', index_col='gains_losses')
     concated = pd.concat([old_df, new_df])
-    print('\n- Concat DF:\n')
     concated.to_csv(output_path+'Full_DataFrame.csv', sep=';')
 
 print('\n\nTerminou\n\n')
