@@ -1,0 +1,3 @@
+Os arquivos que começam com per são os arquivos com o HEI calculado, são resultado do código impact_index_calcule_surface.
+
+Os demais arquivos são os resultados da primeira análise, com o código surface_uni_dividindo

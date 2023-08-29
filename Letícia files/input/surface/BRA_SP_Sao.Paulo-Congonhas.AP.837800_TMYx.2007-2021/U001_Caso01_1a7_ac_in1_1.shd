@@ -1,0 +1,271 @@
+Shadowing Combinations
+..Solar Distribution=FullInteriorAndExteriorWithReflectionsFromExteriorSurfaces
+..In the following, only the first 10 reference surfaces will be shown.
+..But all surfaces are used in the calculations.
+==================================
+Surface=SALA_PARIN_00E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PORTAIN_0_00E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PARIN_01S is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PAREX_00I is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=16
+...Surface=SALA_PARIN_00E
+...Surface=SALA_PARIN_01S
+...Surface=SALA_PAREX_01E
+...Surface=SALA_PAREX_00D
+...Surface=SALA_PAREX_00S
+...Surface=SALA_PARIN_02D
+...Surface=SALA_PARIN_01D
+...Surface=SALA_PISO
+...Surface=SALA_COB_1
+...Surface=SALA_COB_0
+Number of receiving sub surfaces=1
+....Surface=SALA_JAN_0_00I
+==================================
+Surface=SALA_JAN_0_00I is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PAREX_01E is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=16
+...Surface=SALA_PARIN_00E
+...Surface=SALA_PARIN_01S
+...Surface=SALA_PAREX_00I
+...Surface=SALA_PAREX_00D
+...Surface=SALA_PAREX_00S
+...Surface=SALA_PARIN_02D
+...Surface=SALA_PARIN_01D
+...Surface=SALA_PISO
+...Surface=SALA_COB_1
+...Surface=SALA_COB_0
+Number of receiving sub surfaces=1
+....Surface=SALA_JAN_0_01E
+==================================
+Surface=SALA_JAN_0_01E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PAREX_00D is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=DORM1_PAREX_00I
+Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=SALA_PORTAEX_0_00D
+==================================
+Surface=SALA_PORTAEX_0_00D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PAREX_00S is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=DORM2_PAREX_00E
+Number of back surfaces=0
+Number of receiving sub surfaces=1
+....Surface=SALA_PORTAEX_0_00S
+==================================
+Surface=SALA_PORTAEX_0_00S is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PARIN_02D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PORTAIN_0_02D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PARIN_01D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PORTAIN_0_01D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_PISO is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_COB_1 is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=SALA_COB_0 is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PARIN_00E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PORTAIN_0_00E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PAREX_00D is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PAREX_00I is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=SALA_PAREX_00D
+Number of back surfaces=6
+...Surface=DORM1_PARIN_00E
+...Surface=DORM1_PAREX_00D
+...Surface=DORM1_PARIN_00S
+...Surface=DORM1_PISO
+...Surface=DORM1_COB
+...Surface=DORM1_PORTAIN_0_00E
+Number of receiving sub surfaces=1
+....Surface=DORM1_JAN_0_00I
+==================================
+Surface=DORM1_JAN_0_00I is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PARIN_00S is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_PISO is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM1_COB is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PAREX_00D is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=7
+...Surface=DORM2_PARIN_00I
+...Surface=DORM2_PAREX_00S
+...Surface=DORM2_PARIN_01E
+...Surface=DORM2_PAREX_00E
+...Surface=DORM2_PISO
+...Surface=DORM2_COB
+...Surface=DORM2_PORTAIN_0_01E
+Number of receiving sub surfaces=1
+....Surface=DORM2_JAN_0_00D
+==================================
+Surface=DORM2_JAN_0_00D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PARIN_00I is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PAREX_00S is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PARIN_01E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PORTAIN_0_01E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PAREX_00E is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=2
+..Surface=SALA_PAREX_00S
+..Surface=BWC_PAREX_00S
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_PISO is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=DORM2_COB is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PARIN_00D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PORTAIN_0_00D is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PAREX_00E is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=6
+...Surface=BWC_PARIN_00D
+...Surface=BWC_PAREX_00S
+...Surface=BWC_PARIN_00I
+...Surface=BWC_PISO
+...Surface=BWC_COB
+...Surface=BWC_PORTAIN_0_00D
+Number of receiving sub surfaces=1
+....Surface=BWC_JAN_0_00E
+==================================
+Surface=BWC_JAN_0_00E is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PAREX_00S is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=1
+..Surface=DORM2_PAREX_00E
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PARIN_00I is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_PISO is not used as Receiving Surface in calculations.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0
+==================================
+Surface=BWC_COB is used as Receiving Surface in calculations and is convex.
+Number of general casting surfaces=0
+Number of back surfaces=0
+Number of receiving sub surfaces=0

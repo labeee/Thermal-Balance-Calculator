@@ -1,0 +1,509 @@
+"","gains_losses","value","case","city","app","case_graph","gains","exchange","per"
+"1","none_roof_convection_gain",388064.412697067,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","roof",0.1263
+"2","none_floor_convection_gain",626608.506186791,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","floor",0.204
+"3","none_intwalls_convection_gain",802504.401388577,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","intwalls",0.2613
+"4","south_extwalls_convection_gain",226973.680866838,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","south_extwalls",0.0739
+"5","east_extwalls_convection_gain",549983.185077387,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","east_extwalls",0.179
+"6","south_windows_convection_gain",32840.7515550971,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","south_windows",0.0107
+"7","none_roof_convection_loss",-4213.78306993436,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","roof",0.0014
+"8","none_floor_convection_loss",-34819.5237675679,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","floor",0.0114
+"9","none_intwalls_convection_loss",-89749.4426484811,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","intwalls",0.0294
+"10","south_extwalls_convection_loss",-20650.2368222083,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","south_extwalls",0.0068
+"11","east_extwalls_convection_loss",-221.769231801474,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","east_extwalls",1e-04
+"12","south_windows_convection_loss",-27160.4203160594,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","south_windows",0.0089
+"13","internal_gains",382583.376809756,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","internal_gains",0.1246
+"14","cooling",-2739838.06660136,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","cooling",0.8968
+"15","heating",0,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","heating",0
+"16","vn_window_loss",-2275.47901983604,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","vn_window",7e-04
+"17","vn_window_gain",2293.9301401721,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","vn_window",7e-04
+"18","vn_interzone_loss",-136266.579792672,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","loss","vn_interzone",0.0446
+"19","vn_interzone_gain",59871.3126237998,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM1","Air Conditioner","gain","vn_interzone",0.0195
+"20","none_roof_convection_gain",386165.414607923,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","roof",0.1263
+"21","none_floor_convection_gain",629111.467854609,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","floor",0.2058
+"22","none_intwalls_convection_gain",806956.543803384,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","intwalls",0.264
+"23","south_extwalls_convection_gain",224931.295525972,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","south_extwalls",0.0736
+"24","east_extwalls_convection_gain",537329.631021036,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","east_extwalls",0.1758
+"25","south_windows_convection_gain",32818.8617111461,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","south_windows",0.0107
+"26","none_roof_convection_loss",-7778.08123362313,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","roof",0.0026
+"27","none_floor_convection_loss",-40499.149571476,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","floor",0.0133
+"28","none_intwalls_convection_loss",-107334.408151871,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","intwalls",0.0352
+"29","south_extwalls_convection_loss",-24226.4913015124,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","south_extwalls",0.0079
+"30","east_extwalls_convection_loss",-208.482505454921,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","east_extwalls",1e-04
+"31","south_windows_convection_loss",-28919.837361036,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","south_windows",0.0095
+"32","internal_gains",382575.067534222,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","internal_gains",0.1252
+"33","cooling",-2749523.59522983,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","cooling",0.9018
+"34","heating",0,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","heating",0
+"35","vn_window_loss",-2376.89495040467,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","vn_window",8e-04
+"36","vn_window_gain",2298.0527811954,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","vn_window",8e-04
+"37","vn_interzone_loss",-87960.5370473589,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","loss","vn_interzone",0.0289
+"38","vn_interzone_gain",54650.6265692874,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM1","Air Conditioner","gain","vn_interzone",0.0179
+"39","none_roof_convection_gain",388184.815815153,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","roof",0.1257
+"40","none_floor_convection_gain",627453.060500022,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","floor",0.2032
+"41","none_intwalls_convection_gain",803485.208958217,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","intwalls",0.2602
+"42","south_extwalls_convection_gain",227049.157514855,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","south_extwalls",0.0735
+"43","east_extwalls_convection_gain",550035.817957744,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","east_extwalls",0.1781
+"44","south_windows_convection_gain",32861.9626587268,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","south_windows",0.0106
+"45","none_roof_convection_loss",-4286.37235693826,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","roof",0.0014
+"46","none_floor_convection_loss",-34775.8992901219,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","floor",0.0113
+"47","none_intwalls_convection_loss",-89426.3010301454,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","intwalls",0.0292
+"48","south_extwalls_convection_loss",-20720.4393724157,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","south_extwalls",0.0068
+"49","east_extwalls_convection_loss",-225.785144241164,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","east_extwalls",1e-04
+"50","south_windows_convection_loss",-27199.2734936581,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","south_windows",0.0089
+"51","internal_gains",382583.222019262,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","internal_gains",0.1239
+"52","cooling",-2753719.18656579,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","cooling",0.8977
+"53","heating",0,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","heating",0
+"54","vn_window_loss",-2279.66000137757,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","vn_window",7e-04
+"55","vn_window_gain",2302.07585873174,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","vn_window",7e-04
+"56","vn_interzone_loss",-134887.585662931,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","loss","vn_interzone",0.044
+"57","vn_interzone_gain",73593.409263327,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM1","Hybrid","gain","vn_interzone",0.0238
+"58","none_roof_convection_gain",163198.534324489,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","roof",0.119
+"59","none_floor_convection_gain",209466.721601092,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","floor",0.1527
+"60","none_intwalls_convection_gain",308298.846065945,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","intwalls",0.2248
+"61","south_extwalls_convection_gain",33816.9383389216,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","south_extwalls",0.0247
+"62","east_extwalls_convection_gain",212308.814367809,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","east_extwalls",0.1548
+"63","south_windows_convection_gain",6.59577629023287,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","south_windows",0
+"64","none_roof_convection_loss",-3869.00514727858,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","roof",0.0028
+"65","none_floor_convection_loss",-17489.97524714,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","floor",0.0127
+"66","none_intwalls_convection_loss",-38482.9749972782,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","intwalls",0.028
+"67","south_extwalls_convection_loss",-31352.2921613128,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","south_extwalls",0.0228
+"68","east_extwalls_convection_loss",-3900.90041749338,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","east_extwalls",0.0028
+"69","south_windows_convection_loss",-57796.9958092686,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","south_windows",0.042
+"70","internal_gains",232390.554364491,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","internal_gains",0.1695
+"71","vn_window_loss",-888363.873351679,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","vn_window",0.6458
+"72","vn_window_gain",0,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","vn_window",0
+"73","vn_interzone_loss",-334379.361114001,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","loss","vn_interzone",0.2431
+"74","vn_interzone_gain",211946.910556811,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM1","Natural Ventilation","gain","vn_interzone",0.1545
+"75","none_roof_convection_gain",375976.61720264,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","roof",0.124
+"76","none_floor_convection_gain",603104.908508187,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","floor",0.1989
+"77","none_intwalls_convection_gain",705690.639798484,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","intwalls",0.2327
+"78","north_extwalls_convection_gain",356459.538289387,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","north_extwalls",0.1175
+"79","west_extwalls_convection_gain",94783.6900807875,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","west_extwalls",0.0313
+"80","east_extwalls_convection_gain",415362.663164111,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","east_extwalls",0.137
+"81","east_windows_convection_gain",37369.6683688236,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","east_windows",0.0123
+"82","none_roof_convection_loss",-1472.4670287518,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","roof",5e-04
+"83","none_floor_convection_loss",-33169.1843976942,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","floor",0.011
+"84","none_intwalls_convection_loss",-68125.9276837993,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","intwalls",0.0226
+"85","north_extwalls_convection_loss",-16449.1714580067,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","north_extwalls",0.0055
+"86","west_extwalls_convection_loss",-6628.87313054912,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","west_extwalls",0.0022
+"87","east_extwalls_convection_loss",-225.971815459629,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","east_extwalls",1e-04
+"88","east_windows_convection_loss",-26642.4645081834,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","east_windows",0.0088
+"89","internal_gains",380735.329046431,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","internal_gains",0.1256
+"90","cooling",-2669464.84898473,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","cooling",0.8856
+"91","heating",0,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","heating",0
+"92","vn_window_loss",-5166.24156523967,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","vn_window",0.0017
+"93","vn_window_gain",2752.62523299899,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","vn_window",9e-04
+"94","vn_interzone_loss",-186965.817952081,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","loss","vn_interzone",0.062
+"95","vn_interzone_gain",60209.9743226537,"U001_Caso01_1a7_ac_in1_1.csv","belem","DORM2","Air Conditioner","gain","vn_interzone",0.0199
+"96","none_roof_convection_gain",368756.118762684,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","roof",0.1235
+"97","none_floor_convection_gain",600417.770778346,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","floor",0.2012
+"98","none_intwalls_convection_gain",707294.785954497,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","intwalls",0.237
+"99","north_extwalls_convection_gain",343649.623528934,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","north_extwalls",0.1151
+"100","west_extwalls_convection_gain",93891.7756363802,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","west_extwalls",0.0315
+"101","east_extwalls_convection_gain",397211.202551154,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","east_extwalls",0.1331
+"102","east_windows_convection_gain",36830.3909104717,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","east_windows",0.0123
+"103","none_roof_convection_loss",-5295.21617540209,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","roof",0.0018
+"104","none_floor_convection_loss",-42852.3511844738,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","floor",0.0144
+"105","none_intwalls_convection_loss",-93711.5700695588,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","intwalls",0.0315
+"106","north_extwalls_convection_loss",-19434.732381551,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","north_extwalls",0.0065
+"107","west_extwalls_convection_loss",-9484.51605479192,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","west_extwalls",0.0032
+"108","east_extwalls_convection_loss",-203.082187712292,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","east_extwalls",1e-04
+"109","east_windows_convection_loss",-29498.3410959754,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","east_windows",0.0099
+"110","internal_gains",380724.594767104,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","internal_gains",0.1276
+"111","cooling",-2681262.77836625,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","cooling",0.9005
+"112","heating",0,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","heating",0
+"113","vn_window_loss",-5533.0839091271,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","vn_window",0.0019
+"114","vn_window_gain",2703.94701407609,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","vn_window",9e-04
+"115","vn_interzone_loss",-90261.7839620293,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","loss","vn_interzone",0.0303
+"116","vn_interzone_gain",53416.9565280563,"U001_Caso01_1a7_ac_nbr_1.csv","belem","DORM2","Air Conditioner","gain","vn_interzone",0.0179
+"117","none_roof_convection_gain",371744.183028631,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","roof",0.1234
+"118","none_floor_convection_gain",602744.563738559,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","floor",0.2001
+"119","none_intwalls_convection_gain",705132.150818553,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","intwalls",0.2341
+"120","north_extwalls_convection_gain",351550.786770187,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","north_extwalls",0.1167
+"121","west_extwalls_convection_gain",93690.3087502488,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","west_extwalls",0.0311
+"122","east_extwalls_convection_gain",409740.929101829,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","east_extwalls",0.136
+"123","east_windows_convection_gain",37361.9065692794,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","east_windows",0.0124
+"124","none_roof_convection_loss",-1490.25321854106,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","roof",5e-04
+"125","none_floor_convection_loss",-37761.0804331284,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","floor",0.0126
+"126","none_intwalls_convection_loss",-75423.5332452455,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","intwalls",0.0252
+"127","north_extwalls_convection_loss",-17026.5311442627,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","north_extwalls",0.0057
+"128","west_extwalls_convection_loss",-6700.00930296224,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","west_extwalls",0.0022
+"129","east_extwalls_convection_loss",-223.291016539075,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","east_extwalls",1e-04
+"130","east_windows_convection_loss",-27719.270935217,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","east_windows",0.0093
+"131","internal_gains",380731.751016753,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","internal_gains",0.1264
+"132","cooling",-2672685.44950088,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","cooling",0.8921
+"133","heating",0,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","heating",0
+"134","vn_window_loss",-5270.4174881402,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","vn_window",0.0018
+"135","vn_window_gain",2704.48016017465,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","vn_window",9e-04
+"136","vn_interzone_loss",-151539.034998803,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","loss","vn_interzone",0.0506
+"137","vn_interzone_gain",57300.8160213145,"U001_Caso01_1a7_hi_in1_1.csv","belem","DORM2","Hybrid","gain","vn_interzone",0.019
+"138","none_roof_convection_gain",168743.23284228,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","roof",0.1152
+"139","none_floor_convection_gain",227867.467917752,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","floor",0.1556
+"140","none_intwalls_convection_gain",301822.465850429,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","intwalls",0.2061
+"141","north_extwalls_convection_gain",92594.3831991207,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","north_extwalls",0.0632
+"142","west_extwalls_convection_gain",25966.1975051676,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","west_extwalls",0.0177
+"143","east_extwalls_convection_gain",166901.50525678,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","east_extwalls",0.114
+"144","east_windows_convection_gain",1251.2254031064,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","east_windows",9e-04
+"145","none_roof_convection_loss",-1627.42380824003,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","roof",0.0011
+"146","none_floor_convection_loss",-16563.8881602868,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","floor",0.0113
+"147","none_intwalls_convection_loss",-24381.2183915714,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","intwalls",0.0166
+"148","north_extwalls_convection_loss",-26371.3101223641,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","north_extwalls",0.018
+"149","west_extwalls_convection_loss",-9354.36612388194,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","west_extwalls",0.0064
+"150","east_extwalls_convection_loss",-1523.63231745649,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","east_extwalls",0.001
+"151","east_windows_convection_loss",-48256.3297353394,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","east_windows",0.0329
+"152","internal_gains",237261.283507044,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","internal_gains",0.162
+"153","vn_window_loss",-1018502.99769943,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","vn_window",0.6937
+"154","vn_window_gain",0,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","vn_window",0
+"155","vn_interzone_loss",-321646.134000668,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","loss","vn_interzone",0.2191
+"156","vn_interzone_gain",242187.104184786,"U001_Caso01_1a7_vn_nbr_1.csv","belem","DORM2","Natural Ventilation","gain","vn_interzone",0.1654
+"157","none_roof_convection_gain",1270394.59566925,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","roof",0.1585
+"158","none_floor_convection_gain",1623890.94707454,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","floor",0.2026
+"159","none_intwalls_convection_gain",1663311.50839015,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","intwalls",0.2075
+"160","south_extwalls_convection_gain",555633.030563673,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","south_extwalls",0.0693
+"161","north_extwalls_convection_gain",231637.898236989,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","north_extwalls",0.0289
+"162","west_extwalls_convection_gain",968756.286243437,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","west_extwalls",0.1208
+"163","east_extwalls_convection_gain",229166.135044714,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","east_extwalls",0.0286
+"164","south_windows_convection_gain",83015.1547218188,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","south_windows",0.0104
+"165","west_windows_convection_gain",75209.0921691125,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","west_windows",0.0094
+"166","none_roof_convection_loss",-3857.14318990072,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","roof",5e-04
+"167","none_floor_convection_loss",-20426.7761666431,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","floor",0.0026
+"168","none_intwalls_convection_loss",-65287.8223670857,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","intwalls",0.0082
+"169","south_extwalls_convection_loss",-48643.8364349515,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","south_extwalls",0.0061
+"170","north_extwalls_convection_loss",-20388.817421448,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","north_extwalls",0.0025
+"171","west_extwalls_convection_loss",-65993.866792934,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","west_extwalls",0.0083
+"172","east_extwalls_convection_loss",-11448.9747717709,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","east_extwalls",0.0014
+"173","south_windows_convection_loss",-42252.0196445993,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","south_windows",0.0053
+"174","west_windows_convection_loss",-36591.2519360905,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","west_windows",0.0046
+"175","internal_gains",793189.398110547,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","internal_gains",0.0989
+"176","cooling",-7506075.78054602,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","cooling",0.9385
+"177","heating",0,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","heating",0
+"178","vn_window_loss",-53975.9314648313,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","vn_window",0.0067
+"179","vn_window_gain",119476.094071687,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","vn_window",0.0149
+"180","vn_interzone_loss",-122751.254017916,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","loss","vn_interzone",0.0153
+"181","vn_interzone_gain",403391.772766906,"U001_Caso01_1a7_ac_in1_1.csv","belem","SALA","Air Conditioner","gain","vn_interzone",0.0503
+"182","none_roof_convection_gain",1280957.4304838,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","roof",0.1623
+"183","none_floor_convection_gain",1629808.5355499,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","floor",0.2064
+"184","none_intwalls_convection_gain",1663127.87252705,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","intwalls",0.2107
+"185","south_extwalls_convection_gain",556610.439605865,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","south_extwalls",0.0705
+"186","north_extwalls_convection_gain",233541.45566764,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","north_extwalls",0.0296
+"187","west_extwalls_convection_gain",967845.329752998,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","west_extwalls",0.1226
+"188","east_extwalls_convection_gain",232099.07453083,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","east_extwalls",0.0294
+"189","south_windows_convection_gain",83217.9046342991,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","south_windows",0.0105
+"190","west_windows_convection_gain",75428.7003541416,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","west_windows",0.0096
+"191","none_roof_convection_loss",-4550.60767574908,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","roof",6e-04
+"192","none_floor_convection_loss",-12447.3457066116,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","floor",0.0016
+"193","none_intwalls_convection_loss",-41897.568117652,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","intwalls",0.0053
+"194","south_extwalls_convection_loss",-43738.0914632342,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","south_extwalls",0.0055
+"195","north_extwalls_convection_loss",-19740.2688382248,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","north_extwalls",0.0025
+"196","west_extwalls_convection_loss",-57007.7797075428,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","west_extwalls",0.0072
+"197","east_extwalls_convection_loss",-11556.2689222547,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","east_extwalls",0.0015
+"198","south_windows_convection_loss",-40777.6209942277,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","south_windows",0.0052
+"199","west_windows_convection_loss",-35487.8061841645,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","west_windows",0.0045
+"200","internal_gains",793244.234123826,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","internal_gains",0.1005
+"201","cooling",-7467292.07886485,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","cooling",0.9454
+"202","heating",0,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","heating",0
+"203","vn_window_loss",-53177.6739792667,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","vn_window",0.0067
+"204","vn_window_gain",119599.790584718,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","vn_window",0.0151
+"205","vn_interzone_loss",-110572.556545994,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","loss","vn_interzone",0.014
+"206","vn_interzone_gain",258978.499814326,"U001_Caso01_1a7_ac_nbr_1.csv","belem","SALA","Air Conditioner","gain","vn_interzone",0.0328
+"207","none_roof_convection_gain",1273029.63236561,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","roof",0.1593
+"208","none_floor_convection_gain",1626538.25822688,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","floor",0.2035
+"209","none_intwalls_convection_gain",1667178.4018431,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","intwalls",0.2086
+"210","south_extwalls_convection_gain",556657.129516128,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","south_extwalls",0.0696
+"211","north_extwalls_convection_gain",232137.329847618,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","north_extwalls",0.029
+"212","west_extwalls_convection_gain",971054.103460839,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","west_extwalls",0.1215
+"213","east_extwalls_convection_gain",229124.807277336,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","east_extwalls",0.0287
+"214","south_windows_convection_gain",83031.8060231093,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","south_windows",0.0104
+"215","west_windows_convection_gain",75234.5945960835,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","west_windows",0.0094
+"216","none_roof_convection_loss",-4763.62653180034,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","roof",6e-04
+"217","none_floor_convection_loss",-20369.8964216837,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","floor",0.0026
+"218","none_intwalls_convection_loss",-65355.1608484377,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","intwalls",0.0082
+"219","south_extwalls_convection_loss",-49294.1140650921,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","south_extwalls",0.0062
+"220","north_extwalls_convection_loss",-20690.6367745971,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","north_extwalls",0.0026
+"221","west_extwalls_convection_loss",-67279.051551976,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","west_extwalls",0.0084
+"222","east_extwalls_convection_loss",-11445.3137235714,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","east_extwalls",0.0014
+"223","south_windows_convection_loss",-42174.4205401659,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","south_windows",0.0053
+"224","west_windows_convection_loss",-36564.8829424959,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","west_windows",0.0046
+"225","internal_gains",793188.190613995,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","internal_gains",0.0992
+"226","cooling",-7473175.36330626,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","cooling",0.9366
+"227","heating",0,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","heating",0
+"228","vn_window_loss",-53958.0787691041,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","vn_window",0.0068
+"229","vn_window_gain",119459.971996503,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","vn_window",0.0149
+"230","vn_interzone_loss",-133602.725266918,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","loss","vn_interzone",0.0167
+"231","vn_interzone_gain",366746.866336634,"U001_Caso01_1a7_hi_in1_1.csv","belem","SALA","Hybrid","gain","vn_interzone",0.0459
+"232","none_roof_convection_gain",417852.659534128,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","roof",0.1437
+"233","none_floor_convection_gain",470792.560504196,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","floor",0.1619
+"234","none_intwalls_convection_gain",493560.606639684,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","intwalls",0.1697
+"235","south_extwalls_convection_gain",88833.3165711524,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","south_extwalls",0.0305
+"236","north_extwalls_convection_gain",35378.7176407318,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","north_extwalls",0.0122
+"237","west_extwalls_convection_gain",240394.154775322,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","west_extwalls",0.0827
+"238","east_extwalls_convection_gain",58619.7525474281,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","east_extwalls",0.0202
+"239","south_windows_convection_gain",14.6786236462327,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","south_windows",0
+"240","west_windows_convection_gain",711.585763933062,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","west_windows",2e-04
+"241","none_roof_convection_loss",-4046.62409327494,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","roof",0.0014
+"242","none_floor_convection_loss",-21836.5414794673,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","floor",0.0075
+"243","none_intwalls_convection_loss",-55080.7160429037,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","intwalls",0.0189
+"244","south_extwalls_convection_loss",-51301.3710960615,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","south_extwalls",0.0176
+"245","north_extwalls_convection_loss",-20626.8424502947,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","north_extwalls",0.0071
+"246","west_extwalls_convection_loss",-77945.7806251216,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","west_extwalls",0.0267
+"247","east_extwalls_convection_loss",-8914.62286074878,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","east_extwalls",0.0031
+"248","south_windows_convection_loss",-76841.4506836681,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","south_windows",0.0263
+"249","west_windows_convection_loss",-61401.2957727112,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","west_windows",0.021
+"250","internal_gains",486334.773241908,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","internal_gains",0.1672
+"251","vn_window_loss",-2006513.00715327,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","vn_window",0.6868
+"252","vn_window_gain",0,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","vn_window",0
+"253","vn_interzone_loss",-537112.490879274,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","loss","vn_interzone",0.1838
+"254","vn_interzone_gain",616053.522959937,"U001_Caso01_1a7_vn_nbr_1.csv","belem","SALA","Natural Ventilation","gain","vn_interzone",0.2118
+"255","none_roof_convection_gain",102563.458088014,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","roof",0.0957
+"256","none_floor_convection_gain",96094.0755610322,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","floor",0.0897
+"257","none_intwalls_convection_gain",167616.157080935,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","intwalls",0.1564
+"258","south_extwalls_convection_gain",17785.4587874613,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","south_extwalls",0.0166
+"259","east_extwalls_convection_gain",204320.022875519,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","east_extwalls",0.1907
+"260","south_windows_convection_gain",657.298595243979,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","south_windows",6e-04
+"261","none_roof_convection_loss",-50037.1181960983,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","roof",0.047
+"262","none_floor_convection_loss",-59487.8964337081,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","floor",0.0558
+"263","none_intwalls_convection_loss",-55845.6140192537,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","intwalls",0.0524
+"264","south_extwalls_convection_loss",-97848.3393715724,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","south_extwalls",0.0918
+"265","east_extwalls_convection_loss",-88371.4847631774,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","east_extwalls",0.0829
+"266","south_windows_convection_loss",-74222.8864690178,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","south_windows",0.0697
+"267","internal_gains",387813.59856526,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","internal_gains",0.362
+"268","cooling",-438184.102516864,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","cooling",0.4112
+"269","heating",33751.9482401008,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","heating",0.0315
+"270","vn_window_loss",-35288.0465306002,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","vn_window",0.0331
+"271","vn_window_gain",50.8597850251771,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","vn_window",0
+"272","vn_interzone_loss",-166305.514395764,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","loss","vn_interzone",0.1561
+"273","vn_interzone_gain",60735.9474472362,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM1","Air Conditioner","gain","vn_interzone",0.0567
+"274","none_roof_convection_gain",110516.094341082,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","roof",0.1027
+"275","none_floor_convection_gain",101593.737601123,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","floor",0.0944
+"276","none_intwalls_convection_gain",189781.874156913,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","intwalls",0.1764
+"277","south_extwalls_convection_gain",18252.2204993435,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","south_extwalls",0.017
+"278","east_extwalls_convection_gain",194337.968466758,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","east_extwalls",0.1806
+"279","south_windows_convection_gain",658.789313931971,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","south_windows",6e-04
+"280","none_roof_convection_loss",-63479.2545793003,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","roof",0.0591
+"281","none_floor_convection_loss",-60930.9739062447,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","floor",0.0567
+"282","none_intwalls_convection_loss",-73156.093873565,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","intwalls",0.0681
+"283","south_extwalls_convection_loss",-97041.6106709319,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","south_extwalls",0.0903
+"284","east_extwalls_convection_loss",-82848.532510159,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","east_extwalls",0.0771
+"285","south_windows_convection_loss",-72792.2354621693,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","south_windows",0.0677
+"286","internal_gains",391391.57791948,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","internal_gains",0.3637
+"287","cooling",-567249.270783705,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","cooling",0.5279
+"288","heating",63855.2608449132,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","heating",0.0593
+"289","vn_window_loss",-33172.8579764981,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","vn_window",0.0309
+"290","vn_window_gain",58.3523185986215,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","vn_window",1e-04
+"291","vn_interzone_loss",-23845.264926551,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","loss","vn_interzone",0.0222
+"292","vn_interzone_gain",5578.68350944087,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM1","Air Conditioner","gain","vn_interzone",0.0052
+"293","none_roof_convection_gain",124499.462397804,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","roof",0.0978
+"294","none_floor_convection_gain",146450.195376065,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","floor",0.1151
+"295","none_intwalls_convection_gain",244034.255416471,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","intwalls",0.1918
+"296","south_extwalls_convection_gain",20160.7632234771,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","south_extwalls",0.0158
+"297","east_extwalls_convection_gain",218658.36865537,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","east_extwalls",0.1718
+"298","south_windows_convection_gain",662.866544999319,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","south_windows",5e-04
+"299","none_roof_convection_loss",-30227.640896822,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","roof",0.024
+"300","none_floor_convection_loss",-53402.0049820022,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","floor",0.0424
+"301","none_intwalls_convection_loss",-56634.5168115143,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","intwalls",0.0449
+"302","south_extwalls_convection_loss",-61640.0666303124,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","south_extwalls",0.0489
+"303","east_extwalls_convection_loss",-42451.1488169732,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","east_extwalls",0.0337
+"304","south_windows_convection_loss",-57186.224915406,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","south_windows",0.0454
+"305","internal_gains",404298.485103577,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","internal_gains",0.3177
+"306","cooling",-408504.140118451,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","cooling",0.324
+"307","heating",53756.6319265236,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","heating",0.0422
+"308","vn_window_loss",-360401.488548263,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","vn_window",0.2859
+"309","vn_window_gain",57.5463814011014,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","vn_window",0
+"310","vn_interzone_loss",-190232.655484095,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","loss","vn_interzone",0.1509
+"311","vn_interzone_gain",59816.2914524681,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM1","Hybrid","gain","vn_interzone",0.047
+"312","none_roof_convection_gain",117881.193528532,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","roof",0.0993
+"313","none_floor_convection_gain",132124.372619871,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","floor",0.1113
+"314","none_intwalls_convection_gain",230327.38701922,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","intwalls",0.1941
+"315","south_extwalls_convection_gain",12624.1233172675,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","south_extwalls",0.0106
+"316","east_extwalls_convection_gain",206659.470356803,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","east_extwalls",0.1741
+"317","south_windows_convection_gain",75.0224218857585,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","south_windows",1e-04
+"318","none_roof_convection_loss",-19748.3085029679,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","roof",0.0166
+"319","none_floor_convection_loss",-46886.4112849198,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","floor",0.0395
+"320","none_intwalls_convection_loss",-44191.7085961639,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","intwalls",0.0372
+"321","south_extwalls_convection_loss",-56480.0238552461,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","south_extwalls",0.0476
+"322","east_extwalls_convection_loss",-32976.4182867626,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","east_extwalls",0.0278
+"323","south_windows_convection_loss",-56451.3297668418,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","south_windows",0.0476
+"324","internal_gains",392590.37168201,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","internal_gains",0.3308
+"325","vn_window_loss",-596454.253218063,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","vn_window",0.5028
+"326","vn_window_gain",23.7957865055709,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","vn_window",0
+"327","vn_interzone_loss",-333185.304232135,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","loss","vn_interzone",0.2808
+"328","vn_interzone_gain",94568.6859370238,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM1","Natural Ventilation","gain","vn_interzone",0.0797
+"329","none_roof_convection_gain",99710.5875400896,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","roof",0.0864
+"330","none_floor_convection_gain",98571.2769086489,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","floor",0.0854
+"331","none_intwalls_convection_gain",161975.452795224,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","intwalls",0.1403
+"332","north_extwalls_convection_gain",173288.164632998,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","north_extwalls",0.1501
+"333","west_extwalls_convection_gain",27394.0408783817,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","west_extwalls",0.0237
+"334","east_extwalls_convection_gain",150106.981067219,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","east_extwalls",0.1301
+"335","east_windows_convection_gain",2166.36888453345,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","east_windows",0.0019
+"336","none_roof_convection_loss",-33621.4759336853,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","roof",0.0294
+"337","none_floor_convection_loss",-68918.7067392386,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","floor",0.0602
+"338","none_intwalls_convection_loss",-59632.464541193,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","intwalls",0.0521
+"339","north_extwalls_convection_loss",-68321.9166858254,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","north_extwalls",0.0597
+"340","west_extwalls_convection_loss",-19382.7920115288,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","west_extwalls",0.0169
+"341","east_extwalls_convection_loss",-60398.8219479911,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","east_extwalls",0.0528
+"342","east_windows_convection_loss",-67226.6800208139,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","east_windows",0.0587
+"343","internal_gains",386213.515301011,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","internal_gains",0.3346
+"344","cooling",-467677.409358079,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","cooling",0.4087
+"345","heating",30455.8648487655,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","heating",0.0264
+"346","vn_window_loss",-23117.7457328923,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","vn_window",0.0202
+"347","vn_window_gain",42.1843884572429,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","vn_window",0
+"348","vn_interzone_loss",-276120.750021678,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","loss","vn_interzone",0.2413
+"349","vn_interzone_gain",24262.8294240365,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","DORM2","Air Conditioner","gain","vn_interzone",0.021
+"350","none_roof_convection_gain",99269.5350850468,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","roof",0.0885
+"351","none_floor_convection_gain",96895.770125254,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","floor",0.0864
+"352","none_intwalls_convection_gain",168201.865606322,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","intwalls",0.15
+"353","north_extwalls_convection_gain",154217.869969205,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","north_extwalls",0.1376
+"354","west_extwalls_convection_gain",27782.7768534161,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","west_extwalls",0.0248
+"355","east_extwalls_convection_gain",125779.025809211,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","east_extwalls",0.1122
+"356","east_windows_convection_gain",1782.91716270824,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","east_windows",0.0016
+"357","none_roof_convection_loss",-54408.6033694793,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","roof",0.0486
+"358","none_floor_convection_loss",-84408.6522936007,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","floor",0.0754
+"359","none_intwalls_convection_loss",-98590.0149894099,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","intwalls",0.0881
+"360","north_extwalls_convection_loss",-74564.6284983186,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","north_extwalls",0.0666
+"361","west_extwalls_convection_loss",-24992.6414946892,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","west_extwalls",0.0223
+"362","east_extwalls_convection_loss",-60171.7351516363,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","east_extwalls",0.0538
+"363","east_windows_convection_loss",-70843.5992099662,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","east_windows",0.0633
+"364","internal_gains",388585.489988232,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","internal_gains",0.3466
+"365","cooling",-592783.583775246,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","cooling",0.5298
+"366","heating",53494.0972163422,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","heating",0.0477
+"367","vn_window_loss",-22774.5974981544,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","vn_window",0.0204
+"368","vn_window_gain",28.8025750706785,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","vn_window",0
+"369","vn_interzone_loss",-35440.851460853,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","loss","vn_interzone",0.0317
+"370","vn_interzone_gain",5050.64514887389,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","DORM2","Air Conditioner","gain","vn_interzone",0.0045
+"371","none_roof_convection_gain",123870.363328275,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","roof",0.0912
+"372","none_floor_convection_gain",145074.574411726,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","floor",0.1068
+"373","none_intwalls_convection_gain",228070.966804778,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","intwalls",0.1679
+"374","north_extwalls_convection_gain",196464.776732247,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","north_extwalls",0.1447
+"375","west_extwalls_convection_gain",33233.6232570208,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","west_extwalls",0.0245
+"376","east_extwalls_convection_gain",160212.448423722,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","east_extwalls",0.118
+"377","east_windows_convection_gain",2592.42520499657,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","east_windows",0.0019
+"378","none_roof_convection_loss",-20235.0907602978,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","roof",0.0151
+"379","none_floor_convection_loss",-61917.5466061912,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","floor",0.0461
+"380","none_intwalls_convection_loss",-59084.5380296525,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","intwalls",0.044
+"381","north_extwalls_convection_loss",-36633.0005418156,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","north_extwalls",0.0273
+"382","west_extwalls_convection_loss",-12067.5599501493,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","west_extwalls",0.009
+"383","east_extwalls_convection_loss",-27291.6919809899,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","east_extwalls",0.0203
+"384","east_windows_convection_loss",-51569.1458556265,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","east_windows",0.0384
+"385","internal_gains",402620.111011101,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","internal_gains",0.2965
+"386","cooling",-438733.438284349,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","cooling",0.3268
+"387","heating",35306.4870776098,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","heating",0.026
+"388","vn_window_loss",-336882.075876137,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","vn_window",0.2509
+"389","vn_window_gain",44.2184058090471,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","vn_window",0
+"390","vn_interzone_loss",-298037.421745368,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","loss","vn_interzone",0.222
+"391","vn_interzone_gain",30580.9153748417,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","DORM2","Hybrid","gain","vn_interzone",0.0225
+"392","none_roof_convection_gain",123277.42586312,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","roof",0.0943
+"393","none_floor_convection_gain",129148.970585175,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","floor",0.0988
+"394","none_intwalls_convection_gain",217949.591940481,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","intwalls",0.1668
+"395","north_extwalls_convection_gain",196340.624361873,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","north_extwalls",0.1503
+"396","west_extwalls_convection_gain",33162.4652162539,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","west_extwalls",0.0254
+"397","east_extwalls_convection_gain",155547.683722532,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","east_extwalls",0.119
+"398","east_windows_convection_gain",1491.1732372633,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","east_windows",0.0011
+"399","none_roof_convection_loss",-10886.8519021932,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","roof",0.0084
+"400","none_floor_convection_loss",-46508.1500871665,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","floor",0.0357
+"401","none_intwalls_convection_loss",-38915.5992631967,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","intwalls",0.0299
+"402","north_extwalls_convection_loss",-28666.6239332824,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","north_extwalls",0.022
+"403","west_extwalls_convection_loss",-10331.8130337767,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","west_extwalls",0.0079
+"404","east_extwalls_convection_loss",-19176.0448133568,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","east_extwalls",0.0147
+"405","east_windows_convection_loss",-47922.2224805936,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","east_windows",0.0368
+"406","internal_gains",391020.078514986,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","internal_gains",0.2992
+"407","vn_window_loss",-601401.228671836,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","vn_window",0.4615
+"408","vn_window_gain",18.4946678761478,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","vn_window",0
+"409","vn_interzone_loss",-499219.000837255,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","loss","vn_interzone",0.3831
+"410","vn_interzone_gain",58729.1170880737,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","DORM2","Natural Ventilation","gain","vn_interzone",0.0449
+"411","none_roof_convection_gain",432914.196150656,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","roof",0.1303
+"412","none_floor_convection_gain",372579.417873432,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","floor",0.1121
+"413","none_intwalls_convection_gain",545197.867778971,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","intwalls",0.164
+"414","south_extwalls_convection_gain",114840.624544106,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","south_extwalls",0.0346
+"415","north_extwalls_convection_gain",110903.970861309,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","north_extwalls",0.0334
+"416","west_extwalls_convection_gain",349837.688710726,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","west_extwalls",0.1053
+"417","east_extwalls_convection_gain",76093.463081532,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","east_extwalls",0.0229
+"418","south_windows_convection_gain",13228.872731259,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","south_windows",0.004
+"419","west_windows_convection_gain",15491.3599051543,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","west_windows",0.0047
+"420","none_roof_convection_loss",-73990.2297796558,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","roof",0.0224
+"421","none_floor_convection_loss",-69393.050964768,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","floor",0.021
+"422","none_intwalls_convection_loss",-80765.7568952829,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","intwalls",0.0245
+"423","south_extwalls_convection_loss",-129999.043873019,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","south_extwalls",0.0394
+"424","north_extwalls_convection_loss",-37358.9350055088,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","north_extwalls",0.0113
+"425","west_extwalls_convection_loss",-135058.859280005,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","west_extwalls",0.0409
+"426","east_extwalls_convection_loss",-33323.8273234814,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","east_extwalls",0.0101
+"427","south_windows_convection_loss",-88262.3602140754,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","south_windows",0.0267
+"428","west_windows_convection_loss",-69946.5509227961,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","west_windows",0.0212
+"429","internal_gains",789971.250096586,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","internal_gains",0.2377
+"430","cooling",-2292413.46515535,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","cooling",0.6943
+"431","heating",6984.13885478175,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","heating",0.0021
+"432","vn_window_loss",-199392.932146104,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","vn_window",0.0604
+"433","vn_window_gain",25637.7757358243,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","vn_window",0.0077
+"434","vn_interzone_loss",-91725.2052181388,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","loss","vn_interzone",0.0278
+"435","vn_interzone_gain",470018.955095217,"U001_Caso01_1a7_ac_in1_1.csv","saopaulo","SALA","Air Conditioner","gain","vn_interzone",0.1414
+"436","none_roof_convection_gain",465607.579026394,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","roof",0.1484
+"437","none_floor_convection_gain",427535.806580395,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","floor",0.1363
+"438","none_intwalls_convection_gain",604696.340789054,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","intwalls",0.1927
+"439","south_extwalls_convection_gain",115625.021615417,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","south_extwalls",0.0369
+"440","north_extwalls_convection_gain",120233.476002437,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","north_extwalls",0.0383
+"441","west_extwalls_convection_gain",363572.706228398,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","west_extwalls",0.1159
+"442","east_extwalls_convection_gain",82108.5242906359,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","east_extwalls",0.0262
+"443","south_windows_convection_gain",13427.914193373,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","south_windows",0.0043
+"444","west_windows_convection_gain",16553.2807865953,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","west_windows",0.0053
+"445","none_roof_convection_loss",-42057.9636451438,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","roof",0.0135
+"446","none_floor_convection_loss",-34592.8533903395,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","floor",0.0111
+"447","none_intwalls_convection_loss",-38991.687566708,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","intwalls",0.0125
+"448","south_extwalls_convection_loss",-92801.6303502638,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","south_extwalls",0.0297
+"449","north_extwalls_convection_loss",-28305.4798374493,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","north_extwalls",0.0091
+"450","west_extwalls_convection_loss",-95285.978035033,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","west_extwalls",0.0305
+"451","east_extwalls_convection_loss",-25166.4464975464,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","east_extwalls",0.0081
+"452","south_windows_convection_loss",-74739.6627585329,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","south_windows",0.0239
+"453","west_windows_convection_loss",-60027.5726006309,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","west_windows",0.0192
+"454","internal_gains",797974.083884599,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","internal_gains",0.2543
+"455","cooling",-2439774.45359583,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","cooling",0.7817
+"456","heating",13167.1862398276,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","heating",0.0042
+"457","vn_window_loss",-173620.264656364,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","vn_window",0.0556
+"458","vn_window_gain",28670.1424249876,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","vn_window",0.0091
+"459","vn_interzone_loss",-15691.2565202461,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","loss","vn_interzone",0.005
+"460","vn_interzone_gain",88417.8834464777,"U001_Caso01_1a7_ac_nbr_1.csv","saopaulo","SALA","Air Conditioner","gain","vn_interzone",0.0282
+"461","none_roof_convection_gain",479477.844362188,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","roof",0.1329
+"462","none_floor_convection_gain",470603.93261911,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","floor",0.1304
+"463","none_intwalls_convection_gain",640502.907302779,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","intwalls",0.1775
+"464","south_extwalls_convection_gain",119380.355347948,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","south_extwalls",0.0331
+"465","north_extwalls_convection_gain",117647.224927563,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","north_extwalls",0.0326
+"466","west_extwalls_convection_gain",375489.037428758,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","west_extwalls",0.1041
+"467","east_extwalls_convection_gain",78894.7108812152,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","east_extwalls",0.0219
+"468","south_windows_convection_gain",12940.358146119,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","south_windows",0.0036
+"469","west_windows_convection_gain",15334.9541574724,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","west_windows",0.0042
+"470","none_roof_convection_loss",-38122.964278775,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","roof",0.0106
+"471","none_floor_convection_loss",-54700.896326411,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","floor",0.0153
+"472","none_intwalls_convection_loss",-64817.5279990571,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","intwalls",0.0181
+"473","south_extwalls_convection_loss",-85777.0135372345,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","south_extwalls",0.0239
+"474","north_extwalls_convection_loss",-22760.5354024647,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","north_extwalls",0.0064
+"475","west_extwalls_convection_loss",-94377.8924959853,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","west_extwalls",0.0263
+"476","east_extwalls_convection_loss",-18433.9970361137,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","east_extwalls",0.0051
+"477","south_windows_convection_loss",-68377.7704101996,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","south_windows",0.0191
+"478","west_windows_convection_loss",-54201.8078882488,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","west_windows",0.0151
+"479","internal_gains",808845.603775218,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","internal_gains",0.2242
+"480","cooling",-2054285.40629869,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","cooling",0.5735
+"481","heating",7421.25989772754,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","heating",0.0021
+"482","vn_window_loss",-835355.014380348,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","vn_window",0.2332
+"483","vn_window_gain",25579.3864674487,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","vn_window",0.0071
+"484","vn_interzone_loss",-190847.6241943,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","loss","vn_interzone",0.0533
+"485","vn_interzone_gain",456215.056935028,"U001_Caso01_1a7_hi_in1_1.csv","saopaulo","SALA","Hybrid","gain","vn_interzone",0.1264
+"486","none_roof_convection_gain",323307.483435092,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","roof",0.1075
+"487","none_floor_convection_gain",359619.128979344,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","floor",0.1195
+"488","none_intwalls_convection_gain",450835.541917983,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","intwalls",0.1499
+"489","south_extwalls_convection_gain",43351.9304799594,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","south_extwalls",0.0144
+"490","north_extwalls_convection_gain",77011.4040119992,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","north_extwalls",0.0256
+"491","west_extwalls_convection_gain",230394.514314779,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","west_extwalls",0.0766
+"492","east_extwalls_convection_gain",47590.8856258856,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","east_extwalls",0.0158
+"493","south_windows_convection_gain",59.0308006723348,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","south_windows",0
+"494","west_windows_convection_gain",1991.49537746228,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","west_windows",7e-04
+"495","none_roof_convection_loss",-33891.1998818637,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","roof",0.0112
+"496","none_floor_convection_loss",-97757.5014574463,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","floor",0.0323
+"497","none_intwalls_convection_loss",-81788.7293799684,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","intwalls",0.027
+"498","south_extwalls_convection_loss",-83664.6447288541,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","south_extwalls",0.0276
+"499","north_extwalls_convection_loss",-19444.9218558766,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","north_extwalls",0.0064
+"500","west_extwalls_convection_loss",-87176.7489174768,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","west_extwalls",0.0288
+"501","east_extwalls_convection_loss",-15858.3632122668,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","east_extwalls",0.0052
+"502","south_windows_convection_loss",-73172.6654527809,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","south_windows",0.0241
+"503","west_windows_convection_loss",-56743.3904746097,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","west_windows",0.0187
+"504","internal_gains",755761.226800146,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","internal_gains",0.2512
+"505","vn_window_loss",-2110190.86445847,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","vn_window",0.6962
+"506","vn_window_gain",2825.10270337628,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","vn_window",9e-04
+"507","vn_interzone_loss",-371351.113433429,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","loss","vn_interzone",0.1225
+"508","vn_interzone_gain",715498.702378136,"U001_Caso01_1a7_vn_nbr_1.csv","saopaulo","SALA","Natural Ventilation","gain","vn_interzone",0.2378

@@ -1,0 +1,21 @@
+Códigos R para retirada dos dados dos csv da simulação e gerar os arquivos anuais, mensais e diários:
+- convection_uni_dividindo 
+para o balanço térmico por convecção, dividindo nos ganhos e perdas
+- surface_uni_dividindo
+para o balanço térmico na superfície, dividindo nos ganhos e perdas
+
+Códigos R para calcular o Heat Exchange Index (HEI):
+- impact_index_calcule
+convecção
+- impact_index_calcule_surface
+superfície
+
+Códigos R para desenvolvimento do gráfico estilo Heat Map
+- heatmap_novo_conv
+gráficos anuais e mensais para a convecção
+- heatmap_novo_daily_conv
+gráfico diário para a convecção
+- heatmap_novo
+gráficos anuais e mensais para a superfície
+- heatmap_novo_daily
+gráfico diário para a superfície

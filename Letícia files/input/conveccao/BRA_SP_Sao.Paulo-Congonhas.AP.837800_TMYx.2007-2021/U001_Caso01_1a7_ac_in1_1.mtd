@@ -1,0 +1,464 @@
+
+ Meters for 15,SALA LIGHTS_SALA:Lights Electricity Energy [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:SALA [J]
+  OnMeter=Electricity:SpaceType:GENERAL [J]
+  OnMeter=InteriorLights:Electricity [J]
+  OnMeter=InteriorLights:Electricity:Zone:SALA [J]
+  OnMeter=InteriorLights:Electricity:SpaceType:GENERAL [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:Zone:SALA [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:SpaceType:GENERAL [J]
+
+ Meters for 136,DORM1 LIGHTS_DORM:Lights Electricity Energy [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:DORM1 [J]
+  OnMeter=Electricity:SpaceType:GENERAL [J]
+  OnMeter=InteriorLights:Electricity [J]
+  OnMeter=InteriorLights:Electricity:Zone:DORM1 [J]
+  OnMeter=InteriorLights:Electricity:SpaceType:GENERAL [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:Zone:DORM1 [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:SpaceType:GENERAL [J]
+
+ Meters for 173,DORM2 LIGHTS_DORM:Lights Electricity Energy [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:DORM2 [J]
+  OnMeter=Electricity:SpaceType:GENERAL [J]
+  OnMeter=InteriorLights:Electricity [J]
+  OnMeter=InteriorLights:Electricity:Zone:DORM2 [J]
+  OnMeter=InteriorLights:Electricity:SpaceType:GENERAL [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:Zone:DORM2 [J]
+  OnMeter=GeneralLights:InteriorLights:Electricity:SpaceType:GENERAL [J]
+
+ Meters for 210,SALA EQUIP_SALA:Electric Equipment Electricity Energy [J]
+  OnMeter=Electricity:Facility [J]
+  OnMeter=Electricity:Building [J]
+  OnMeter=Electricity:Zone:SALA [J]
+  OnMeter=Electricity:SpaceType:GENERAL [J]
+  OnMeter=InteriorEquipment:Electricity [J]
+  OnMeter=InteriorEquipment:Electricity:Zone:SALA [J]
+  OnMeter=InteriorEquipment:Electricity:SpaceType:GENERAL [J]
+  OnMeter=General:InteriorEquipment:Electricity [J]
+  OnMeter=General:InteriorEquipment:Electricity:Zone:SALA [J]
+  OnMeter=General:InteriorEquipment:Electricity:SpaceType:GENERAL [J]
+
+ Meters for 353,SALA:Zone Air System Sensible Heating Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:SALA [J]
+  OnMeter=Heating:EnergyTransfer [J]
+  OnMeter=Heating:EnergyTransfer:Zone:SALA [J]
+  OnMeter=General:Heating:EnergyTransfer [J]
+  OnMeter=General:Heating:EnergyTransfer:Zone:SALA [J]
+
+ Meters for 438,SALA:Zone Air System Sensible Cooling Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:SALA [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+  OnMeter=Cooling:EnergyTransfer:Zone:SALA [J]
+  OnMeter=General:Cooling:EnergyTransfer [J]
+  OnMeter=General:Cooling:EnergyTransfer:Zone:SALA [J]
+
+ Meters for 489,DORM1:Zone Air System Sensible Heating Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:DORM1 [J]
+  OnMeter=Heating:EnergyTransfer [J]
+  OnMeter=Heating:EnergyTransfer:Zone:DORM1 [J]
+  OnMeter=General:Heating:EnergyTransfer [J]
+  OnMeter=General:Heating:EnergyTransfer:Zone:DORM1 [J]
+
+ Meters for 526,DORM1:Zone Air System Sensible Cooling Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:DORM1 [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+  OnMeter=Cooling:EnergyTransfer:Zone:DORM1 [J]
+  OnMeter=General:Cooling:EnergyTransfer [J]
+  OnMeter=General:Cooling:EnergyTransfer:Zone:DORM1 [J]
+
+ Meters for 553,DORM2:Zone Air System Sensible Heating Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:DORM2 [J]
+  OnMeter=Heating:EnergyTransfer [J]
+  OnMeter=Heating:EnergyTransfer:Zone:DORM2 [J]
+  OnMeter=General:Heating:EnergyTransfer [J]
+  OnMeter=General:Heating:EnergyTransfer:Zone:DORM2 [J]
+
+ Meters for 590,DORM2:Zone Air System Sensible Cooling Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:DORM2 [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+  OnMeter=Cooling:EnergyTransfer:Zone:DORM2 [J]
+  OnMeter=General:Cooling:EnergyTransfer [J]
+  OnMeter=General:Cooling:EnergyTransfer:Zone:DORM2 [J]
+
+ Meters for 617,BWC:Zone Air System Sensible Heating Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:BWC [J]
+  OnMeter=Heating:EnergyTransfer [J]
+  OnMeter=Heating:EnergyTransfer:Zone:BWC [J]
+  OnMeter=General:Heating:EnergyTransfer [J]
+  OnMeter=General:Heating:EnergyTransfer:Zone:BWC [J]
+
+ Meters for 654,BWC:Zone Air System Sensible Cooling Energy [J]
+  OnMeter=EnergyTransfer:Facility [J]
+  OnMeter=EnergyTransfer:Building [J]
+  OnMeter=EnergyTransfer:Zone:BWC [J]
+  OnMeter=Cooling:EnergyTransfer [J]
+  OnMeter=Cooling:EnergyTransfer:Zone:BWC [J]
+  OnMeter=General:Cooling:EnergyTransfer [J]
+  OnMeter=General:Cooling:EnergyTransfer:Zone:BWC [J]
+
+ Meters for 681,DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J]
+  OnMeter=DistrictHeating:Facility [J]
+  OnMeter=DistrictHeating:HVAC [J]
+  OnMeter=Heating:DistrictHeating [J]
+  OnMeter=General:Heating:DistrictHeating [J]
+
+ Meters for 730,DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J]
+  OnMeter=DistrictCooling:Facility [J]
+  OnMeter=DistrictCooling:HVAC [J]
+  OnMeter=Cooling:DistrictCooling [J]
+  OnMeter=General:Cooling:DistrictCooling [J]
+
+ Meters for 779,SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J]
+  OnMeter=DistrictHeating:Facility [J]
+  OnMeter=DistrictHeating:HVAC [J]
+  OnMeter=Heating:DistrictHeating [J]
+  OnMeter=General:Heating:DistrictHeating [J]
+
+ Meters for 780,SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J]
+  OnMeter=DistrictCooling:Facility [J]
+  OnMeter=DistrictCooling:HVAC [J]
+  OnMeter=Cooling:DistrictCooling [J]
+  OnMeter=General:Cooling:DistrictCooling [J]
+
+ Meters for 781,DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy [J]
+  OnMeter=DistrictHeating:Facility [J]
+  OnMeter=DistrictHeating:HVAC [J]
+  OnMeter=Heating:DistrictHeating [J]
+  OnMeter=General:Heating:DistrictHeating [J]
+
+ Meters for 782,DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy [J]
+  OnMeter=DistrictCooling:Facility [J]
+  OnMeter=DistrictCooling:HVAC [J]
+  OnMeter=Cooling:DistrictCooling [J]
+  OnMeter=General:Cooling:DistrictCooling [J]
+
+ Meters for 783,Whole Building:Facility Total Purchased Electricity Energy [J]
+  OnMeter=ElectricityPurchased:Facility [J]
+  OnMeter=ElectricityPurchased:Plant [J]
+  OnMeter=Cogeneration:ElectricityPurchased [J]
+  OnMeter=General:Cogeneration:ElectricityPurchased [J]
+
+ Meters for 832,Whole Building:Facility Total Surplus Electricity Energy [J]
+  OnMeter=ElectricitySurplusSold:Facility [J]
+  OnMeter=ElectricitySurplusSold:Plant [J]
+  OnMeter=Cogeneration:ElectricitySurplusSold [J]
+  OnMeter=General:Cogeneration:ElectricitySurplusSold [J]
+
+ Meters for 881,Whole Building:Facility Net Purchased Electricity Energy [J]
+  OnMeter=ElectricityNet:Facility [J]
+  OnMeter=ElectricityNet:Plant [J]
+  OnMeter=Cogeneration:ElectricityNet [J]
+  OnMeter=General:Cogeneration:ElectricityNet [J]
+
+ Meters for 935,Site:Environmental Impact Total N2O Emissions Carbon Equivalent Mass [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ Meters for 960,Site:Environmental Impact Total CH4 Emissions Carbon Equivalent Mass [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ Meters for 961,Site:Environmental Impact Total CO2 Emissions Carbon Equivalent Mass [kg]
+  OnMeter=Carbon Equivalent:Facility [kg]
+  OnMeter=CarbonEquivalentEmissions:Carbon Equivalent [kg]
+
+ For Meter=Electricity:Facility [J], ResourceType=Electricity, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=Electricity:Building [J], ResourceType=Electricity, Group=Building, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=Electricity:Zone:SALA [J], ResourceType=Electricity, Group=Zone, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=Electricity:SpaceType:GENERAL [J], ResourceType=Electricity, Group=SpaceType, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=InteriorLights:Electricity [J], ResourceType=Electricity, EndUse=InteriorLights, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=InteriorLights:Electricity:Zone:SALA [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+
+ For Meter=InteriorLights:Electricity:SpaceType:GENERAL [J], ResourceType=Electricity, EndUse=InteriorLights, Group=SpaceType, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=GeneralLights:InteriorLights:Electricity [J], ResourceType=Electricity, EndUse=InteriorLights, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=GeneralLights:InteriorLights:Electricity:Zone:SALA [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+
+ For Meter=GeneralLights:InteriorLights:Electricity:SpaceType:GENERAL [J], ResourceType=Electricity, EndUse=InteriorLights, Group=SpaceType, contents are:
+  SALA LIGHTS_SALA:Lights Electricity Energy
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=Electricity:Zone:DORM1 [J], ResourceType=Electricity, Group=Zone, contents are:
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=InteriorLights:Electricity:Zone:DORM1 [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=GeneralLights:InteriorLights:Electricity:Zone:DORM1 [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  DORM1 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=Electricity:Zone:DORM2 [J], ResourceType=Electricity, Group=Zone, contents are:
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=InteriorLights:Electricity:Zone:DORM2 [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=GeneralLights:InteriorLights:Electricity:Zone:DORM2 [J], ResourceType=Electricity, EndUse=InteriorLights, Group=Zone, contents are:
+  DORM2 LIGHTS_DORM:Lights Electricity Energy
+
+ For Meter=InteriorEquipment:Electricity [J], ResourceType=Electricity, EndUse=InteriorEquipment, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=InteriorEquipment:Electricity:Zone:SALA [J], ResourceType=Electricity, EndUse=InteriorEquipment, Group=Zone, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=InteriorEquipment:Electricity:SpaceType:GENERAL [J], ResourceType=Electricity, EndUse=InteriorEquipment, Group=SpaceType, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=General:InteriorEquipment:Electricity [J], ResourceType=Electricity, EndUse=InteriorEquipment, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=General:InteriorEquipment:Electricity:Zone:SALA [J], ResourceType=Electricity, EndUse=InteriorEquipment, Group=Zone, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=General:InteriorEquipment:Electricity:SpaceType:GENERAL [J], ResourceType=Electricity, EndUse=InteriorEquipment, Group=SpaceType, contents are:
+  SALA EQUIP_SALA:Electric Equipment Electricity Energy
+
+ For Meter=EnergyTransfer:Facility [J], ResourceType=EnergyTransfer, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+  SALA:Zone Air System Sensible Cooling Energy
+  DORM1:Zone Air System Sensible Heating Energy
+  DORM1:Zone Air System Sensible Cooling Energy
+  DORM2:Zone Air System Sensible Heating Energy
+  DORM2:Zone Air System Sensible Cooling Energy
+  BWC:Zone Air System Sensible Heating Energy
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Building [J], ResourceType=EnergyTransfer, Group=Building, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+  SALA:Zone Air System Sensible Cooling Energy
+  DORM1:Zone Air System Sensible Heating Energy
+  DORM1:Zone Air System Sensible Cooling Energy
+  DORM2:Zone Air System Sensible Heating Energy
+  DORM2:Zone Air System Sensible Cooling Energy
+  BWC:Zone Air System Sensible Heating Energy
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Zone:SALA [J], ResourceType=EnergyTransfer, Group=Zone, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+  SALA:Zone Air System Sensible Cooling Energy
+
+ For Meter=Heating:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Heating, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+  DORM1:Zone Air System Sensible Heating Energy
+  DORM2:Zone Air System Sensible Heating Energy
+  BWC:Zone Air System Sensible Heating Energy
+
+ For Meter=Heating:EnergyTransfer:Zone:SALA [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+
+ For Meter=General:Heating:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Heating, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+  DORM1:Zone Air System Sensible Heating Energy
+  DORM2:Zone Air System Sensible Heating Energy
+  BWC:Zone Air System Sensible Heating Energy
+
+ For Meter=General:Heating:EnergyTransfer:Zone:SALA [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  SALA:Zone Air System Sensible Heating Energy
+
+ For Meter=Cooling:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Cooling, contents are:
+  SALA:Zone Air System Sensible Cooling Energy
+  DORM1:Zone Air System Sensible Cooling Energy
+  DORM2:Zone Air System Sensible Cooling Energy
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=Cooling:EnergyTransfer:Zone:SALA [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  SALA:Zone Air System Sensible Cooling Energy
+
+ For Meter=General:Cooling:EnergyTransfer [J], ResourceType=EnergyTransfer, EndUse=Cooling, contents are:
+  SALA:Zone Air System Sensible Cooling Energy
+  DORM1:Zone Air System Sensible Cooling Energy
+  DORM2:Zone Air System Sensible Cooling Energy
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=General:Cooling:EnergyTransfer:Zone:SALA [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  SALA:Zone Air System Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Zone:DORM1 [J], ResourceType=EnergyTransfer, Group=Zone, contents are:
+  DORM1:Zone Air System Sensible Heating Energy
+  DORM1:Zone Air System Sensible Cooling Energy
+
+ For Meter=Heating:EnergyTransfer:Zone:DORM1 [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  DORM1:Zone Air System Sensible Heating Energy
+
+ For Meter=General:Heating:EnergyTransfer:Zone:DORM1 [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  DORM1:Zone Air System Sensible Heating Energy
+
+ For Meter=Cooling:EnergyTransfer:Zone:DORM1 [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  DORM1:Zone Air System Sensible Cooling Energy
+
+ For Meter=General:Cooling:EnergyTransfer:Zone:DORM1 [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  DORM1:Zone Air System Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Zone:DORM2 [J], ResourceType=EnergyTransfer, Group=Zone, contents are:
+  DORM2:Zone Air System Sensible Heating Energy
+  DORM2:Zone Air System Sensible Cooling Energy
+
+ For Meter=Heating:EnergyTransfer:Zone:DORM2 [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  DORM2:Zone Air System Sensible Heating Energy
+
+ For Meter=General:Heating:EnergyTransfer:Zone:DORM2 [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  DORM2:Zone Air System Sensible Heating Energy
+
+ For Meter=Cooling:EnergyTransfer:Zone:DORM2 [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  DORM2:Zone Air System Sensible Cooling Energy
+
+ For Meter=General:Cooling:EnergyTransfer:Zone:DORM2 [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  DORM2:Zone Air System Sensible Cooling Energy
+
+ For Meter=EnergyTransfer:Zone:BWC [J], ResourceType=EnergyTransfer, Group=Zone, contents are:
+  BWC:Zone Air System Sensible Heating Energy
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=Heating:EnergyTransfer:Zone:BWC [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  BWC:Zone Air System Sensible Heating Energy
+
+ For Meter=General:Heating:EnergyTransfer:Zone:BWC [J], ResourceType=EnergyTransfer, EndUse=Heating, Group=Zone, contents are:
+  BWC:Zone Air System Sensible Heating Energy
+
+ For Meter=Cooling:EnergyTransfer:Zone:BWC [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=General:Cooling:EnergyTransfer:Zone:BWC [J], ResourceType=EnergyTransfer, EndUse=Cooling, Group=Zone, contents are:
+  BWC:Zone Air System Sensible Cooling Energy
+
+ For Meter=DistrictHeating:Facility [J], ResourceType=DistrictHeating, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+
+ For Meter=DistrictHeating:HVAC [J], ResourceType=DistrictHeating, Group=HVAC, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+
+ For Meter=Heating:DistrictHeating [J], ResourceType=DistrictHeating, EndUse=Heating, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+
+ For Meter=General:Heating:DistrictHeating [J], ResourceType=DistrictHeating, EndUse=Heating, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Heating Energy
+
+ For Meter=DistrictCooling:Facility [J], ResourceType=DistrictCooling, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+
+ For Meter=DistrictCooling:HVAC [J], ResourceType=DistrictCooling, Group=HVAC, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+
+ For Meter=Cooling:DistrictCooling [J], ResourceType=DistrictCooling, EndUse=Cooling, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+
+ For Meter=General:Cooling:DistrictCooling [J], ResourceType=DistrictCooling, EndUse=Cooling, contents are:
+  DORM1 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  SALA IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+  DORM2 IDEAL LOADS AIR SYSTEM:Zone Ideal Loads Supply Air Total Cooling Energy
+
+ For Meter=ElectricityPurchased:Facility [J], ResourceType=ElectricityPurchased, contents are:
+  Whole Building:Facility Total Purchased Electricity Energy
+
+ For Meter=ElectricityPurchased:Plant [J], ResourceType=ElectricityPurchased, Group=Plant, contents are:
+  Whole Building:Facility Total Purchased Electricity Energy
+
+ For Meter=Cogeneration:ElectricityPurchased [J], ResourceType=ElectricityPurchased, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Total Purchased Electricity Energy
+
+ For Meter=General:Cogeneration:ElectricityPurchased [J], ResourceType=ElectricityPurchased, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Total Purchased Electricity Energy
+
+ For Meter=ElectricitySurplusSold:Facility [J], ResourceType=ElectricitySurplusSold, contents are:
+  Whole Building:Facility Total Surplus Electricity Energy
+
+ For Meter=ElectricitySurplusSold:Plant [J], ResourceType=ElectricitySurplusSold, Group=Plant, contents are:
+  Whole Building:Facility Total Surplus Electricity Energy
+
+ For Meter=Cogeneration:ElectricitySurplusSold [J], ResourceType=ElectricitySurplusSold, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Total Surplus Electricity Energy
+
+ For Meter=General:Cogeneration:ElectricitySurplusSold [J], ResourceType=ElectricitySurplusSold, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Total Surplus Electricity Energy
+
+ For Meter=ElectricityNet:Facility [J], ResourceType=ElectricityNet, contents are:
+  Whole Building:Facility Net Purchased Electricity Energy
+
+ For Meter=ElectricityNet:Plant [J], ResourceType=ElectricityNet, Group=Plant, contents are:
+  Whole Building:Facility Net Purchased Electricity Energy
+
+ For Meter=Cogeneration:ElectricityNet [J], ResourceType=ElectricityNet, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Net Purchased Electricity Energy
+
+ For Meter=General:Cogeneration:ElectricityNet [J], ResourceType=ElectricityNet, EndUse=Cogeneration, contents are:
+  Whole Building:Facility Net Purchased Electricity Energy
+
+ For Meter=Carbon Equivalent:Facility [kg], ResourceType=Carbon Equivalent, contents are:
+  Site:Environmental Impact Total N2O Emissions Carbon Equivalent Mass
+  Site:Environmental Impact Total CH4 Emissions Carbon Equivalent Mass
+  Site:Environmental Impact Total CO2 Emissions Carbon Equivalent Mass
+
+ For Meter=CarbonEquivalentEmissions:Carbon Equivalent [kg], ResourceType=Carbon Equivalent, EndUse=CarbonEquivalentEmissions, contents are:
+  Site:Environmental Impact Total N2O Emissions Carbon Equivalent Mass
+  Site:Environmental Impact Total CH4 Emissions Carbon Equivalent Mass
+  Site:Environmental Impact Total CO2 Emissions Carbon Equivalent Mass
