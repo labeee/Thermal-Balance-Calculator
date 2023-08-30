@@ -1,15 +1,15 @@
 import pandas as pd
 from glob import glob
+from variables import *
 
 # Engloba arquivos dentro de input
-print('\n'*150)
-globed = glob('input/*.csv')
+print(screen_clean)
+globed = glob(f'{input_path}*.csv')
 print(f'\nglobed --> {globed}\n\n')
-output_path = 'output/'
 
 # Loop que exclui linhas com NaN e soma todos os valores
 for i in globed:
-    print('- '*45)
+    print(interface_separators)
     df = pd.read_csv(i, index_col='Date/Time')
     print(f'\n\n- Leu CSV {i}')
     df = df.dropna()
@@ -22,7 +22,7 @@ for i in globed:
     print(df_somado)
     df_somado.to_csv(output_path+'processed_'+i.split('\\')[1], sep=';', index_label='gains_losses')
     print('- Criou arquivo\n\n')
-    print('- '*45)
+    print(interface_separators)
 
 # Criar um arquivo grandão com todos os dados concatenados
 globed = glob(output_path+'*.csv')
