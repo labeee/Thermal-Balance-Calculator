@@ -31,8 +31,10 @@ dorm2 = {
 }
 
 # Paths
-output_path = 'output/'
-input_path = 'input/'
+surface_output_path = 'output/surface/'
+convection_output_path = 'output/convection/'
+surface_input_path = 'input/surface/'
+convection_input_path = 'input/convection/'
 
 # Style
 interface_separators = '- '*45
