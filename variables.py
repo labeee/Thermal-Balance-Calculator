@@ -1,5 +1,6 @@
 import re
 import time
+import pandas as pd
 
 # Columns per zone
 sala = {
@@ -48,3 +49,9 @@ convection_input_path = 'input/convection/'
 # Style
 interface_separators = '- '*45
 screen_clean = '\n'*150
+
+# Functions
+def sum_separated(coluna):
+    positivos = coluna[coluna > 0].sum()
+    negativos = coluna[coluna < 0].sum()
+    return pd.Series([positivos, negativos])
