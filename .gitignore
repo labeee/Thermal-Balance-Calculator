@@ -3,3 +3,7 @@ __pycache__
 .vscode
 Letícia*
 teste.py
+input/convection/*.csv
+input/surface/*.csv
+output/convection/*.csv
+output/surface/*.csv
