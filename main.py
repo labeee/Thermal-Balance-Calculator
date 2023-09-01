@@ -16,7 +16,19 @@ if globed != []:
         print(f'\n\n- Leu CSV {i}')
         df = df.dropna()
         print('- Excluiu os NaN')
-        columns_list = list(df.columns)
+        columns_list = df.columns
+        for item in columns_list:
+            for new_name in sala:
+                if item.startswith(new_name):
+                    df.rename(columns={item: sala[new_name]}, inplace=True)
+        for item in columns_list:
+            for new_name in dorm1:
+                if item.startswith(new_name):
+                    df.rename(columns={item: dorm1[new_name]}, inplace=True)
+        for item in columns_list:
+            for new_name in dorm2:
+                if item.startswith(new_name):
+                    df.rename(columns={item: dorm2[new_name]}, inplace=True)
         soma = df.iloc[:].sum()
         print('- Somou os valores')
         df_somado = pd.DataFrame(soma, columns=['value'])
@@ -49,7 +61,19 @@ if globed != []:
         print(f'\n\n- Leu CSV {i}')
         df = df.dropna()
         print('- Excluiu os NaN')
-        columns_list = list(df.columns)
+        columns_list = df.columns
+        for item in columns_list:
+            for new_name in sala:
+                if item.startswith(new_name):
+                    df.rename(columns={item: sala[new_name]}, inplace=True)
+        for item in columns_list:
+            for new_name in dorm1:
+                if item.startswith(new_name):
+                    df.rename(columns={item: dorm1[new_name]}, inplace=True)
+        for item in columns_list:
+            for new_name in dorm2:
+                if item.startswith(new_name):
+                    df.rename(columns={item: dorm2[new_name]}, inplace=True)
         soma = df.iloc[:].sum()
         print('- Somou os valores')
         df_somado = pd.DataFrame(soma, columns=['value'])

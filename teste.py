@@ -5,24 +5,24 @@ from variables import *
 
 # dado = {
 #     "Position": [
-#         "QUARTO1_trashtrash",
-#         "QUARTO1_trash2trash2",
-#         "BWC_trashtrash",
-#         "QUARTO2_trashtrash"
+#         "primeiro",
+#         "segundo",
+#         "terceiro",
+#         "quarto"
 #     ],
-#     "A": [
+#     "QUARTO1_trashtrash": [
 #         1,
 #         2,
 #         3,
 #         4
 #     ],
-#     "B": [
+#     "QUARTO1_trash2trash2": [
 #         5,
 #         6,
 #         7,
 #         8
 #     ],
-#     "C": [
+#     "BWC_trashtrash": [
 #         9,
 #         10,
 #         11,
@@ -36,18 +36,19 @@ from variables import *
 # print(f'Dataframe\n{df}\nTermo de busca: {busca}')
 # print('\n'*5)
 
-# for item in df.iloc[:, 0]:
-    # reg = re.search(busca, item)
-    # print('\n'*5)
-    # if reg != None:
-        # print(reg.group())
-        # df.replace(item, busca, inplace=True)
-        # print(f'Found {reg}')
-        # print(df)
-    # else:
-    #     df.replace(item, numpy.nan, inplace=True)
-        # print(f'Did not found {reg}, found {item} instead. Row will be removed')
-        # print(df)
+# colunas = df.columns
+
+# for item in colunas:
+#     reg = re.search(busca, df.iloc[item])
+#     print('\n'*5)
+#     if reg != None:
+#         print(reg.group())
+#         df[item].replace(item, busca, inplace=True)
+#         print(f'Found {reg}')
+#         print(df)
+#     else:
+#         df[item].replace(item, numpy.nan, inplace=True)
+#         print(f'Did not found {reg}, found {item} instead. Col will be removed')
 
 # print('\n'*5)
 # df.dropna(inplace=True)
@@ -64,7 +65,6 @@ from variables import *
 # print(df)
 # print('\n'*5)
 
-print(sala['zone'])
 
-for item in sala:
-    print(item)
+# for item in sala['none_intwalls']:
+#     print(item)
