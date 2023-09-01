@@ -1,3 +1,0 @@
-Os arquivos que começam com per são os arquivos com o HEI calculado, são resultado do código impact_index_calcule.
-
-Os demais arquivos são os resultados da primeira análise, com o código convection_uni_dividindo
