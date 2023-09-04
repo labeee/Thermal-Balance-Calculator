@@ -1,5 +1,4 @@
-import re
-import time
+from glob import glob
 import pandas as pd
 
 # Columns per zone
@@ -39,6 +38,20 @@ dorm2 = {
     'DORM2_COB': 'none_roof',
     'DORM2_JAN_0_00D': 'east_windows'
 }
+extras = {
+    'Environment': 'outdoor_air_drybulb_temperature'
+}
+
+wanted_list = []
+for item in sala:
+    wanted_list.append(sala[item])
+for item in dorm1:
+    wanted_list.append(dorm1[item])
+for item in dorm2:
+    wanted_list.append(dorm2[item])
+for item in extras:
+    wanted_list.append(extras[item])
+wanted_list = list(set(wanted_list))
 
 # Paths
 surface_output_path = 'output/surface/'
@@ -55,3 +68,16 @@ def sum_separated(coluna):
     positivos = coluna[coluna > 0].sum()
     negativos = coluna[coluna < 0].sum()
     return pd.Series([positivos, negativos])
+
+def divide(df):
+    divided = pd.DataFrame()
+    col = df.columns
+    for column in col:
+        if column == extras['Environment']:
+            divided[column] = df[column]
+        else:
+            divided[f'{column}_gains'] = df[column].apply(lambda item: item if item>0 else 0)
+            divided[f'{column}_losses'] = df[column].apply(lambda item: item if item<0 else 0)
+    divided = divided.sum().reset_index()
+    divided.columns = ['type', 'value']
+    return divided

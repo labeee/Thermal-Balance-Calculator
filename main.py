@@ -1,6 +1,4 @@
-import pandas as pd
-from glob import glob
-from variables import *
+from source import *
 
 print(screen_clean)
 
@@ -31,17 +29,29 @@ if globed != []:
         for item in columns_list:
             for new_name in dorm2:
                 if item.startswith(new_name):
-                    df.rename(columns={item: dorm2[new_name]}, inplace=True)
-        
-        soma = df.apply(sum_separated)
-        print('- Somou gains e losses')
-        soma = soma.transpose()
+                    df.rename(columns={item: dorm2[new_name]}, inplace=True)    
+        for item in columns_list:
+            for new_name in extras:
+                if item.startswith(new_name):
+                    df.rename(columns={item: extras[new_name]}, inplace=True)
 
-        soma.columns = ['gains', 'losses']
+        columns_list = df.columns
+        unwanted_list = []
+        for item in columns_list:
+            if item not in wanted_list:
+                unwanted_list.append(item)
+        df.drop(columns=unwanted_list, axis=1, inplace=True)     
+
+        df = df.groupby(df.columns, axis=1).sum()
+
+        soma = df.apply(sum_separated)
+        soma = divide(soma)
+        print('- Somou gains e losses')
+        
         soma.loc[:, 'case'] = i.split('\\')[1]
         print('- Adicionou case')
 
-        soma.to_csv(surface_output_path+'annual_surface_'+i.split('\\')[1], sep=';', index_label='type')
+        soma.to_csv(surface_output_path+'annual_surface_'+i.split('\\')[1], sep=';')
         print('- Criou arquivo\n\n')
 
         print(interface_separators)
@@ -85,18 +95,27 @@ if globed != []:
             for new_name in dorm2:
                 if item.startswith(new_name):
                     df.rename(columns={item: dorm2[new_name]}, inplace=True)
-      
-        soma = df.apply(sum_separated)
-        print('- Somou gains e losses')
-        soma = soma.transpose()
+        
+        columns_list = df.columns
+        unwanted_list = []
+        for item in columns_list:
+            if item not in wanted_list:
+                unwanted_list.append(item)
+        df.drop(columns=unwanted_list, axis=1, inplace=True) 
+        
+        df = df.groupby(df.columns, axis=1).sum()
 
-        soma.columns = ['gains', 'losses']
+        soma = df.apply(sum_separated)
+        soma = divide(soma)
+        print('- Somou gains e losses')
+        soma = soma[soma['value'] != 0]
+             
         soma.loc[:, 'case'] = i.split('\\')[1]
         print('- Adicionou case')
 
-        soma.to_csv(convection_output_path+'annual_surface_'+i.split('\\')[1], sep=';', index_label='type')
+        soma.to_csv(convection_output_path+'annual_surface_'+i.split('\\')[1], sep=';')
         print('- Criou arquivo\n\n')
-      
+
         print(interface_separators)
 
     # Criar um arquivo grandão com todos os dados concatenados
