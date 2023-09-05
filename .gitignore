@@ -7,3 +7,4 @@ input/convection/*.csv
 input/surface/*.csv
 output/convection/*.csv
 output/surface/*.csv
+output/full/*.csv

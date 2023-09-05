@@ -53,11 +53,15 @@ for item in extras:
     wanted_list.append(extras[item])
 wanted_list = list(set(wanted_list))
 
+convection = 'convection'
+surface = 'conduction'
+
 # Paths
 surface_output_path = 'output/surface/'
 convection_output_path = 'output/convection/'
 surface_input_path = 'input/surface/'
 convection_input_path = 'input/convection/'
+full_output_path = 'output/full/'
 
 # Style
 interface_separators = '- '*45
