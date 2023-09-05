@@ -21,15 +21,15 @@ if globed != []:
         for item in columns_list:
             for new_name in sala:
                 if item.startswith(new_name):
-                    df.rename(columns={item: sala[new_name]+surface}, inplace=True)
+                    df.rename(columns={item: sala[new_name]}, inplace=True)
         for item in columns_list:
             for new_name in dorm1:
                 if item.startswith(new_name):
-                    df.rename(columns={item: dorm1[new_name]+surface}, inplace=True)
+                    df.rename(columns={item: dorm1[new_name]}, inplace=True)
         for item in columns_list:
             for new_name in dorm2:
                 if item.startswith(new_name):
-                    df.rename(columns={item: dorm2[new_name]+surface}, inplace=True)    
+                    df.rename(columns={item: dorm2[new_name]}, inplace=True)    
         for item in columns_list:
             for new_name in extras:
                 if item.startswith(new_name):
@@ -41,7 +41,9 @@ if globed != []:
             if item not in wanted_list:
                 unwanted_list.append(item)
         df.drop(columns=unwanted_list, axis=1, inplace=True)     
-
+        columns_list = df.columns
+        for item in columns_list:
+            df.rename(columns={item: item+surface}, inplace=True)
         df = df.groupby(df.columns, axis=1).sum()
 
         soma = df.apply(sum_separated)
@@ -76,34 +78,34 @@ if globed != []:
         for item in columns_list:
             for new_name in sala:
                 if item.startswith(new_name):
-                    df.rename(columns={item: sala[new_name]+convection}, inplace=True)
+                    df.rename(columns={item: sala[new_name]}, inplace=True)
         for item in columns_list:
             for new_name in dorm1:
                 if item.startswith(new_name):
-                    df.rename(columns={item: dorm1[new_name]+convection}, inplace=True)
+                    df.rename(columns={item: dorm1[new_name]}, inplace=True)
         for item in columns_list:
             for new_name in dorm2:
                 if item.startswith(new_name):
-                    df.rename(columns={item: dorm2[new_name]+convection}, inplace=True)
+                    df.rename(columns={item: dorm2[new_name]}, inplace=True)
         for item in columns_list:
             for new_name in extras:
                 if item.startswith(new_name):
-                    df.rename(columns={item: extras[new_name]+convection}, inplace=True)
-        
+                    df.rename(columns={item: extras[new_name]}, inplace=True)
+
         columns_list = df.columns
         unwanted_list = []
         for item in columns_list:
             if item not in wanted_list:
                 unwanted_list.append(item)
         df.drop(columns=unwanted_list, axis=1, inplace=True) 
-        
+        columns_list = df.columns
+        for item in columns_list:
+            df.rename(columns={item: item+convection}, inplace=True)
         df = df.groupby(df.columns, axis=1).sum()
 
         soma = df.apply(sum_separated)
         soma = divide(soma)
         print('- Somou gains e losses')
-        print(type(soma))
-        print(soma)
              
         soma.loc[:, 'case'] = i.split('\\')[1]
         print('- Adicionou case')

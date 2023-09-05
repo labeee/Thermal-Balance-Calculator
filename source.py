@@ -53,8 +53,8 @@ for item in extras:
     wanted_list.append(extras[item])
 wanted_list = list(set(wanted_list))
 
-convection = 'convection'
-surface = 'conduction'
+convection = '_convection'
+surface = '_conduction'
 
 # Paths
 surface_output_path = 'output/surface/'
