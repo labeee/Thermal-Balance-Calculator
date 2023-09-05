@@ -102,7 +102,8 @@ if globed != []:
         soma = df.apply(sum_separated)
         soma = divide(soma)
         print('- Somou gains e losses')
-        soma = soma[soma['value'] != 0]
+        print(type(soma))
+        print(soma)
              
         soma.loc[:, 'case'] = i.split('\\')[1]
         print('- Adicionou case')
