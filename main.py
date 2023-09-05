@@ -95,6 +95,10 @@ if globed != []:
             for new_name in dorm2:
                 if item.startswith(new_name):
                     df.rename(columns={item: dorm2[new_name]}, inplace=True)
+        for item in columns_list:
+            for new_name in extras:
+                if item.startswith(new_name):
+                    df.rename(columns={item: extras[new_name]}, inplace=True)
         
         columns_list = df.columns
         unwanted_list = []
