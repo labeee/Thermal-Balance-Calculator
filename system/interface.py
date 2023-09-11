@@ -7,7 +7,7 @@ def menu():
         clear_screen()
         print(software_name)
         separators()
-        print(f'\n\tWhat would you like to do?\n\n\t[1] Generate dataframes for surface\n\t[2] Generate dataframes for convection\n\t[3] Generate full dataframe\n\t[4] Personalize separators\n\n\t[ENTER] End software\n')
+        print(f'\n\tWhat would you like to do?\n\n\t[1] Generate dataframes for surface\n\t[2] Generate dataframes for convection\n\t[3] Personalize separators\n\n\t[ENTER] End software\n')
         separators()
         opt = input('...')
         if opt == '':
@@ -20,10 +20,11 @@ def menu():
         elif opt == '2':
             clear_screen()
             generate_df(convection_input_path, convection_output_path, convection, '_convection_')
+        elif opt == '0':
+            pass
+            # clear_screen()
+            # generate_full_df()
         elif opt == '3':
-            clear_screen()
-            generate_full_df()
-        elif opt == '4':
             clear_screen()
             separators()
             print(f'\n\tInsert your desired separators\n\n\t[ENTER] Exit\n')

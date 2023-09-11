@@ -69,7 +69,7 @@ extras = {
     'Environment': 'temp_ext'
 }
 
-wanted_list = []
+wanted_list = ['Date/Time']
 for item in sala:
     wanted_list.append(sala[item])
 for item in dorm1:

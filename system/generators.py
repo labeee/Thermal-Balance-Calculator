@@ -28,7 +28,7 @@ def generate_df(path, output, way, type):
     if globed != []:
         for i in globed:
             separators()
-            df = pd.read_csv(i, index_col='Date/Time')
+            df = pd.read_csv(i)
             print(f'\n\n- Leu CSV {i}')
             df = df.dropna()
             print('- Excluiu os NaN')
@@ -57,30 +57,33 @@ def generate_df(path, output, way, type):
             df.drop(columns=unwanted_list, axis=1, inplace=True)     
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
+            df.to_csv(output+'initial'+type+i.split('\\')[1], sep=';')
+            print('- Criou arquivo de hora em hora')
+            df.drop(columns='Date/Time', axis=1, inplace=True)
             soma = df.apply(sum_separated)
             soma = divide(soma)
             print('- Somou gains e losses')
             soma.loc[:, 'case'] = i.split('\\')[1]
             soma.loc[:, 'type'] = way
             print('- Adicionou case')
-            soma.to_csv(output+'annual'+type+i.split('\\')[1], sep=';')
+            soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
             print('- Criou arquivo\n\n')
 
 
-def generate_full_df():
-    # Criar um arquivo grandão com todos os dados concatenados
-    globed = glob(convection_output_path+'*.csv')
-    globed2 = glob(surface_output_path+'*.csv')
-    for each in globed2:
-        globed.append(each)
-    big_df = pd.read_csv(globed[0], sep=';', index_col='index')
-    big_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
-    globed.pop(0)
-    for i in globed:
-        new_df = pd.read_csv(i, sep=';', index_col='index')
-        old_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
-        concated = pd.concat([old_df, new_df])
-        concated.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
-    edit_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
-    edit_df.drop(columns='Unnamed: 0', axis=1,inplace=True)
-    edit_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
+# def generate_full_df():
+#     # Criar um arquivo grandão com todos os dados concatenados
+#     globed = glob(convection_output_path+'*.csv')
+#     globed2 = glob(surface_output_path+'*.csv')
+#     for each in globed2:
+#         globed.append(each)
+#     big_df = pd.read_csv(globed[0], sep=';', index_col='index')
+#     big_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
+#     globed.pop(0)
+#     for i in globed:
+#         new_df = pd.read_csv(i, sep=';', index_col='index')
+#         old_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
+#         concated = pd.concat([old_df, new_df])
+#         concated.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
+#     edit_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
+#     edit_df.drop(columns='Unnamed: 0', axis=1,inplace=True)
+#     edit_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
