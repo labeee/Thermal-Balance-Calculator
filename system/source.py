@@ -99,6 +99,5 @@ LabEEE - Thermal Balance Calculator
 def clear_screen():
     print('\n'*150)
 def separators():
-    interface_separators = open('separators.txt', 'r').readlines()[0]
-    interface_separators = interface_separators*(round(100/len(interface_separators)))
+    interface_separators = open('system/separators.txt', 'r').readlines()[0]
     print(interface_separators)

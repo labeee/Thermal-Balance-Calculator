@@ -1,3 +1,3 @@
-from interface import *
+from system.interface import *
 
 menu()

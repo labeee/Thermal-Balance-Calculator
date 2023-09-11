@@ -1,5 +1,5 @@
-from source import *
-from generators import *
+from system.source import *
+from system.generators import *
 
 def menu():
     execute = True
@@ -30,4 +30,4 @@ def menu():
             separators()
             new = input('...')
             if new != '':
-                open('separators.txt', 'w').write(new)
+                open('system/separators.txt', 'w').write(new*(round(100/len(new))))
