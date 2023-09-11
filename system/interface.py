@@ -18,8 +18,8 @@ def menu():
             clear_screen()
             generate_df(surface_input_path, surface_output_path, surface, '_surface_')
         elif opt == '2':
-            clear_screen(convection_input_path, convection_output_path, convection, '_convection_')
-            generate_df()
+            clear_screen()
+            generate_df(convection_input_path, convection_output_path, convection, '_convection_')
         elif opt == '3':
             clear_screen()
             generate_full_df()

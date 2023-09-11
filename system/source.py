@@ -2,6 +2,7 @@ import pandas as pd
 
 # Columns per zone
 sala = {
+    "ZONE": "SALA",
     "SALA_PARIN_01S": "none_intwalls",
     "SALA_PARIN_00E": "none_intwalls",
     "SALA_PORTAIN_0_00E": "none_intwalls",
@@ -11,9 +12,22 @@ sala = {
     "SALA_PORTAIN_0_02D": "none_intwalls",
     "SALA_PAREX_00I": 'south_extwalls',
     "SALA_PAREX_01E": 'west_extwalls',
-    'SALA_JAN_0_01E': 'west_windows'
+    "SALA_PAREX_00S": 'north_extwalls',
+    "SALA_PORTAEX_0_00S": 'north_extwalls',
+    'SALA_JAN_0_01E:Surface Inside': 'west_windows',
+    'SALA_JAN_0_00I:Surface Inside': 'south_windows',
+    'SALA_JAN_0_00I:Surface Window': 'south_frame',
+    'SALA_JAN_0_01E:Surface Window': 'west_frame',
+    'SALA:Zone Total': 'internal_gains',
+    'SALA:AFN Zone Ventilation Sensible Heat Gain': 'vn_window_gain',
+    'SALA:AFN Zone Ventilation Sensible Heat Loss': 'vn_window_loss',
+    'SALA:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
+    'SALA:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
+    'SALA:Zone Air System Sensible Heating': 'heating',
+    'SALA:Zone Air System Sensible Cooling': 'cooling'
 }
 dorm1 = {
+    "ZONE": "DORM1",
     "DORM1_PARIN_00E": 'none_intwalls',
     "DORM1_PARIN_00S": 'none_intwalls',
     "DORM1_PORTAIN_0_00E": 'none_intwalls',
@@ -21,9 +35,18 @@ dorm1 = {
     "DORM1_PAREX_00D": 'east_extwalls',
     "DORM1_PISO": 'none_floor',
     'DORM1_COB': 'none_roof',
-    'DORM1_JAN_0_00I': 'south_windows'
+    'DORM1_JAN_0_00I:Surface Inside': 'south_windows',
+    'DORM1_JAN_0_00I:Surface Window': 'south_frame',
+    'DORM1:Zone Total Internal': 'internal_gains',
+    'DORM1:AFN Zone Ventilation Sensible Heat Gain': 'vn_window_gain',
+    'DORM1:AFN Zone Ventilation Sensible Heat Loss': 'vn_window_loss',
+    'DORM1:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
+    'DORM1:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
+    'DORM1:Zone Air System Sensible Heating': 'heating',
+    'DORM1:Zone Air System Sensible Cooling': 'cooling'
 }
 dorm2 = {
+    "ZONE": "DORM2",
     "DORM2_PARIN_00I": 'none_intwalls',
     "DORM2_PARIN_01E": 'none_intwalls',
     "DORM2_PORTAIN_0_01E": 'none_intwalls',
@@ -32,7 +55,15 @@ dorm2 = {
     'DORM2_PAREX_00S': 'north_extwalls',
     'DORM2_PISO': 'none_floor',
     'DORM2_COB': 'none_roof',
-    'DORM2_JAN_0_00D': 'east_windows'
+    'DORM2_JAN_0_00D:Surface Inside': 'east_windows',
+    'DORM2_JAN_0_00D:Surface Window': 'east_frame',
+    'DORM2:Zone Total Internal': 'internal_gains',
+    'DORM2:AFN Zone Ventilation Sensible Heat Gain': 'vn_window_gain',
+    'DORM2:AFN Zone Ventilation Sensible Heat Loss': 'vn_window_loss',
+    'DORM2:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
+    'DORM2:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
+    'DORM2:Zone Air System Sensible Heating': 'heating',
+    'DORM2:Zone Air System Sensible Cooling': 'cooling'
 }
 extras = {
     'Environment': 'temp_ext'
@@ -49,8 +80,23 @@ for item in extras:
     wanted_list.append(extras[item])
 wanted_list = list(set(wanted_list))
 
-convection = '_convection'
-surface = '_conduction'
+dont_change_list = ['cooling', 'heating', 'temp_ext', 'internal_gains']
+for item in sala:
+    if sala[item].endswith('gain') or sala[item].endswith('loss'):
+        dont_change_list.append(sala[item])
+for item in dorm1:
+    if dorm1[item].endswith('gain') or dorm1[item].endswith('loss'):
+        dont_change_list.append(dorm1[item])
+for item in dorm2:
+    if dorm2[item].endswith('gain') or dorm2[item].endswith('loss'):
+        dont_change_list.append(dorm2[item])
+for item in extras:
+    if extras[item].endswith('gain') or extras[item].endswith('loss'):
+        dont_change_list.append(extras[item])
+dont_change_list = list(set(dont_change_list))
+
+convection = 'convection'
+surface = 'conduction'
 
 # Paths
 surface_output_path = 'output/surface/'
@@ -58,26 +104,6 @@ convection_output_path = 'output/convection/'
 surface_input_path = 'input/surface/'
 convection_input_path = 'input/convection/'
 full_output_path = 'output/full/'
-
-# Main Functions
-def sum_separated(coluna):
-    positivos = coluna[coluna > 0].sum()
-    negativos = coluna[coluna < 0].sum()
-    return pd.Series([positivos, negativos])
-
-def divide(df):
-    divided = pd.DataFrame()
-    col = df.columns
-    for column in col:
-        if column == extras['Environment']:
-            divided[column] = df[column]
-        else:
-            divided[f'{column}_gains'] = df[column].apply(lambda item: item if item>0 else 0)
-            divided[f'{column}_losses'] = df[column].apply(lambda item: item if item<0 else 0)
-    divided = divided.sum().reset_index()
-    divided.columns = ['type', 'value']
-    return divided
-
 
 # Style
 software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
