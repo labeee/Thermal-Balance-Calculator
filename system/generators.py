@@ -68,22 +68,3 @@ def generate_df(path, output, way, type):
             print('- Adicionou case')
             soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
             print('- Criou arquivo\n\n')
-
-
-# def generate_full_df():
-#     # Criar um arquivo grandão com todos os dados concatenados
-#     globed = glob(convection_output_path+'*.csv')
-#     globed2 = glob(surface_output_path+'*.csv')
-#     for each in globed2:
-#         globed.append(each)
-#     big_df = pd.read_csv(globed[0], sep=';', index_col='index')
-#     big_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
-#     globed.pop(0)
-#     for i in globed:
-#         new_df = pd.read_csv(i, sep=';', index_col='index')
-#         old_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
-#         concated = pd.concat([old_df, new_df])
-#         concated.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')
-#     edit_df = pd.read_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';', index_col='index')
-#     edit_df.drop(columns='Unnamed: 0', axis=1,inplace=True)
-#     edit_df.to_csv(full_output_path+'annual_Full_DataFrame.csv', sep=';')

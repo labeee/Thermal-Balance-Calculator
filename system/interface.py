@@ -20,10 +20,6 @@ def menu():
         elif opt == '2':
             clear_screen()
             generate_df(convection_input_path, convection_output_path, convection, '_convection_')
-        elif opt == '0':
-            pass
-            # clear_screen()
-            # generate_full_df()
         elif opt == '3':
             clear_screen()
             separators()
