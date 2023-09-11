@@ -1,4 +1,3 @@
-from glob import glob
 import pandas as pd
 
 # Columns per zone
@@ -12,9 +11,6 @@ sala = {
     "SALA_PORTAIN_0_02D": "none_intwalls",
     "SALA_PAREX_00I": 'south_extwalls',
     "SALA_PAREX_01E": 'west_extwalls',
-    "DORM1_PISO": 'none_floor',
-    "DORM1_COB": 'none_roof',
-    "DORM1_JAN_0_00I": 'south_windows',
     'SALA_JAN_0_01E': 'west_windows'
 }
 dorm1 = {
@@ -39,7 +35,7 @@ dorm2 = {
     'DORM2_JAN_0_00D': 'east_windows'
 }
 extras = {
-    'Environment': 'outdoor_air_drybulb_temperature'
+    'Environment': 'temp_ext'
 }
 
 wanted_list = []
@@ -63,11 +59,7 @@ surface_input_path = 'input/surface/'
 convection_input_path = 'input/convection/'
 full_output_path = 'output/full/'
 
-# Style
-interface_separators = '- '*45
-screen_clean = '\n'*150
-
-# Functions
+# Main Functions
 def sum_separated(coluna):
     positivos = coluna[coluna > 0].sum()
     negativos = coluna[coluna < 0].sum()
@@ -85,3 +77,28 @@ def divide(df):
     divided = divided.sum().reset_index()
     divided.columns = ['type', 'value']
     return divided
+
+
+# Style
+software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
+░█░ █▀█ ██▄ █▀▄ █░▀░█ █▀█ █▄▄   █▄█ █▀█ █▄▄ █▀█ █░▀█ █▄▄ ██▄   █▄▄ █▀█ █▄▄ █▄▄ █▄█ █▄▄ █▀█ ░█░ █▄█ █▀▄"""
+end_message = """▀█▀ █░█ ▄▀█ █▄░█ █▄▀   █▄█ █▀█ █░█
+░█░ █▀█ █▀█ █░▀█ █░█   ░█░ █▄█ █▄█
+----------------------------------
+LabEEE - Thermal Balance Calculator
+
+    Developed by Zac   -    https://www.linkedin.com/in/zac-milioli
+                       -    zacmilioli@gmail.com
+
+    Created and directed by Letícia  -  https://www.linkedin.com/in/letícia-gabriela-eli-347063b0
+
+
+    Texts from https://fsymbols.com/generators/blocky/
+    Free of copyright
+"""
+def clear_screen():
+    print('\n'*150)
+def separators():
+    interface_separators = open('separators.txt', 'r').readlines()[0]
+    interface_separators = interface_separators*(round(100/len(interface_separators)))
+    print(interface_separators)
