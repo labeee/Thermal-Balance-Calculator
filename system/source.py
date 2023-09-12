@@ -3,6 +3,7 @@ import pandas as pd
 # Columns per zone
 sala = {
     "ZONE": "SALA",
+    'Environment': 'temp_ext',
     "SALA_PARIN_01S": "none_intwalls",
     "SALA_PARIN_00E": "none_intwalls",
     "SALA_PORTAIN_0_00E": "none_intwalls",
@@ -28,6 +29,7 @@ sala = {
 }
 dorm1 = {
     "ZONE": "DORM1",
+    'Environment': 'temp_ext',
     "DORM1_PARIN_00E": 'none_intwalls',
     "DORM1_PARIN_00S": 'none_intwalls',
     "DORM1_PORTAIN_0_00E": 'none_intwalls',
@@ -47,6 +49,7 @@ dorm1 = {
 }
 dorm2 = {
     "ZONE": "DORM2",
+    'Environment': 'temp_ext',
     "DORM2_PARIN_00I": 'none_intwalls',
     "DORM2_PARIN_01E": 'none_intwalls',
     "DORM2_PORTAIN_0_01E": 'none_intwalls',
@@ -65,34 +68,20 @@ dorm2 = {
     'DORM2:Zone Air System Sensible Heating': 'heating',
     'DORM2:Zone Air System Sensible Cooling': 'cooling'
 }
-extras = {
-    'Environment': 'temp_ext'
-}
 
 wanted_list = ['Date/Time']
 for item in sala:
-    wanted_list.append(f"{sala[item]}_{sala['ZONE']}")
+    wanted_list.append(f"{sala['ZONE']}_{sala[item]}")
 for item in dorm1:
-    wanted_list.append(f"{dorm1[item]}_{dorm1['ZONE']}")
+    wanted_list.append(f"{dorm1['ZONE']}_{dorm1[item]}")
 for item in dorm2:
-    wanted_list.append(f"{dorm2[item]}_{dorm2['ZONE']}")
-for item in extras:
-    wanted_list.append(extras[item])
+    wanted_list.append(f"{dorm2['ZONE']}_{dorm2[item]}")
 wanted_list = list(set(wanted_list))
 
-dont_change_list = ['cooling', 'heating', 'temp_ext', 'internal_gains']
-for item in sala:
-    if sala[item].endswith('gain') or sala[item].endswith('loss'):
-        dont_change_list.append(sala[item])
-for item in dorm1:
-    if dorm1[item].endswith('gain') or dorm1[item].endswith('loss'):
-        dont_change_list.append(dorm1[item])
-for item in dorm2:
-    if dorm2[item].endswith('gain') or dorm2[item].endswith('loss'):
-        dont_change_list.append(dorm2[item])
-for item in extras:
-    if extras[item].endswith('gain') or extras[item].endswith('loss'):
-        dont_change_list.append(extras[item])
+dont_change_list = []
+for item in wanted_list:
+    if item.endswith('loss') or item.endswith('gains') or item.endswith('gain') or item.endswith('cooling') or item.endswith('heating'):
+        dont_change_list.append(item)
 dont_change_list = list(set(dont_change_list))
 
 convection = 'convection'

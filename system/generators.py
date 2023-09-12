@@ -2,6 +2,30 @@ from system.source import *
 from glob import glob
 
 
+def rename_sala(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in sala:
+            if new_name in item:
+                df.rename(columns={item: f"{sala['ZONE']}_{sala[new_name]}"}, inplace=True)
+    return df
+
+
+def rename_dorm1(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in dorm1:
+            if new_name in item:
+                df.rename(columns={item: f"{dorm1['ZONE']}_{dorm1[new_name]}"}, inplace=True)
+    return df
+
+
+def rename_dorm2(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in dorm2:
+            if new_name in item:
+                df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[new_name]}"}, inplace=True)
+    return df
+
+
 def sum_separated(coluna):
     """
     Soma separadamente os positivos e os negativos, retornando um objeto 
@@ -12,31 +36,7 @@ def sum_separated(coluna):
     return pd.Series([positivos, negativos])
 
 
-def rename_sala(columns_list: list, df: pd.DataFrame):
-    for item in columns_list:
-        for new_name in sala:
-            if new_name in item:
-                df.rename(columns={item: f"{sala[new_name]}_{sala['ZONE']}"}, inplace=True)
-    return df
-
-
-def rename_dorm1(columns_list: list, df: pd.DataFrame):
-    for item in columns_list:
-        for new_name in dorm1:
-            if new_name in item:
-                df.rename(columns={item: f"{dorm1[new_name]}_{dorm1['ZONE']}"}, inplace=True)
-    return df
-
-
-def rename_dorm2(columns_list: list, df: pd.DataFrame):
-    for item in columns_list:
-        for new_name in dorm2:
-            if new_name in item:
-                df.rename(columns={item: f"{dorm2[new_name]}_{dorm2['ZONE']}"}, inplace=True)
-    return df
-
-
-def divide(df):
+def divide(df: pd.DataFrame):
     """
     Divide algumas colunas em gain e loss. Ao fim, adiciona às colunas os nomes de 
     index e value, além de excluir os valores iguais a zero
@@ -78,10 +78,6 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
                 df = rename_dorm1(columns_list=columns_list, df=df)
             if dorm2['ZONE'] in zone:
                 df = rename_dorm2(columns_list=columns_list, df=df)
-            for item in columns_list:
-                for new_name in extras:
-                    if new_name in item:
-                        df.rename(columns={item: extras[new_name]}, inplace=True)
             columns_list = df.columns
             unwanted_list = []
             for item in columns_list:
@@ -98,7 +94,15 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             print('- Gains and losses separated and added')
             soma.loc[:, 'case'] = i.split('\\')[1]
             soma.loc[:, 'type'] = way
-            print('- Case and type added')
+            soma.loc[:, 'zone'] = 'no zone'
+            for j in soma['index']:
+                zones = j.split('_')[0]
+                lenght = (len(j.split('_')[0])+1)
+                new_name = j[lenght:]
+                soma['zone'] = soma['zone'].replace('no zone', zones)
+                soma['index'] = soma['index'].replace(j, new_name)
+            print(soma)
+            print('- Case, type and zone added')
             soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
             print('- Final dataframe created\n\n')
 
