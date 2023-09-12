@@ -1,12 +1,46 @@
 from system.source import *
 from glob import glob
 
+
 def sum_separated(coluna):
+    """
+    Soma separadamente os positivos e os negativos, retornando um objeto 
+    Series contendo em uma coluna os positivos e em outra os negativos de cada linha
+    """
     positivos = coluna[coluna > 0].sum()
     negativos = coluna[coluna < 0].sum()
     return pd.Series([positivos, negativos])
 
+
+def rename_sala(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in sala:
+            if new_name in item:
+                df.rename(columns={item: f"{sala[new_name]}_{sala['ZONE']}"}, inplace=True)
+    return df
+
+
+def rename_dorm1(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in dorm1:
+            if new_name in item:
+                df.rename(columns={item: f"{dorm1[new_name]}_{dorm1['ZONE']}"}, inplace=True)
+    return df
+
+
+def rename_dorm2(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in dorm2:
+            if new_name in item:
+                df.rename(columns={item: f"{dorm2[new_name]}_{dorm2['ZONE']}"}, inplace=True)
+    return df
+
+
 def divide(df):
+    """
+    Divide algumas colunas em gain e loss. Ao fim, adiciona às colunas os nomes de 
+    index e value, além de excluir os valores iguais a zero
+    """
     divided = pd.DataFrame()
     col = df.columns
     for column in col:
@@ -20,31 +54,30 @@ def divide(df):
     divided = divided[divided['value'] != 0]
     return divided
 
-def generate_df(path, output, way, type):
+
+def generate_df(path: str, output: str, way: str, type: str, zone: list):
+    """
+    Irá gerar os dataframes, separando por zona.
+    """
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
     print(f'\nglobed --> {globed}\n\n')
+    print(f'Choosen zones: {zone}')
     # Loop que exclui linhas com NaN e soma todos os valores
     if globed != []:
         for i in globed:
             separators()
             df = pd.read_csv(i)
-            print(f'\n\n- Leu CSV {i}')
+            print(f'\n\n- CSV read {i}')
             df = df.dropna()
-            print('- Excluiu os NaN')
+            print('- NaN rows removed')
             columns_list = df.columns
-            for item in columns_list:
-                for new_name in sala:
-                    if new_name in item:
-                        df.rename(columns={item: sala[new_name]}, inplace=True)
-            for item in columns_list:
-                for new_name in dorm1:
-                    if new_name in item:
-                        df.rename(columns={item: dorm1[new_name]}, inplace=True)
-            for item in columns_list:
-                for new_name in dorm2:
-                    if new_name in item:
-                        df.rename(columns={item: dorm2[new_name]}, inplace=True)    
+            if sala['ZONE'] in zone:
+                df = rename_sala(columns_list=columns_list, df=df)
+            if dorm1['ZONE'] in zone:
+                df = rename_dorm1(columns_list=columns_list, df=df)
+            if dorm2['ZONE'] in zone:
+                df = rename_dorm2(columns_list=columns_list, df=df)
             for item in columns_list:
                 for new_name in extras:
                     if new_name in item:
@@ -58,13 +91,14 @@ def generate_df(path, output, way, type):
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
             df.to_csv(output+'initial'+type+i.split('\\')[1], sep=';')
-            print('- Criou arquivo de hora em hora')
+            print('- Created the hourly dataframe')
             df.drop(columns='Date/Time', axis=1, inplace=True)
             soma = df.apply(sum_separated)
             soma = divide(soma)
-            print('- Somou gains e losses')
+            print('- Gains and losses separated and added')
             soma.loc[:, 'case'] = i.split('\\')[1]
             soma.loc[:, 'type'] = way
-            print('- Adicionou case')
+            print('- Case and type added')
             soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
-            print('- Criou arquivo\n\n')
+            print('- Final dataframe created\n\n')
+

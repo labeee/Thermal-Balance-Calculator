@@ -71,11 +71,11 @@ extras = {
 
 wanted_list = ['Date/Time']
 for item in sala:
-    wanted_list.append(sala[item])
+    wanted_list.append(f"{sala[item]}_{sala['ZONE']}")
 for item in dorm1:
-    wanted_list.append(dorm1[item])
+    wanted_list.append(f"{dorm1[item]}_{dorm1['ZONE']}")
 for item in dorm2:
-    wanted_list.append(dorm2[item])
+    wanted_list.append(f"{dorm2[item]}_{dorm2['ZONE']}")
 for item in extras:
     wanted_list.append(extras[item])
 wanted_list = list(set(wanted_list))
@@ -122,8 +122,12 @@ LabEEE - Thermal Balance Calculator
     Texts from https://fsymbols.com/generators/blocky/
     Free of copyright
 """
+warn = """█░█░█ ▄▀█ █▀█ █▄░█ █ █▄░█ █▀▀
+▀▄▀▄▀ █▀█ █▀▄ █░▀█ █ █░▀█ █▄█"""
 def clear_screen():
+    """Limpa a tela"""
     print('\n'*150)
 def separators():
+    """Lê e printa os separadores da interface"""
     interface_separators = open('system/separators.txt', 'r').readlines()[0]
     print(interface_separators)
