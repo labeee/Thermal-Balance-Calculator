@@ -61,8 +61,8 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
     """
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
-    print(f'\nglobed --> {globed}\n\n')
-    print(f'Choosen zones: {zone}')
+    print(f'Found inputs: {globed}\n\n')
+    print(f'Choosen zones: {zone}\n\n')
     # Loop que exclui linhas com NaN e soma todos os valores
     if globed != []:
         for i in globed:
