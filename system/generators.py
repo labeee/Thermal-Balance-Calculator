@@ -54,6 +54,16 @@ def divide(df: pd.DataFrame):
     divided = divided[divided['value'] != 0]
     return divided
 
+def invert_values(dataframe: pd.DataFrame):
+    """
+    Multiplica as colunas específicas por -1.
+    """
+    df_copy = dataframe.copy()
+    valid_cols = [col for col in df_copy.columns if col in multiply_list]
+    if not valid_cols:
+        return df_copy
+    df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
+    return df_copy
 
 def generate_df(path: str, output: str, way: str, type: str, zone: list):
     """
@@ -87,11 +97,15 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
             df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-            print('- Created the hourly dataframe')
+            print('- Initial dataframe created')
+            df = invert_values(df)
+            print('- Inverted specified columns')
+            df.to_csv(output+'intermediary_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+            print('- Intermediary dataframe created')
             df.drop(columns='Date/Time', axis=1, inplace=True)
             soma = df.apply(sum_separated)
             soma = divide(soma)
-            print('- Gains and losses separated and added')
+            print('- Gains and losses separated and calculated')
             soma.loc[:, 'case'] = i.split('\\')[1]
             soma.loc[:, 'type'] = way
             soma.loc[:, 'zone'] = 'no zone'

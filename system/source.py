@@ -84,6 +84,14 @@ for item in wanted_list:
         dont_change_list.append(item)
 dont_change_list = list(set(dont_change_list))
 
+ref_multiply_list = ["none_intwalls", "south_extwalls", "north_extwalls", "west_extwalls", "east_extwalls", "none_floor", "none_roof", "south_windows", "west_windows", "east_windows", "east_windows", "vn_window_loss", "vn_interzone_loss", "cooling"]
+multiply_list = []
+for item in ref_multiply_list:
+    for i in wanted_list:
+        if item in i:
+            multiply_list.append(i)
+multiply_list = list(set(multiply_list))
+
 convection = 'convection'
 surface = 'conduction'
 
