@@ -102,6 +102,6 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
                 soma.at[j, 'zone'] = zones
                 soma.at[j, 'index'] = new_name
             print('- Case, type and zone added')
-            soma.to_csv(output+'final_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+            soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Final dataframe created\n\n')
 
