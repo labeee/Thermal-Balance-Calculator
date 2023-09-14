@@ -95,13 +95,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             soma.loc[:, 'case'] = i.split('\\')[1]
             soma.loc[:, 'type'] = way
             soma.loc[:, 'zone'] = 'no zone'
-            for j in soma['index']:
-                zones = j.split('_')[0]
-                lenght = (len(j.split('_')[0])+1)
-                new_name = j[lenght:]
-                soma['zone'] = soma['zone'].replace('no zone', zones)
-                soma['index'] = soma['index'].replace(j, new_name)
-            print(soma)
+            for j in soma.index:
+                zones = soma.at[j, 'index'].split('_')[0]
+                lenght = (len(zones)+1)
+                new_name = soma.at[j, 'index'][lenght:]
+                soma.at[j, 'zone'] = zones
+                soma.at[j, 'index'] = new_name
             print('- Case, type and zone added')
             soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
             print('- Final dataframe created\n\n')
