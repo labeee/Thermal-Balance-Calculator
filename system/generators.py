@@ -86,7 +86,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             df.drop(columns=unwanted_list, axis=1, inplace=True)     
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
-            df.to_csv(output+'initial'+type+i.split('\\')[1], sep=';')
+            df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Created the hourly dataframe')
             df.drop(columns='Date/Time', axis=1, inplace=True)
             soma = df.apply(sum_separated)
@@ -102,6 +102,6 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
                 soma.at[j, 'zone'] = zones
                 soma.at[j, 'index'] = new_name
             print('- Case, type and zone added')
-            soma.to_csv(output+'final'+type+i.split('\\')[1], sep=';')
+            soma.to_csv(output+'final_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Final dataframe created\n\n')
 

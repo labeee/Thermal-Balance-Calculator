@@ -15,7 +15,7 @@ def menu():
         clear_screen()
         print(software_name)
         separators()
-        print(f'\n\n\tWhat would you like to do?\n\n\n\t[1] Generate dataframes for surface (maintenance)\n\n\t[2] Generate dataframes for convection\n\n\t[3] Choose zones for dataframe generation\n\n\t[4] Personalize separators\n\n\n\t[ENTER] End software\n')
+        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\n\n\t[1] Generate dataframes for surface (maintenance)\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Personalize separators\n\n\n\t[ENTER] End software\n')
         separators()
         opt = input('...')
         if opt == '':

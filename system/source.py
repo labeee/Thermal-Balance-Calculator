@@ -120,3 +120,4 @@ def separators():
     """Lê e printa os separadores da interface"""
     interface_separators = open('system/separators.txt', 'r').readlines()[0]
     print(interface_separators)
+    
