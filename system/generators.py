@@ -93,9 +93,11 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             for item in columns_list:
                 if item not in wanted_list:
                     unwanted_list.append(item)
-            df.drop(columns=unwanted_list, axis=1, inplace=True)     
+            df.drop(columns=unwanted_list, axis=1, inplace=True)
             columns_list = df.columns
+            date_time = df['Date/Time']
             df = df.groupby(df.columns, axis=1).sum()
+            df = pd.concat([date_time, df], axis=1)
             df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Initial dataframe created')
             df = invert_values(df)
