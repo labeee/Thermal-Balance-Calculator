@@ -65,7 +65,7 @@ def invert_values(dataframe: pd.DataFrame):
     df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
     return df_copy
 
-def generate_df(path: str, output: str, way: str, type: str, zone: list):
+def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
     """
@@ -104,20 +104,26 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list):
             print('- Inverted specified columns')
             df.to_csv(output+'intermediary_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Intermediary dataframe created')
-            df.drop(columns='Date/Time', axis=1, inplace=True)
-            soma = df.apply(sum_separated)
-            soma = divide(soma)
-            print('- Gains and losses separated and calculated')
-            soma.loc[:, 'case'] = i.split('\\')[1]
-            soma.loc[:, 'type'] = way
-            soma.loc[:, 'zone'] = 'no zone'
-            for j in soma.index:
-                zones = soma.at[j, 'index'].split('_')[0]
-                lenght = (len(zones)+1)
-                new_name = soma.at[j, 'index'][lenght:]
-                soma.at[j, 'zone'] = zones
-                soma.at[j, 'index'] = new_name
-            print('- Case, type and zone added')
-            soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-            print('- Final dataframe created\n\n')
+            match coverage:
+                case 'annual':
+                    df.drop(columns='Date/Time', axis=1, inplace=True)
+                    soma = df.apply(sum_separated)
+                    soma = divide(soma)
+                    print('- Gains and losses separated and calculated')
+                    soma.loc[:, 'case'] = i.split('\\')[1]
+                    soma.loc[:, 'type'] = way
+                    soma.loc[:, 'zone'] = 'no zone'
+                    for j in soma.index:
+                        zones = soma.at[j, 'index'].split('_')[0]
+                        lenght = (len(zones)+1)
+                        new_name = soma.at[j, 'index'][lenght:]
+                        soma.at[j, 'zone'] = zones
+                        soma.at[j, 'index'] = new_name
+                    print('- Case, type and zone added')
+                    soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    print('- Final dataframe created\n\n')
+                case 'monthly':
+                    print('- Monthly separator not ready yet. Watch for updates\n')
+                case 'daily':
+                    print('- Daily separator not ready yet. Watch for updates\n')
 

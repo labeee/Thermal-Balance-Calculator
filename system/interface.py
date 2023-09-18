@@ -31,7 +31,7 @@ def menu():
             time.sleep(3)
         elif opt == '2':
             clear_screen()
-            generate_df(path=convection_input_path, output=convection_output_path, way=convection, type='_convection_', zone=zones)
+            generate_df(path=convection_input_path, output=convection_output_path, way=convection, type='_convection_', zone=zones, coverage=df_type)
         elif opt == '3':
             zone_select = True
             while zone_select:
