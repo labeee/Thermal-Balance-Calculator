@@ -1,5 +1,6 @@
 from system.source import *
 from glob import glob
+import os
 
 
 def rename_sala(columns_list: list, df: pd.DataFrame):
@@ -68,11 +69,18 @@ def invert_values(dataframe: pd.DataFrame):
 def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
+    path: path do input
+    output: path do output
+    way: convection/surface
+    type: _convection_/_conduction_
+    zone: lista de zonas (SALA, DORM1, DORM2)
+    coverage: annual/monthly/daily
     """
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
     print(f'Found inputs: {globed}\n\n')
     print(f'Choosen zones: {zone}\n\n')
+    print(f'Choosen type: {coverage}\n\n')
     # Loop que exclui linhas com NaN e soma todos os valores
     if globed != []:
         for i in globed:
@@ -121,9 +129,76 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.at[j, 'index'] = new_name
                     print('- Case, type and zone added')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    print('- Final dataframe created\n\n')
                 case 'monthly':
-                    print('- Monthly separator not ready yet. Watch for updates\n')
+                    df.loc[:, 'month'] = 'no month'
+                    for row in df.index:
+                        month = str(df.at[row, 'Date/Time'])
+                        df.at[row, 'month'] = month[14:16]
+                    print('- Months column created')
+                    df.drop(columns='Date/Time', axis=1, inplace=True)
+                    months = df['month'].unique()
+                    for unique_month in months:
+                        df_monthly = df[df['month'] == unique_month]
+                        df_monthly.drop(columns='month', axis=1, inplace=True)
+                        soma = df_monthly.apply(sum_separated)
+                        soma = divide(soma)
+                        print(f'- Gains and losses separated and calculated for month {unique_month}')
+                        soma.loc[:, 'case'] = i.split('\\')[1]
+                        soma.loc[:, 'type'] = way
+                        soma.loc[:, 'month'] = unique_month
+                        soma.loc[:, 'zone'] = 'no zone'
+                        for j in soma.index:
+                            zones = soma.at[j, 'index'].split('_')[0]
+                            lenght = (len(zones)+1)
+                            new_name = soma.at[j, 'index'][lenght:]
+                            soma.at[j, 'zone'] = zones
+                            soma.at[j, 'index'] = new_name
+                        print(f'- Case, type and zone added for month {unique_month}')
+                        soma.to_csv(organizer_output_path+'_month'+unique_month+'.csv', sep=';')
+                    glob_organizer = glob(organizer_output_path+'*.csv')
+                    df_total = pd.read_csv(glob_organizer[0], sep=';')
+                    glob_organizer.pop(0)
+                    for item in glob_organizer:
+                        each_df = pd.read_csv(item, sep=';')
+                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
+                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
                 case 'daily':
-                    print('- Daily separator not ready yet. Watch for updates\n')
+                    df.loc[:, 'day'] = 'no day'
+                    for row in df.index:
+                        day = str(df.at[row, 'Date/Time'])
+                        df.at[row, 'day'] = day[17:19]
+                    print('- Days column created')
+                    df.drop(columns='Date/Time', axis=1, inplace=True)
+                    days = df['day'].unique()
+                    for unique_day in days:
+                        df_daily = df[df['day'] == unique_day]
+                        df_daily.drop(columns='day', axis=1, inplace=True)
+                        soma = df_daily.apply(sum_separated)
+                        soma = divide(soma)
+                        print(f'- Gains and losses separated and calculated for day {unique_day}')
+                        soma.loc[:, 'case'] = i.split('\\')[1]
+                        soma.loc[:, 'type'] = way
+                        soma.loc[:, 'day'] = unique_day
+                        soma.loc[:, 'zone'] = 'no zone'
+                        for j in soma.index:
+                            zones = soma.at[j, 'index'].split('_')[0]
+                            lenght = (len(zones)+1)
+                            new_name = soma.at[j, 'index'][lenght:]
+                            soma.at[j, 'zone'] = zones
+                            soma.at[j, 'index'] = new_name
+                        print(f'- Case, type and zone added for day {unique_day}')
+                        soma.to_csv(organizer_output_path+'_day'+unique_day+'.csv', sep=';')
+                    glob_organizer = glob(organizer_output_path+'*.csv')
+                    df_total = pd.read_csv(glob_organizer[0], sep=';')
+                    glob_organizer.pop(0)
+                    for item in glob_organizer:
+                        each_df = pd.read_csv(item, sep=';')
+                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
+                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total.to_csv(output+'final_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+            glob_remove = glob(organizer_output_path+'*.csv')
+            for item in glob_remove:
+                os.remove(item)
+            print('- Final dataframe created\n\n')
 

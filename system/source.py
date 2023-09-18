@@ -103,6 +103,7 @@ convection_output_path = 'output/convection/'
 surface_input_path = 'input/surface/'
 convection_input_path = 'input/convection/'
 full_output_path = 'output/full/'
+organizer_output_path = 'output/organizer/'
 
 # Style
 software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
