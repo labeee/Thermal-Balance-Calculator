@@ -10,12 +10,13 @@ def menu():
     executadas.
     """
     zones = [sala['ZONE'], dorm1['ZONE'], dorm2['ZONE']]
+    df_type = 'annual'
     execute = True
     while execute:
         clear_screen()
         print(software_name)
         separators()
-        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\n\n\t[1] Generate dataframes for surface (maintenance)\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Personalize separators\n\n\n\t[ENTER] End software\n')
+        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\tDataframe type: {df_type}\n\n\n\n\t[1] Generate dataframes for surface (maintenance)\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Change dataframe type\n\t[5] Personalize separators\n\n\n\t[ENTER] End software\n')
         separators()
         opt = input('...')
         if opt == '':
@@ -23,9 +24,11 @@ def menu():
             print(end_message)
             execute = False
         elif opt == '1':
-            pass
-            # clear_screen()
-            # generate_df(surface_input_path, surface_output_path, surface, '_surface_')
+            clear_screen()
+            separators()
+            print('\n\tNot ready yet! Watch for updates!\n')
+            separators()
+            time.sleep(3)
         elif opt == '2':
             clear_screen()
             generate_df(path=convection_input_path, output=convection_output_path, way=convection, type='_convection_', zone=zones)
@@ -63,6 +66,22 @@ def menu():
                     else:
                         zones.append(dorm2["ZONE"])
         elif opt == '4':
+            type_select = True
+            while type_select:
+                clear_screen()
+                separators()
+                print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
+                separators()
+                options = input('...')
+                if options == '':
+                    type_select = False
+                elif options == '1':
+                    df_type = 'annual'
+                elif options == '2':
+                    df_type = 'monthly'
+                elif options == '3':
+                    df_type = 'daily'
+        elif opt == '5':
             clear_screen()
             separators()
             print(f'\n\tInsert your desired separators\n\n\t[ENTER] Exit\n')
