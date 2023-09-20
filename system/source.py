@@ -6,7 +6,6 @@ warnings.filterwarnings("ignore")
 sala = {
     "ZONE": "SALA",
     'Environment': 'temp_ext',
-    'Date/Time': 'date_time',
     "SALA_PARIN_01S": "none_intwalls",
     "SALA_PARIN_00E": "none_intwalls",
     "SALA_PORTAIN_0_00E": "none_intwalls",
@@ -33,7 +32,6 @@ sala = {
 dorm1 = {
     "ZONE": "DORM1",
     'Environment': 'temp_ext',
-    'Date/Time': 'date_time',
     "DORM1_PARIN_00E": 'none_intwalls',
     "DORM1_PARIN_00S": 'none_intwalls',
     "DORM1_PORTAIN_0_00E": 'none_intwalls',
@@ -54,7 +52,6 @@ dorm1 = {
 dorm2 = {
     "ZONE": "DORM2",
     'Environment': 'temp_ext',
-    'Date/Time': 'date_time',
     "DORM2_PARIN_00I": 'none_intwalls',
     "DORM2_PARIN_01E": 'none_intwalls',
     "DORM2_PORTAIN_0_01E": 'none_intwalls',
@@ -74,7 +71,7 @@ dorm2 = {
     'DORM2:Zone Air System Sensible Cooling': 'cooling'
 }
 
-wanted_list = []
+wanted_list = ['Date/Time']
 for item in sala:
     wanted_list.append(f"{sala['ZONE']}_{sala[item]}")
 for item in dorm1:
