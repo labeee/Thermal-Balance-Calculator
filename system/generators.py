@@ -154,8 +154,8 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                             soma.at[j, 'zone'] = zones
                             soma.at[j, 'index'] = new_name
                         print(f'- Case, type and zone added for month {unique_month}')
-                        soma.to_csv(organizer_output_path+'_month'+unique_month+'.csv', sep=';')
-                    glob_organizer = glob(organizer_output_path+'*.csv')
+                        soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
+                    glob_organizer = glob(organizer_path+'*.csv')
                     df_total = pd.read_csv(glob_organizer[0], sep=';')
                     glob_organizer.pop(0)
                     for item in glob_organizer:
@@ -188,8 +188,8 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                             soma.at[j, 'zone'] = zones
                             soma.at[j, 'index'] = new_name
                         print(f'- Case, type and zone added for day {unique_day}')
-                        soma.to_csv(organizer_output_path+'_day'+unique_day+'.csv', sep=';')
-                    glob_organizer = glob(organizer_output_path+'*.csv')
+                        soma.to_csv(organizer_path+'_day'+unique_day+'.csv', sep=';')
+                    glob_organizer = glob(organizer_path+'*.csv')
                     df_total = pd.read_csv(glob_organizer[0], sep=';')
                     glob_organizer.pop(0)
                     for item in glob_organizer:
@@ -197,7 +197,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
                     df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
                     df_total.to_csv(output+'final_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-            glob_remove = glob(organizer_output_path+'*.csv')
+            glob_remove = glob(organizer_path+'*.csv')
             for item in glob_remove:
                 os.remove(item)
             print('- Final dataframe created\n\n')
