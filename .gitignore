@@ -3,3 +3,4 @@ __pycache__
 .vscode
 Letícia
 *.csv
+test.py
