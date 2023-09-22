@@ -5,7 +5,6 @@ warnings.filterwarnings("ignore")
 # Columns per zone
 sala = {
     "ZONE": "SALA",
-    'Environment': 'temp_ext',
     "SALA_PARIN_01S": "none_intwalls",
     "SALA_PARIN_00E": "none_intwalls",
     "SALA_PORTAIN_0_00E": "none_intwalls",
@@ -31,7 +30,6 @@ sala = {
 }
 dorm1 = {
     "ZONE": "DORM1",
-    'Environment': 'temp_ext',
     "DORM1_PARIN_00E": 'none_intwalls',
     "DORM1_PARIN_00S": 'none_intwalls',
     "DORM1_PORTAIN_0_00E": 'none_intwalls',
@@ -51,7 +49,6 @@ dorm1 = {
 }
 dorm2 = {
     "ZONE": "DORM2",
-    'Environment': 'temp_ext',
     "DORM2_PARIN_00I": 'none_intwalls',
     "DORM2_PARIN_01E": 'none_intwalls',
     "DORM2_PORTAIN_0_01E": 'none_intwalls',
@@ -70,8 +67,12 @@ dorm2 = {
     'DORM2:Zone Air System Sensible Heating': 'heating',
     'DORM2:Zone Air System Sensible Cooling': 'cooling'
 }
+all = {
+    'ZONE': 'ALL ZONES',
+    'Environment': 'temp_ext'
+}
 
-wanted_list = ['Date/Time']
+wanted_list = ['Date/Time', 'temp_ext']
 for item in sala:
     wanted_list.append(f"{sala['ZONE']}_{sala[item]}")
 for item in dorm1:
@@ -80,7 +81,7 @@ for item in dorm2:
     wanted_list.append(f"{dorm2['ZONE']}_{dorm2[item]}")
 wanted_list = list(set(wanted_list))
 
-dont_change_list = []
+dont_change_list = ['temp_ext']
 for item in wanted_list:
     if item.endswith('loss') or item.endswith('gains') or item.endswith('gain') or item.endswith('cooling') or item.endswith('heating'):
         dont_change_list.append(item)

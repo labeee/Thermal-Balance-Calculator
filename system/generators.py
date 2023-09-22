@@ -26,6 +26,12 @@ def rename_dorm2(columns_list: list, df: pd.DataFrame):
                 df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[new_name]}"}, inplace=True)
     return df
 
+def rename_special(columns_list: list, df: pd.DataFrame):
+    for item in columns_list:
+        for new_name in all:
+            if new_name in item:
+                df.rename(columns={item: all[new_name]}, inplace=True)
+    return df
 
 def sum_separated(coluna):
     """
@@ -96,6 +102,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                 df = rename_dorm1(columns_list=columns_list, df=df)
             if dorm2['ZONE'] in zone:
                 df = rename_dorm2(columns_list=columns_list, df=df)
+            df = rename_special(columns_list=columns_list, df=df)
             columns_list = df.columns
             unwanted_list = []
             for item in columns_list:
@@ -103,10 +110,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     unwanted_list.append(item)
             df.drop(columns=unwanted_list, axis=1, inplace=True)
             columns_list = df.columns
-            date_time = df['Date/Time']
             df = df.groupby(df.columns, axis=1).sum()
-            df = pd.concat([date_time, df], axis=1)
             df.reset_index(inplace=True)
+            print(df['Date/Time'])
             df.drop(columns='index', axis=1, inplace=True)
             df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Initial dataframe created')
@@ -124,11 +130,14 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     soma.loc[:, 'type'] = way
                     soma.loc[:, 'zone'] = 'no zone'
                     for j in soma.index:
-                        zones = soma.at[j, 'index'].split('_')[0]
-                        lenght = (len(zones)+1)
-                        new_name = soma.at[j, 'index'][lenght:]
-                        soma.at[j, 'zone'] = zones
-                        soma.at[j, 'index'] = new_name
+                        if soma.at[j, 'index'] == 'temp_ext':
+                            soma.at[j, 'zone'] = all['ZONE']
+                        else:
+                            zones = soma.at[j, 'index'].split('_')[0]
+                            lenght = (len(zones)+1)
+                            new_name = soma.at[j, 'index'][lenght:]
+                            soma.at[j, 'zone'] = zones
+                            soma.at[j, 'index'] = new_name
                     print('- Case, type and zone added')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
                 case 'monthly':
