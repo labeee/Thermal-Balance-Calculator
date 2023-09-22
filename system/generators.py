@@ -112,8 +112,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
             df.reset_index(inplace=True)
-            print(df['Date/Time'])
             df.drop(columns='index', axis=1, inplace=True)
+            reorder = ['Date/Time']
+            for item in df.columns:
+                if item != 'Date/Time':
+                    reorder.append(item)
+            df = df[reorder]
             df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Initial dataframe created')
             df = invert_values(df)
