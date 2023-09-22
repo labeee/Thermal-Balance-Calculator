@@ -180,7 +180,57 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
                 case 'daily':
-                    pass
+                    max_temp_idx = df['temp_ext'].idxmax()
+                    date_str = df.loc[max_temp_idx, 'Date/Time']
+                    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
+                    date_str = date_obj.strftime('%m/%d')
+                    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
+                    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
+                    days_list = [date_str, day_bf, day_af]
+                    print(f'- Date with max value: {date_str}')
+                    print(f'- Day before: {day_bf}')
+                    print(f'- Day after: {day_af}')
+                    for j in df.index:
+                        date_splited = df.at[j, 'Date/Time'].split(' ')[1]
+                        if date_splited not in days_list:
+                            df.drop(j, axis=0, inplace=True)
+                            print(f'- Removing date {date_splited}', end='\r')
+                    df.loc[:, 'day'] = 'no day'
+                    for row in df.index:
+                        day = str(df.at[row, 'Date/Time'])
+                        df.at[row, 'day'] = day[4:6]
+                    print('- Days column created')
+                    df.drop(columns='Date/Time', axis=1, inplace=True)
+                    days = df['day'].unique()
+                    for unique_day in days:
+                        df_daily = df[df['day'] == unique_day]
+                        df_daily.drop(columns='day', axis=1, inplace=True)
+                        soma = df_daily.apply(sum_separated)
+                        soma = divide(soma)
+                        print(f'- Gains and losses separated and calculated for day {unique_day}')
+                        soma.loc[:, 'case'] = i.split('\\')[1]
+                        soma.loc[:, 'type'] = way
+                        soma.loc[:, 'day'] = unique_day
+                        soma.loc[:, 'zone'] = 'no zone'
+                        for j in soma.index:
+                            if soma.at[j, 'index'] == all['Environment']:
+                                soma.at[j, 'zone'] = all['ZONE']
+                            else:
+                                zones = soma.at[j, 'index'].split('_')[0]
+                                lenght = (len(zones)+1)
+                                new_name = soma.at[j, 'index'][lenght:]
+                                soma.at[j, 'zone'] = zones
+                                soma.at[j, 'index'] = new_name
+                        print(f'- Case, type and zone added for day {unique_day}')
+                        soma.to_csv(organizer_path+'_day'+unique_day+'.csv', sep=';')
+                    glob_organizer = glob(organizer_path+'*.csv')
+                    df_total = pd.read_csv(glob_organizer[0], sep=';')
+                    glob_organizer.pop(0)
+                    for item in glob_organizer:
+                        each_df = pd.read_csv(item, sep=';')
+                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
+                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             glob_remove = glob(organizer_path+'*.csv')
             for item in glob_remove:
                 os.remove(item)
