@@ -1,6 +1,4 @@
 from system.source import *
-from glob import glob
-import os
 
 
 def rename_sala(columns_list: list, df: pd.DataFrame):
@@ -148,7 +146,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
                         month = str(df.at[row, 'Date/Time'])
-                        df.at[row, 'month'] = month[14:16]
+                        df.at[row, 'month'] = month[1:3]
                     print('- Months column created')
                     df.drop(columns='Date/Time', axis=1, inplace=True)
                     months = df['month'].unique()
@@ -163,11 +161,14 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'month'] = unique_month
                         soma.loc[:, 'zone'] = 'no zone'
                         for j in soma.index:
-                            zones = soma.at[j, 'index'].split('_')[0]
-                            lenght = (len(zones)+1)
-                            new_name = soma.at[j, 'index'][lenght:]
-                            soma.at[j, 'zone'] = zones
-                            soma.at[j, 'index'] = new_name
+                            if soma.at[j, 'index'] == all['Environment']:
+                                soma.at[j, 'zone'] = all['ZONE']
+                            else:
+                                zones = soma.at[j, 'index'].split('_')[0]
+                                lenght = (len(zones)+1)
+                                new_name = soma.at[j, 'index'][lenght:]
+                                soma.at[j, 'zone'] = zones
+                                soma.at[j, 'index'] = new_name
                         print(f'- Case, type and zone added for month {unique_month}')
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
                     glob_organizer = glob(organizer_path+'*.csv')
