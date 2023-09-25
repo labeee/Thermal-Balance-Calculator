@@ -188,6 +188,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
                     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
                     days_list = [date_str, day_bf, day_af]
+                    print('\n')
                     print(f'- Date with max value: {date_str}')
                     print(f'- Day before: {day_bf}')
                     print(f'- Day after: {day_af}')
