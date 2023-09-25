@@ -110,7 +110,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             columns_list = df.columns
             df = df.groupby(df.columns, axis=1).sum()
             df.reset_index(inplace=True)
-            df.drop(columns='gains_losses', axis=1, inplace=True)
+            df.drop(columns='index', axis=1, inplace=True)
             reorder = ['Date/Time']
             for item in df.columns:
                 if item != 'Date/Time':
@@ -122,6 +122,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             print('- Inverted specified columns')
             df.to_csv(output+'intermediary_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Intermediary dataframe created')
+            # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
                     df.drop(columns='Date/Time', axis=1, inplace=True)
