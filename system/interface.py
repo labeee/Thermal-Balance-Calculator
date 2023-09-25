@@ -70,7 +70,7 @@ def menu():
             while type_select:
                 clear_screen()
                 separators()
-                print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily (maintenance)\n\n\t[ENTER] Exit\n')
+                print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
                 separators()
                 options = input('...')
                 if options == '':
