@@ -66,21 +66,19 @@ def menu():
                     else:
                         zones.append(dorm2["ZONE"])
         elif opt == '4':
-            type_select = True
-            while type_select:
-                clear_screen()
-                separators()
-                print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
-                separators()
-                options = input('...')
-                if options == '':
-                    type_select = False
-                elif options == '1':
-                    df_type = 'annual'
-                elif options == '2':
-                    df_type = 'monthly'
-                elif options == '3':
-                    df_type = 'daily'
+            clear_screen()
+            separators()
+            print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
+            separators()
+            options = input('...')
+            if options == '':
+                pass
+            elif options == '1':
+                df_type = 'annual'
+            elif options == '2':
+                df_type = 'monthly'
+            elif options == '3':
+                df_type = 'daily'
         elif opt == '5':
             clear_screen()
             separators()
