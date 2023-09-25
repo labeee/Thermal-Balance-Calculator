@@ -102,12 +102,12 @@ convection = 'convection'
 surface = 'conduction'
 
 # Paths
-surface_output_path = 'output/surface/'
-convection_output_path = 'output/convection/'
-surface_input_path = 'input/surface/'
-convection_input_path = 'input/convection/'
-full_output_path = 'output/full/'
-organizer_path = 'system/organizer/'
+surface_output_path = r'output/surface/'
+convection_output_path = r'output/convection/'
+surface_input_path = r'input/surface/'
+convection_input_path = r'input/convection/'
+full_output_path = r'output/full/'
+organizer_path = r'system/organizer/'
 
 # Style
 software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
