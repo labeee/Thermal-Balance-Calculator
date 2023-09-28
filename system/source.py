@@ -135,4 +135,9 @@ def separators():
     """Lê e printa os separadores da interface"""
     interface_separators = open('system/separators.txt', 'r').readlines()[0]
     print(interface_separators)
+def clean_cache():
+    glob_remove = glob(organizer_path+'*.csv')
+    for item in glob_remove:
+        os.remove(item)
+    print('- Final dataframe created\n\n')
     
