@@ -80,6 +80,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
     zone: lista de zonas (SALA, DORM1, DORM2)
     coverage: annual/monthly/daily
     """
+    clean_cache()
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
     print(f'Found inputs: {globed}\n\n')
