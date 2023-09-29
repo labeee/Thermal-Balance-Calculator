@@ -5,9 +5,11 @@ import os
 from datetime import datetime, timedelta
 warnings.filterwarnings("ignore")
 
+
 # Columns per zone
 sala = {
     "ZONE": "SALA",
+    "convection": {
     "SALA_PARIN_01S": "none_intwalls",
     "SALA_PARIN_00E": "none_intwalls",
     "SALA_PORTAIN_0_00E": "none_intwalls",
@@ -29,10 +31,14 @@ sala = {
     'SALA:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
     'SALA:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
     'SALA:Zone Air System Sensible Heating': 'heating',
-    'SALA:Zone Air System Sensible Cooling': 'cooling'
+    'SALA:Zone Air System Sensible Cooling': 'cooling'},
+    "surface": {
+
+    }
 }
 dorm1 = {
     "ZONE": "DORM1",
+    "convection": {
     "DORM1_PARIN_00E": 'none_intwalls',
     "DORM1_PARIN_00S": 'none_intwalls',
     "DORM1_PORTAIN_0_00E": 'none_intwalls',
@@ -48,10 +54,14 @@ dorm1 = {
     'DORM1:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
     'DORM1:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
     'DORM1:Zone Air System Sensible Heating': 'heating',
-    'DORM1:Zone Air System Sensible Cooling': 'cooling'
+    'DORM1:Zone Air System Sensible Cooling': 'cooling'},
+    "surface": {
+
+    }
 }
 dorm2 = {
     "ZONE": "DORM2",
+    "convection": {
     "DORM2_PARIN_00I": 'none_intwalls',
     "DORM2_PARIN_01E": 'none_intwalls',
     "DORM2_PORTAIN_0_01E": 'none_intwalls',
@@ -68,7 +78,10 @@ dorm2 = {
     'DORM2:AFN Zone Mixing Sensible Heat Gain': 'vn_interzone_gain',
     'DORM2:AFN Zone Mixing Sensible Heat Loss': 'vn_interzone_loss',
     'DORM2:Zone Air System Sensible Heating': 'heating',
-    'DORM2:Zone Air System Sensible Cooling': 'cooling'
+    'DORM2:Zone Air System Sensible Cooling': 'cooling'},
+    "surface": {
+
+    }
 }
 all = {
     'ZONE': 'ALL ZONES',
@@ -76,12 +89,18 @@ all = {
 }
 
 wanted_list = ['Date/Time', 'temp_ext']
-for item in sala:
-    wanted_list.append(f"{sala['ZONE']}_{sala[item]}")
-for item in dorm1:
-    wanted_list.append(f"{dorm1['ZONE']}_{dorm1[item]}")
-for item in dorm2:
-    wanted_list.append(f"{dorm2['ZONE']}_{dorm2[item]}")
+for item in sala['convection']:
+    wanted_list.append(f"{sala['ZONE']}_{sala['convection'][item]}")
+for item in sala['surface']:
+    wanted_list.append(f"{sala['ZONE']}_{sala['surface'][item]}")
+for item in dorm1['convection']:
+    wanted_list.append(f"{dorm1['ZONE']}_{dorm1['convection'][item]}")
+for item in dorm1['surface']:
+    wanted_list.append(f"{dorm1['ZONE']}_{dorm1['surface'][item]}")
+for item in dorm2['convection']:
+    wanted_list.append(f"{dorm2['ZONE']}_{dorm2['convection'][item]}")
+for item in dorm2['surface']:
+    wanted_list.append(f"{dorm2['ZONE']}_{dorm2['surface'][item]}")
 wanted_list = list(set(wanted_list))
 
 dont_change_list = ['temp_ext']
@@ -98,8 +117,6 @@ for item in ref_multiply_list:
             multiply_list.append(i)
 multiply_list = list(set(multiply_list))
 
-convection = 'convection'
-surface = 'conduction'
 
 # Paths
 surface_output_path = r'output/surface/'
@@ -108,6 +125,7 @@ surface_input_path = r'input/surface/'
 convection_input_path = r'input/convection/'
 full_output_path = r'output/full/'
 organizer_path = r'system/organizer/'
+
 
 # Style
 software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█

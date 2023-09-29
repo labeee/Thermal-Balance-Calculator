@@ -1,36 +1,36 @@
 from system.source import *
 
 
-def rename_sala(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
+def rename_sala(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
     """
     Renomeia todos os itens em SALA
     """
     for item in columns_list:
-        for new_name in sala:
+        for new_name in sala[way]:
             if new_name in item:
-                df.rename(columns={item: f"{sala['ZONE']}_{sala[new_name]}"}, inplace=True)
+                df.rename(columns={item: f"{sala['ZONE']}_{sala[way][new_name]}"}, inplace=True)
     return df
 
 
-def rename_dorm1(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
+def rename_dorm1(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
     """
     Renomeia todos os itens em DORM1
     """
     for item in columns_list:
-        for new_name in dorm1:
+        for new_name in dorm1[way]:
             if new_name in item:
-                df.rename(columns={item: f"{dorm1['ZONE']}_{dorm1[new_name]}"}, inplace=True)
+                df.rename(columns={item: f"{dorm1['ZONE']}_{dorm1[way][new_name]}"}, inplace=True)
     return df
 
 
-def rename_dorm2(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
+def rename_dorm2(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
     """
     Renomeia todos os itens em DORM2
     """
     for item in columns_list:
-        for new_name in dorm2:
+        for new_name in dorm2[way]:
             if new_name in item:
-                df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[new_name]}"}, inplace=True)
+                df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[way][new_name]}"}, inplace=True)
     return df
 
 def rename_special(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
@@ -82,18 +82,18 @@ def invert_values(dataframe: pd.DataFrame) -> pd.DataFrame:
     df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
     return df_copy
 
-def renamer_and_formater(df: pd.DataFrame, zone: list) -> pd.DataFrame:
+def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame:
     """
     Recebe o dataframe e uma lista de zonas, então manipula-o renomeando cada lista de 
     colunas e excluindo as colunas desnecessárias 
     """
     columns_list = df.columns
     if sala['ZONE'] in zone:
-        df = rename_sala(columns_list=columns_list, df=df)
+        df = rename_sala(columns_list=columns_list, df=df, way=way)
     if dorm1['ZONE'] in zone:
-        df = rename_dorm1(columns_list=columns_list, df=df)
+        df = rename_dorm1(columns_list=columns_list, df=df, way=way)
     if dorm2['ZONE'] in zone:
-        df = rename_dorm2(columns_list=columns_list, df=df)
+        df = rename_dorm2(columns_list=columns_list, df=df, way=way)
     df = rename_special(columns_list=columns_list, df=df)
     columns_list = df.columns
     unwanted_list = []
@@ -154,13 +154,18 @@ def concatenator() -> pd.DataFrame:
     clean_cache()
     return df
 
+def way_breaker(df: pd.DataFrame, way: str) -> pd.DataFrame:
+    if way == 'surface':
+        pass
+    return df
+
 def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
     path: path do input
     output: path do output
     way: convection/surface
-    type: _convection_/_conduction_
+    type: _convection_/_surface_
     zone: lista de zonas (SALA, DORM1, DORM2)
     coverage: annual/monthly/daily
     """
@@ -178,7 +183,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             print(f'\n\n- CSV read {i}')
             df = df.dropna()
             print('- NaN rows removed')
-            df = renamer_and_formater(df=df, zone=zone)
+            df = renamer_and_formater(df=df, zone=zone, way=way)
             df = df.groupby(df.columns, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
@@ -197,6 +202,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     soma.loc[:, 'case'] = i.split('\\')[1]
                     soma.loc[:, 'type'] = way
                     soma.loc[:, 'zone'] = 'no zone'
+                    soma = way_breaker(df=soma, way=way)
                     soma = zone_breaker(df=soma)
                     print('- Case, type and zone added')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
@@ -217,6 +223,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'month'] = unique_month
                         soma.loc[:, 'zone'] = 'no zone'
+                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
@@ -252,6 +259,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
+                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
@@ -298,6 +306,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
+                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
@@ -366,6 +375,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
+                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
@@ -410,6 +420,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
+                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])

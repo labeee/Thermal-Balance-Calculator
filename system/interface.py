@@ -25,13 +25,10 @@ def menu():
             execute = False
         elif opt == '1':
             clear_screen()
-            separators()
-            print('\n\tNot ready yet! Watch for updates!\n')
-            separators()
-            time.sleep(3)
+            generate_df(path=surface_input_path, output=surface_output_path, way="surface", type='_surface_', zone=zones, coverage=df_type)
         elif opt == '2':
             clear_screen()
-            generate_df(path=convection_input_path, output=convection_output_path, way=convection, type='_convection_', zone=zones, coverage=df_type)
+            generate_df(path=convection_input_path, output=convection_output_path, way="convection", type='_convection_', zone=zones, coverage=df_type)
         elif opt == '3':
             zone_select = True
             while zone_select:
