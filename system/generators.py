@@ -2,9 +2,7 @@ from system.source import *
 
 
 def rename_sala(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
-    """
-    Renomeia todos os itens em SALA
-    """
+    """Renomeia todos os itens em SALA"""
     for item in columns_list:
         for new_name in sala[way]:
             if new_name in item:
@@ -13,9 +11,7 @@ def rename_sala(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
 
 
 def rename_dorm1(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
-    """
-    Renomeia todos os itens em DORM1
-    """
+    """Renomeia todos os itens em DORM1"""
     for item in columns_list:
         for new_name in dorm1[way]:
             if new_name in item:
@@ -24,9 +20,7 @@ def rename_dorm1(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame
 
 
 def rename_dorm2(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
-    """
-    Renomeia todos os itens em DORM2
-    """
+    """Renomeia todos os itens em DORM2"""
     for item in columns_list:
         for new_name in dorm2[way]:
             if new_name in item:
@@ -34,9 +28,7 @@ def rename_dorm2(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame
     return df
 
 def rename_special(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Renomeia todos os itens em ALL (itens especiais fora de categorias de zonas específicas)
-    """
+    """Renomeia todos os itens em ALL (itens especiais fora de categorias de zonas específicas)"""
     for item in columns_list:
         for new_name in all:
             if new_name in item:
@@ -72,9 +64,7 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
     return divided
 
 def invert_values(dataframe: pd.DataFrame) -> pd.DataFrame:
-    """
-    Multiplica as colunas específicas por -1.
-    """
+    """Multiplica as colunas específicas por -1."""
     df_copy = dataframe.copy()
     valid_cols = [col for col in df_copy.columns if col in multiply_list]
     if not valid_cols:
@@ -104,9 +94,7 @@ def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame
     return df
 
 def reorderer(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Reordena as colunas do dataframe para o Date/Time ser o primeiro item
-    """
+    """Reordena as colunas do dataframe para o Date/Time ser o primeiro item"""
     reorder = ['Date/Time']
     for item in df.columns:
         if item != 'Date/Time':
@@ -115,9 +103,7 @@ def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 def basic_manipulator(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Faz o procedimento básico para todos os dataframes serem manipulados
-    """
+    """Faz o procedimento básico para todos os dataframes serem manipulados"""
     df.drop(columns='Date/Time', axis=1, inplace=True)
     df = df.apply(sum_separated)
     df = divide(df)
@@ -155,9 +141,61 @@ def concatenator() -> pd.DataFrame:
     return df
 
 def way_breaker(df: pd.DataFrame, way: str) -> pd.DataFrame:
+    """
+    Irá formatar o arquivo adicionando adequadamente o tipo de
+    forma de transmissão de calor, caso seja do tipo surface
+    """
     if way == 'surface':
         pass
     return df
+
+def days_finder(date_str: str) -> list:
+    """Busca e retorna uma lista contendo o dia, dia anterior e 
+    dia seguinte ao evento"""
+    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
+    date_str = date_obj.strftime('%m/%d')
+    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
+    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
+    days_list = [date_str, day_bf, day_af]
+    return days_list
+
+def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) -> pd.DataFrame:
+    """Manipula e gera os dataframes para cada datetime 
+    dentro do período do evento"""
+    new_daily_df = df.copy()
+    for j in new_daily_df.index:
+        date_splited = new_daily_df.at[j, 'Date/Time'].split(' ')[1]
+        if date_splited not in days_list:
+            new_daily_df.drop(j, axis=0, inplace=True)
+            print(f'- Removing date {date_splited}', end='\r')
+    days = new_daily_df['Date/Time'].unique()
+    for unique_datetime in days:
+        print(f'- Manipulating {unique_datetime}', end='\r')
+        df_daily = new_daily_df[new_daily_df['Date/Time'] == unique_datetime]
+        soma = basic_manipulator(df=df_daily)
+        soma.loc[:, 'case'] = name.split('\\')[1]
+        soma.loc[:, 'type'] = way
+        soma.loc[:, 'Date/Time'] = unique_datetime
+        soma.loc[:, 'zone'] = 'no zone'
+        soma = way_breaker(df=soma, way=way)
+        soma = zone_breaker(df=soma)
+        for row in soma.index:
+            day = str(soma.at[row, 'Date/Time'])
+            soma.at[row, 'day'] = day[4:6]
+        soma.loc[:, 'month'] = 'no month'
+        for row in soma.index:
+            month = str(soma.at[row, 'Date/Time'])
+            soma.at[row, 'month'] = month[1:3]
+        soma.loc[:, 'hour'] = 'no hour'
+        for row in soma.index:
+            hour = str(soma.at[row, 'Date/Time'])
+            soma.at[row, 'hour'] = hour[8:10]
+        unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
+        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
+    print('\n')
+    df_total = concatenator()
+    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+    return df_total
 
 def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
@@ -235,98 +273,26 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     max_temp_idx = df['temp_ext'].idxmax()
                     max_value = df["temp_ext"].max()
                     date_str = df.loc[max_temp_idx, 'Date/Time']
-                    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
-                    date_str = date_obj.strftime('%m/%d')
-                    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
-                    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
-                    days_list = [date_str, day_bf, day_af]
+                    days_list = days_finder(date_str=date_str)
                     print('\n')
-                    print(f'- Date with max value: {date_str} as [{max_value}]')
-                    print(f'- Day before: {day_bf}')
-                    print(f'- Day after: {day_af}')
-                    df_max = df.copy()
-                    for j in df_max.index:
-                        date_splited = df_max.at[j, 'Date/Time'].split(' ')[1]
-                        if date_splited not in days_list:
-                            df_max.drop(j, axis=0, inplace=True)
-                            print(f'- Removing date {date_splited}', end='\r')
-                    days = df_max['Date/Time'].unique()
-                    for unique_datetime in days:
-                        print(f'- Manipulating {unique_datetime}', end='\r')
-                        df_daily = df_max[df_max['Date/Time'] == unique_datetime]
-                        soma = basic_manipulator(df=df_daily)
-                        soma.loc[:, 'case'] = i.split('\\')[1]
-                        soma.loc[:, 'type'] = way
-                        soma.loc[:, 'Date/Time'] = unique_datetime
-                        soma.loc[:, 'zone'] = 'no zone'
-                        soma = way_breaker(df=soma, way=way)
-                        soma = zone_breaker(df=soma)
-                        for row in soma.index:
-                            day = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'day'] = day[4:6]
-                        soma.loc[:, 'month'] = 'no month'
-                        for row in soma.index:
-                            month = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'month'] = month[1:3]
-                        soma.loc[:, 'hour'] = 'no hour'
-                        for row in soma.index:
-                            hour = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'hour'] = hour[8:10]
-                        unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-                        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
-                    print('\n')
-                    df_total = concatenator()
-                    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+                    print(f'- Date with max value: {days_list[0]} as [{max_value}]')
+                    print(f'- Day before: {days_list[1]}')
+                    print(f'- Day after: {days_list[2]}')
+                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
                     
                     ## Min
                     min_temp_idx = df['temp_ext'].idxmin()
                     min_value = df['temp_ext'].min()
                     date_str = df.loc[min_temp_idx, 'Date/Time']
-                    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
-                    date_str = date_obj.strftime('%m/%d')
-                    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
-                    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
-                    days_list = [date_str, day_bf, day_af]
-                    print(f'- Date with min value: {date_str} as [{min_value}]')
-                    print(f'- Day before: {day_bf}')
-                    print(f'- Day after: {day_af}')
-                    df_min = df.copy()
-                    for j in df_min.index:
-                        date_splited = df.at[j, 'Date/Time'].split(' ')[1]
-                        if date_splited not in days_list:
-                            df_min.drop(j, axis=0, inplace=True)
-                            print(f'- Removing date {date_splited}', end='\r')
-                    days = df_min['Date/Time'].unique()
-                    for unique_datetime in days:
-                        print(f'- Manipulating {unique_datetime}', end='\r')
-                        df_daily = df_min[df_min['Date/Time'] == unique_datetime]
-                        soma = basic_manipulator(df=df_daily)
-                        soma.loc[:, 'case'] = i.split('\\')[1]
-                        soma.loc[:, 'type'] = way
-                        soma.loc[:, 'Date/Time'] = unique_datetime
-                        soma.loc[:, 'zone'] = 'no zone'
-                        soma = way_breaker(df=soma, way=way)
-                        soma = zone_breaker(df=soma)
-                        for row in soma.index:
-                            day = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'day'] = day[4:6]
-                        soma.loc[:, 'month'] = 'no month'
-                        for row in soma.index:
-                            month = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'month'] = month[1:3]
-                        soma.loc[:, 'hour'] = 'no hour'
-                        for row in soma.index:
-                            hour = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'hour'] = hour[8:10]
-                        unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-                        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
-                    print('\n')
-                    df_total = concatenator()
-                    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+                    days_list = days_finder(date_str=date_str)
+                    print(f'- Date with min value: {days_list[0]} as [{min_value}]')
+                    print(f'- Day before: {days_list[1]}')
+                    print(f'- Day after: {days_list[2]}')
+                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
 
-                    ## Max and Min amp
+                    ## Max and Min amp locator
                     df_amp = df.copy()
                     df_amp.loc[:, 'date'] = 'no date'
                     for row in df_amp.index:
@@ -352,91 +318,19 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
 
                     # Max amp
                     date_str = df.loc[max_amp['index'], 'Date/Time']
-                    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
-                    date_str = date_obj.strftime('%m/%d')
-                    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
-                    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
-                    days_list = [date_str, day_bf, day_af]
-                    print(f'- Date with max amplitude value: {date_str} as [{max_amp["value"]}]')
-                    print(f'- Day before: {day_bf}')
-                    print(f'- Day after: {day_af}')
-                    df_max = df.copy()
-                    for j in df_max.index:
-                        date_splited = df_max.at[j, 'Date/Time'].split(' ')[1]
-                        if date_splited not in days_list:
-                            df_max.drop(j, axis=0, inplace=True)
-                            print(f'- Removing date {date_splited}', end='\r')
-                    days = df_max['Date/Time'].unique()
-                    for unique_datetime in days:
-                        print(f'- Manipulating {unique_datetime}', end='\r')
-                        df_daily = df_max[df_max['Date/Time'] == unique_datetime]
-                        soma = basic_manipulator(df=df_daily)
-                        soma.loc[:, 'case'] = i.split('\\')[1]
-                        soma.loc[:, 'type'] = way
-                        soma.loc[:, 'Date/Time'] = unique_datetime
-                        soma.loc[:, 'zone'] = 'no zone'
-                        soma = way_breaker(df=soma, way=way)
-                        soma = zone_breaker(df=soma)
-                        for row in soma.index:
-                            day = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'day'] = day[4:6]
-                        soma.loc[:, 'month'] = 'no month'
-                        for row in soma.index:
-                            month = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'month'] = month[1:3]
-                        soma.loc[:, 'hour'] = 'no hour'
-                        for row in soma.index:
-                            hour = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'hour'] = hour[8:10]
-                        unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-                        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
-                    print('\n')
-                    df_total = concatenator()
-                    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+                    days_list = days_finder(date_str=date_str)
+                    print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
+                    print(f'- Day before: {days_list[1]}')
+                    print(f'- Day after: {days_list[2]}')
+                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
-                    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
-                    date_str = date_obj.strftime('%m/%d')
-                    day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
-                    day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
-                    days_list = [date_str, day_bf, day_af]
-                    print(f'- Date with min amplitude value: {date_str} as [{min_amp["value"]}]')
-                    print(f'- Day before: {day_bf}')
-                    print(f'- Day after: {day_af}')
-                    df_min = df.copy()
-                    for j in df_min.index:
-                        date_splited = df.at[j, 'Date/Time'].split(' ')[1]
-                        if date_splited not in days_list:
-                            df_min.drop(j, axis=0, inplace=True)
-                            print(f'- Removing date {date_splited}', end='\r')
-                    days = df_min['Date/Time'].unique()
-                    for unique_datetime in days:
-                        print(f'- Manipulating {unique_datetime}', end='\r')
-                        df_daily = df_min[df_min['Date/Time'] == unique_datetime]
-                        soma = basic_manipulator(df=df_daily)
-                        soma.loc[:, 'case'] = i.split('\\')[1]
-                        soma.loc[:, 'type'] = way
-                        soma.loc[:, 'Date/Time'] = unique_datetime
-                        soma.loc[:, 'zone'] = 'no zone'
-                        soma = way_breaker(df=soma, way=way)
-                        soma = zone_breaker(df=soma)
-                        for row in soma.index:
-                            day = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'day'] = day[4:6]
-                        soma.loc[:, 'month'] = 'no month'
-                        for row in soma.index:
-                            month = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'month'] = month[1:3]
-                        soma.loc[:, 'hour'] = 'no hour'
-                        for row in soma.index:
-                            hour = str(soma.at[row, 'Date/Time'])
-                            soma.at[row, 'hour'] = hour[8:10]
-                        unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-                        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
-                    print('\n')
-                    df_total = concatenator()
-                    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+                    days_list = days_finder(date_str=date_str)
+                    print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
+                    print(f'- Day before: {days_list[1]}')
+                    print(f'- Day after: {days_list[2]}')
+                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
         separators()

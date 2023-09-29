@@ -154,6 +154,7 @@ def separators():
     interface_separators = open('system/separators.txt', 'r').readlines()[0]
     print(interface_separators)
 def clean_cache():
+    """Limpa o cache (arquivos temporários na pasta organizer)"""
     glob_remove = glob(organizer_path+'*.csv')
     if glob_remove != []:
         for item in glob_remove:
