@@ -137,7 +137,7 @@ def separators():
     print(interface_separators)
 def clean_cache():
     glob_remove = glob(organizer_path+'*.csv')
-    if None not in glob_remove:
+    if glob_remove != []:
         for item in glob_remove:
             os.remove(item)
     
