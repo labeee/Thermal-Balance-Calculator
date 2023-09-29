@@ -144,6 +144,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                             soma.at[j, 'gains_losses'] = new_name
                     print('- Case, type and zone added')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    print('- Final annual dataframe created')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
@@ -181,6 +182,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
                     df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    print('- Final monthly dataframe created')
                     clean_cache()
                 case 'daily':
                     ## Max

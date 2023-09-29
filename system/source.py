@@ -137,7 +137,7 @@ def separators():
     print(interface_separators)
 def clean_cache():
     glob_remove = glob(organizer_path+'*.csv')
-    for item in glob_remove:
-        os.remove(item)
-    print('- Final dataframe created\n\n')
+    if None not in glob_remove:
+        for item in glob_remove:
+            os.remove(item)
     
