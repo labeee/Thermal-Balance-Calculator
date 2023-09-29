@@ -26,6 +26,11 @@ def menu():
         elif opt == '1':
             clear_screen()
             generate_df(path=surface_input_path, output=surface_output_path, way="surface", type='_surface_', zone=zones, coverage=df_type)
+            print(warn)
+            separators()
+            print('\nFUNCTION NOT YET READY\n')
+            separators()
+            time.sleep(2)
         elif opt == '2':
             clear_screen()
             generate_df(path=convection_input_path, output=convection_output_path, way="convection", type='_convection_', zone=zones, coverage=df_type)
