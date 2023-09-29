@@ -2,6 +2,9 @@ from system.source import *
 
 
 def rename_sala(columns_list: list, df: pd.DataFrame):
+    """
+    Renomeia todos os itens em SALA
+    """
     for item in columns_list:
         for new_name in sala:
             if new_name in item:
@@ -10,6 +13,9 @@ def rename_sala(columns_list: list, df: pd.DataFrame):
 
 
 def rename_dorm1(columns_list: list, df: pd.DataFrame):
+    """
+    Renomeia todos os itens em DORM1
+    """
     for item in columns_list:
         for new_name in dorm1:
             if new_name in item:
@@ -18,6 +24,9 @@ def rename_dorm1(columns_list: list, df: pd.DataFrame):
 
 
 def rename_dorm2(columns_list: list, df: pd.DataFrame):
+    """
+    Renomeia todos os itens em DORM2
+    """
     for item in columns_list:
         for new_name in dorm2:
             if new_name in item:
@@ -25,6 +34,9 @@ def rename_dorm2(columns_list: list, df: pd.DataFrame):
     return df
 
 def rename_special(columns_list: list, df: pd.DataFrame):
+    """
+    Renomeia todos os itens em ALL (itens especiais fora de categorias de zonas específicas)
+    """
     for item in columns_list:
         for new_name in all:
             if new_name in item:
@@ -70,6 +82,78 @@ def invert_values(dataframe: pd.DataFrame):
     df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
     return df_copy
 
+def renamer_and_formater(df: pd.DataFrame, zone: list):
+    """
+    Recebe o dataframe e uma lista de zonas, então manipula-o renomeando cada lista de 
+    colunas e excluindo as colunas desnecessárias 
+    """
+    columns_list = df.columns
+    if sala['ZONE'] in zone:
+        df = rename_sala(columns_list=columns_list, df=df)
+    if dorm1['ZONE'] in zone:
+        df = rename_dorm1(columns_list=columns_list, df=df)
+    if dorm2['ZONE'] in zone:
+        df = rename_dorm2(columns_list=columns_list, df=df)
+    df = rename_special(columns_list=columns_list, df=df)
+    columns_list = df.columns
+    unwanted_list = []
+    for item in columns_list:
+        if item not in wanted_list:
+            unwanted_list.append(item)
+    df.drop(columns=unwanted_list, axis=1, inplace=True)
+    return df
+
+def reorderer(df: pd.DataFrame):
+    """
+    Reordena as colunas do dataframe para o Date/Time ser o primeiro item
+    """
+    reorder = ['Date/Time']
+    for item in df.columns:
+        if item != 'Date/Time':
+            reorder.append(item)
+    df = df[reorder]
+    return df
+
+def basic_manipulator(df: pd.DataFrame):
+    """
+    Faz o procedimento básico para todos os dataframes serem manipulados
+    """
+    df.drop(columns='Date/Time', axis=1, inplace=True)
+    df = df.apply(sum_separated)
+    df = divide(df)
+    return df
+
+def zone_breaker(df: pd.DataFrame):
+    """
+    Renomeia cada item da coluna zone para sua respectiva zona, renomeia 
+    também o gains_losses para remover a zona nele aplicada
+    """
+    for j in df.index:
+        if df.at[j, 'gains_losses'] == 'temp_ext':
+            df.at[j, 'zone'] = all['ZONE']
+        else:
+            zones = df.at[j, 'gains_losses'].split('_')[0]
+            lenght = (len(zones)+1)
+            new_name = df.at[j, 'gains_losses'][lenght:]
+            df.at[j, 'zone'] = zones
+            df.at[j, 'gains_losses'] = new_name
+    return df
+
+def concatenator():
+    """
+    Concatena todos os itens dentro de organizer e retorna o 
+    dataframe resultante
+    """
+    glob_organizer = glob(organizer_path+'*.csv')
+    df = pd.read_csv(glob_organizer[0], sep=';')
+    glob_organizer.pop(0)
+    for item in glob_organizer:
+        each_df = pd.read_csv(item, sep=';')
+        df = pd.concat([df, each_df], axis=0, ignore_index=True)
+    df.drop(columns='Unnamed: 0', axis=1, inplace=True)
+    clean_cache()
+    return df
+
 def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
@@ -94,29 +178,11 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             print(f'\n\n- CSV read {i}')
             df = df.dropna()
             print('- NaN rows removed')
-            columns_list = df.columns
-            if sala['ZONE'] in zone:
-                df = rename_sala(columns_list=columns_list, df=df)
-            if dorm1['ZONE'] in zone:
-                df = rename_dorm1(columns_list=columns_list, df=df)
-            if dorm2['ZONE'] in zone:
-                df = rename_dorm2(columns_list=columns_list, df=df)
-            df = rename_special(columns_list=columns_list, df=df)
-            columns_list = df.columns
-            unwanted_list = []
-            for item in columns_list:
-                if item not in wanted_list:
-                    unwanted_list.append(item)
-            df.drop(columns=unwanted_list, axis=1, inplace=True)
-            columns_list = df.columns
+            df = renamer_and_formater(df=df, zone=zone)
             df = df.groupby(df.columns, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
-            reorder = ['Date/Time']
-            for item in df.columns:
-                if item != 'Date/Time':
-                    reorder.append(item)
-            df = df[reorder]
+            df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
             print('- Initial dataframe created')
             df = invert_values(df)
@@ -126,64 +192,37 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
-                    df.drop(columns='Date/Time', axis=1, inplace=True)
-                    soma = df.apply(sum_separated)
-                    soma = divide(soma)
+                    soma = basic_manipulator(df=df)
                     print('- Gains and losses separated and calculated')
                     soma.loc[:, 'case'] = i.split('\\')[1]
                     soma.loc[:, 'type'] = way
                     soma.loc[:, 'zone'] = 'no zone'
-                    for j in soma.index:
-                        if soma.at[j, 'gains_losses'] == 'temp_ext':
-                            soma.at[j, 'zone'] = all['ZONE']
-                        else:
-                            zones = soma.at[j, 'gains_losses'].split('_')[0]
-                            lenght = (len(zones)+1)
-                            new_name = soma.at[j, 'gains_losses'][lenght:]
-                            soma.at[j, 'zone'] = zones
-                            soma.at[j, 'gains_losses'] = new_name
+                    soma = zone_breaker(df=soma)
                     print('- Case, type and zone added')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    print('- Final annual dataframe created')
+                    print('- Final annual dataframe created\n')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
                         month = str(df.at[row, 'Date/Time'])
                         df.at[row, 'month'] = month[1:3]
                     print('- Months column created')
-                    df.drop(columns='Date/Time', axis=1, inplace=True)
                     months = df['month'].unique()
                     for unique_month in months:
                         df_monthly = df[df['month'] == unique_month]
                         df_monthly.drop(columns='month', axis=1, inplace=True)
-                        soma = df_monthly.apply(sum_separated)
-                        soma = divide(soma)
+                        soma = basic_manipulator(df=df_monthly)
                         print(f'- Gains and losses separated and calculated for month {unique_month}')
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'month'] = unique_month
                         soma.loc[:, 'zone'] = 'no zone'
-                        for j in soma.index:
-                            if soma.at[j, 'gains_losses'] == all['Environment']:
-                                soma.at[j, 'zone'] = all['ZONE']
-                            else:
-                                zones = soma.at[j, 'gains_losses'].split('_')[0]
-                                lenght = (len(zones)+1)
-                                new_name = soma.at[j, 'gains_losses'][lenght:]
-                                soma.at[j, 'zone'] = zones
-                                soma.at[j, 'gains_losses'] = new_name
+                        soma = zone_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
-                    glob_organizer = glob(organizer_path+'*.csv')
-                    df_total = pd.read_csv(glob_organizer[0], sep=';')
-                    glob_organizer.pop(0)
-                    for item in glob_organizer:
-                        each_df = pd.read_csv(item, sep=';')
-                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
-                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    print('- Final monthly dataframe created')
-                    clean_cache()
+                    print('- Final monthly dataframe created\n')
                 case 'daily':
                     ## Max
                     max_temp_idx = df['temp_ext'].idxmax()
@@ -208,22 +247,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     for unique_datetime in days:
                         print(f'- Manipulating {unique_datetime}', end='\r')
                         df_daily = df_max[df_max['Date/Time'] == unique_datetime]
-                        df_daily.drop(columns='Date/Time', axis=1, inplace=True)
-                        soma = df_daily.apply(sum_separated)
-                        soma = divide(soma)
+                        soma = basic_manipulator(df=df_daily)
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
-                        for j in soma.index:
-                            if soma.at[j, 'gains_losses'] == all['Environment']:
-                                soma.at[j, 'zone'] = all['ZONE']
-                            else:
-                                zones = soma.at[j, 'gains_losses'].split('_')[0]
-                                lenght = (len(zones)+1)
-                                new_name = soma.at[j, 'gains_losses'][lenght:]
-                                soma.at[j, 'zone'] = zones
-                                soma.at[j, 'gains_losses'] = new_name
+                        soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
                             soma.at[row, 'day'] = day[4:6]
@@ -238,16 +267,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
                         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
                     print('\n')
-                    glob_organizer = glob(organizer_path+'*.csv')
-                    df_total = pd.read_csv(glob_organizer[0], sep=';')
-                    glob_organizer.pop(0)
-                    for item in glob_organizer:
-                        each_df = pd.read_csv(item, sep=';')
-                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
-                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total = concatenator()
                     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    clean_cache()
                     
                     ## Min
                     min_temp_idx = df['temp_ext'].idxmin()
@@ -271,22 +293,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     for unique_datetime in days:
                         print(f'- Manipulating {unique_datetime}', end='\r')
                         df_daily = df_min[df_min['Date/Time'] == unique_datetime]
-                        df_daily.drop(columns='Date/Time', axis=1, inplace=True)
-                        soma = df_daily.apply(sum_separated)
-                        soma = divide(soma)
+                        soma = basic_manipulator(df=df_daily)
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
-                        for j in soma.index:
-                            if soma.at[j, 'gains_losses'] == all['Environment']:
-                                soma.at[j, 'zone'] = all['ZONE']
-                            else:
-                                zones = soma.at[j, 'gains_losses'].split('_')[0]
-                                lenght = (len(zones)+1)
-                                new_name = soma.at[j, 'gains_losses'][lenght:]
-                                soma.at[j, 'zone'] = zones
-                                soma.at[j, 'gains_losses'] = new_name
+                        soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
                             soma.at[row, 'day'] = day[4:6]
@@ -301,16 +313,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
                         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
                     print('\n')
-                    glob_organizer = glob(organizer_path+'*.csv')
-                    df_total = pd.read_csv(glob_organizer[0], sep=';')
-                    glob_organizer.pop(0)
-                    for item in glob_organizer:
-                        each_df = pd.read_csv(item, sep=';')
-                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
-                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total = concatenator()
                     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    clean_cache()
 
                     ## Max and Min amp
                     df_amp = df.copy()
@@ -356,22 +361,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     for unique_datetime in days:
                         print(f'- Manipulating {unique_datetime}', end='\r')
                         df_daily = df_max[df_max['Date/Time'] == unique_datetime]
-                        df_daily.drop(columns='Date/Time', axis=1, inplace=True)
-                        soma = df_daily.apply(sum_separated)
-                        soma = divide(soma)
+                        soma = basic_manipulator(df=df_daily)
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
-                        for j in soma.index:
-                            if soma.at[j, 'gains_losses'] == all['Environment']:
-                                soma.at[j, 'zone'] = all['ZONE']
-                            else:
-                                zones = soma.at[j, 'gains_losses'].split('_')[0]
-                                lenght = (len(zones)+1)
-                                new_name = soma.at[j, 'gains_losses'][lenght:]
-                                soma.at[j, 'zone'] = zones
-                                soma.at[j, 'gains_losses'] = new_name
+                        soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
                             soma.at[row, 'day'] = day[4:6]
@@ -386,16 +381,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
                         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
                     print('\n')
-                    glob_organizer = glob(organizer_path+'*.csv')
-                    df_total = pd.read_csv(glob_organizer[0], sep=';')
-                    glob_organizer.pop(0)
-                    for item in glob_organizer:
-                        each_df = pd.read_csv(item, sep=';')
-                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
-                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total = concatenator()
                     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    clean_cache()
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
@@ -417,22 +405,12 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     for unique_datetime in days:
                         print(f'- Manipulating {unique_datetime}', end='\r')
                         df_daily = df_min[df_min['Date/Time'] == unique_datetime]
-                        df_daily.drop(columns='Date/Time', axis=1, inplace=True)
-                        soma = df_daily.apply(sum_separated)
-                        soma = divide(soma)
+                        soma = basic_manipulator(df=df_daily)
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'type'] = way
                         soma.loc[:, 'Date/Time'] = unique_datetime
                         soma.loc[:, 'zone'] = 'no zone'
-                        for j in soma.index:
-                            if soma.at[j, 'gains_losses'] == all['Environment']:
-                                soma.at[j, 'zone'] = all['ZONE']
-                            else:
-                                zones = soma.at[j, 'gains_losses'].split('_')[0]
-                                lenght = (len(zones)+1)
-                                new_name = soma.at[j, 'gains_losses'][lenght:]
-                                soma.at[j, 'zone'] = zones
-                                soma.at[j, 'gains_losses'] = new_name
+                        soma = zone_breaker(df=soma)
                         for row in soma.index:
                             day = str(soma.at[row, 'Date/Time'])
                             soma.at[row, 'day'] = day[4:6]
@@ -447,13 +425,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
                         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
                     print('\n')
-                    glob_organizer = glob(organizer_path+'*.csv')
-                    df_total = pd.read_csv(glob_organizer[0], sep=';')
-                    glob_organizer.pop(0)
-                    for item in glob_organizer:
-                        each_df = pd.read_csv(item, sep=';')
-                        df_total = pd.concat([df_total, each_df], axis=0, ignore_index=True)
-                    df_total.drop(columns='Unnamed: 0', axis=1, inplace=True)
+                    df_total = concatenator()
                     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-                    clean_cache()
+            separators()
