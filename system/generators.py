@@ -439,4 +439,4 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     df_total = concatenator()
                     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
-            separators()
+        separators()
