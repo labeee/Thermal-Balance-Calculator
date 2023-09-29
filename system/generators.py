@@ -1,7 +1,7 @@
 from system.source import *
 
 
-def rename_sala(columns_list: list, df: pd.DataFrame):
+def rename_sala(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
     """
     Renomeia todos os itens em SALA
     """
@@ -12,7 +12,7 @@ def rename_sala(columns_list: list, df: pd.DataFrame):
     return df
 
 
-def rename_dorm1(columns_list: list, df: pd.DataFrame):
+def rename_dorm1(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
     """
     Renomeia todos os itens em DORM1
     """
@@ -23,7 +23,7 @@ def rename_dorm1(columns_list: list, df: pd.DataFrame):
     return df
 
 
-def rename_dorm2(columns_list: list, df: pd.DataFrame):
+def rename_dorm2(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
     """
     Renomeia todos os itens em DORM2
     """
@@ -33,7 +33,7 @@ def rename_dorm2(columns_list: list, df: pd.DataFrame):
                 df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[new_name]}"}, inplace=True)
     return df
 
-def rename_special(columns_list: list, df: pd.DataFrame):
+def rename_special(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
     """
     Renomeia todos os itens em ALL (itens especiais fora de categorias de zonas específicas)
     """
@@ -43,7 +43,7 @@ def rename_special(columns_list: list, df: pd.DataFrame):
                 df.rename(columns={item: all[new_name]}, inplace=True)
     return df
 
-def sum_separated(coluna):
+def sum_separated(coluna) -> pd.Series:
     """
     Soma separadamente os positivos e os negativos, retornando um objeto 
     Series contendo em uma coluna os positivos e em outra os negativos de cada linha
@@ -53,7 +53,7 @@ def sum_separated(coluna):
     return pd.Series([positivos, negativos])
 
 
-def divide(df: pd.DataFrame):
+def divide(df: pd.DataFrame) -> pd.DataFrame:
     """
     Divide algumas colunas em gain e loss. Ao fim, adiciona às colunas os nomes de 
     gains_losses e value, além de excluir os valores iguais a zero
@@ -71,7 +71,7 @@ def divide(df: pd.DataFrame):
     divided = divided[divided['value'] != 0]
     return divided
 
-def invert_values(dataframe: pd.DataFrame):
+def invert_values(dataframe: pd.DataFrame) -> pd.DataFrame:
     """
     Multiplica as colunas específicas por -1.
     """
@@ -82,7 +82,7 @@ def invert_values(dataframe: pd.DataFrame):
     df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
     return df_copy
 
-def renamer_and_formater(df: pd.DataFrame, zone: list):
+def renamer_and_formater(df: pd.DataFrame, zone: list) -> pd.DataFrame:
     """
     Recebe o dataframe e uma lista de zonas, então manipula-o renomeando cada lista de 
     colunas e excluindo as colunas desnecessárias 
@@ -103,7 +103,7 @@ def renamer_and_formater(df: pd.DataFrame, zone: list):
     df.drop(columns=unwanted_list, axis=1, inplace=True)
     return df
 
-def reorderer(df: pd.DataFrame):
+def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     """
     Reordena as colunas do dataframe para o Date/Time ser o primeiro item
     """
@@ -114,7 +114,7 @@ def reorderer(df: pd.DataFrame):
     df = df[reorder]
     return df
 
-def basic_manipulator(df: pd.DataFrame):
+def basic_manipulator(df: pd.DataFrame) -> pd.DataFrame:
     """
     Faz o procedimento básico para todos os dataframes serem manipulados
     """
@@ -123,7 +123,7 @@ def basic_manipulator(df: pd.DataFrame):
     df = divide(df)
     return df
 
-def zone_breaker(df: pd.DataFrame):
+def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
     Renomeia cada item da coluna zone para sua respectiva zona, renomeia 
     também o gains_losses para remover a zona nele aplicada
@@ -139,7 +139,7 @@ def zone_breaker(df: pd.DataFrame):
             df.at[j, 'gains_losses'] = new_name
     return df
 
-def concatenator():
+def concatenator() -> pd.DataFrame:
     """
     Concatena todos os itens dentro de organizer e retorna o 
     dataframe resultante
