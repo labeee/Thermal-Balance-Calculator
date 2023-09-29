@@ -184,6 +184,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                 case 'daily':
                     ## Max
                     max_temp_idx = df['temp_ext'].idxmax()
+                    max_value = df["temp_ext"].max()
                     date_str = df.loc[max_temp_idx, 'Date/Time']
                     date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
                     date_str = date_obj.strftime('%m/%d')
@@ -191,7 +192,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
                     days_list = [date_str, day_bf, day_af]
                     print('\n')
-                    print(f'- Date with max value: {date_str}')
+                    print(f'- Date with max value: {date_str} as [{max_value}]')
                     print(f'- Day before: {day_bf}')
                     print(f'- Day after: {day_af}')
                     df_max = df.copy()
@@ -247,13 +248,14 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     
                     ## Min
                     min_temp_idx = df['temp_ext'].idxmin()
+                    min_value = df['temp_ext'].min()
                     date_str = df.loc[min_temp_idx, 'Date/Time']
                     date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
                     date_str = date_obj.strftime('%m/%d')
                     day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
                     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
                     days_list = [date_str, day_bf, day_af]
-                    print(f'- Date with min value: {date_str}')
+                    print(f'- Date with min value: {date_str} as [{min_value}]')
                     print(f'- Day before: {day_bf}')
                     print(f'- Day after: {day_af}')
                     df_min = df.copy()
