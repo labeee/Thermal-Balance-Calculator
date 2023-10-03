@@ -93,6 +93,14 @@ def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame
     df.drop(columns=unwanted_list, axis=1, inplace=True)
     return df
 
+def adjust_values(df: pd.DataFrame) -> pd.DataFrame:
+    try:
+        for j in df.index:
+                df.at[j, 'value'] = int(str(df.at[j, 'value']).split('.')[1])
+    except:
+        pass
+    return df
+
 def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     """Reordena as colunas do dataframe para o Date/Time ser o primeiro item"""
     reorder = ['Date/Time']
@@ -191,11 +199,25 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) ->
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
+        soma = adjust_values(df=soma)
+        soma = hei(df=soma)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
     print('\n')
     df_total = concatenator()
-    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'case']]
+    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'absolute', 'SUM', 'HEI', 'case']]
     return df_total
+
+def hei(df: pd.DataFrame) -> pd.DataFrame:
+    """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
+    df.loc[:, 'absolute'] = 'no abs'
+    df.loc[:, 'HEI'] = 'no HEI'
+    for j in df.index:
+        df.at[j, 'absolute'] = abs(df.at[j, 'value'])
+    module_total = df['absolute'].sum()
+    df.loc[:, 'SUM'] = module_total
+    for j in df.index:
+        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+    return df
 
 def generate_df(path: str, output: str, way: str, type: str, zone: list, coverage: str):
     """
@@ -243,6 +265,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     soma = way_breaker(df=soma, way=way)
                     soma = zone_breaker(df=soma)
                     print('- Case, type and zone added')
+                    soma = adjust_values(df=soma)
+                    soma = hei(df=soma)
+                    print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
                     print('- Final annual dataframe created\n')
                 case 'monthly':
@@ -264,6 +289,8 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
+                        soma = adjust_values(df=soma)
+                        soma = hei(df=soma)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
