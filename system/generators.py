@@ -214,7 +214,6 @@ def hei(df: pd.DataFrame) -> pd.DataFrame:
     for j in df.index:
         df.at[j, 'absolute'] = abs(df.at[j, 'value'])
     module_total = df['absolute'].sum()
-    df.loc[:, 'SUM'] = module_total
     for j in df.index:
         df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     return df
