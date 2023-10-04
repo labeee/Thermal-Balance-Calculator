@@ -139,10 +139,10 @@ def concatenator() -> pd.DataFrame:
     dataframe resultante
     """
     glob_organizer = glob(organizer_path+'*.csv')
-    df = pd.read_csv(glob_organizer[0], sep=';')
+    df = pd.read_csv(glob_organizer[0], sep=',')
     glob_organizer.pop(0)
     for item in glob_organizer:
-        each_df = pd.read_csv(item, sep=';')
+        each_df = pd.read_csv(item, sep=',')
         df = pd.concat([df, each_df], axis=0, ignore_index=True)
     df.drop(columns='Unnamed: 0', axis=1, inplace=True)
     clean_cache()
@@ -201,7 +201,7 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) ->
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
         soma = adjust_values(df=soma)
         soma = hei(df=soma)
-        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=';')
+        soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'absolute', 'SUM', 'HEI', 'case']]
@@ -248,11 +248,11 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
             df = reorderer(df=df)
-            df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+            df.to_csv(output+'initial_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
             df = invert_values(df)
             print('- Inverted specified columns')
-            df.to_csv(output+'intermediary_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+            df.to_csv(output+'intermediary_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
             print('- Intermediary dataframe created')
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
@@ -268,7 +268,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     soma = adjust_values(df=soma)
                     soma = hei(df=soma)
                     print('- Absolute and HEI calculated')
-                    soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    soma.to_csv(output+'final_annual_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
                     print('- Final annual dataframe created\n')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
@@ -291,9 +291,9 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                         print(f'- Case, type and zone added for month {unique_month}')
                         soma = adjust_values(df=soma)
                         soma = hei(df=soma)
-                        soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=';')
+                        soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
-                    df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
                     print('- Final monthly dataframe created\n')
                 case 'daily':
                     ## Max
@@ -306,7 +306,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
-                    df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
                     
                     ## Min
                     min_temp_idx = df['temp_ext'].idxmin()
@@ -317,7 +317,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
-                    df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
                     df_amp = df.copy()
@@ -350,7 +350,7 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
-                    df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
@@ -359,5 +359,5 @@ def generate_df(path: str, output: str, way: str, type: str, zone: list, coverag
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
-                    df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=';')
+                    df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type+i.split('\\')[1], sep=',')
         separators()
