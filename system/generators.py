@@ -93,14 +93,6 @@ def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame
     df.drop(columns=unwanted_list, axis=1, inplace=True)
     return df
 
-def adjust_values(df: pd.DataFrame) -> pd.DataFrame:
-    try:
-        for j in df.index:
-                df.at[j, 'value'] = int(str(df.at[j, 'value']).split('.')[1])
-    except:
-        pass
-    return df
-
 def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     """Reordena as colunas do dataframe para o Date/Time ser o primeiro item"""
     reorder = ['Date/Time']
@@ -123,7 +115,7 @@ def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
     também o gains_losses para remover a zona nele aplicada
     """
     for j in df.index:
-        if df.at[j, 'gains_losses'] == 'temp_ext':
+        if df.at[j, 'gains_losses'] in all['Environment']:
             df.at[j, 'zone'] = all['ZONE']
         else:
             zones = df.at[j, 'gains_losses'].split('_')[0]
@@ -148,14 +140,15 @@ def concatenator() -> pd.DataFrame:
     clean_cache()
     return df
 
-def way_breaker(df: pd.DataFrame, way: str) -> pd.DataFrame:
+def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
     Irá formatar o arquivo adicionando adequadamente o tipo de
-    forma de transmissão de calor, caso seja do tipo surface
+    forma de transmissão de calor
     """
-    if way == 'surface':
-        for i in df.index:
-            df.at[i, 'type'] = df.at[i, 'gains_losses'].split('?')[1] 
+    df.loc[:, 'flux'] = 'Empty'
+    for i in df.index:
+            df.at[i, 'flux'] = df.at[i, 'gains_losses'].split('?')[0]
+            df.at[i, 'gains_losses'] = df.at[i, 'gains_losses'].split('?')[1] 
     return df
 
 def days_finder(date_str: str) -> list:
@@ -168,7 +161,7 @@ def days_finder(date_str: str) -> list:
     days_list = [date_str, day_bf, day_af]
     return days_list
 
-def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) -> pd.DataFrame:
+def daily_manipulator(df: pd.DataFrame, days_list: list, name: str) -> pd.DataFrame:
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
@@ -183,11 +176,10 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) ->
         df_daily = new_daily_df[new_daily_df['Date/Time'] == unique_datetime]
         soma = basic_manipulator(df=df_daily)
         soma.loc[:, 'case'] = name.split('\\')[1]
-        soma.loc[:, 'type'] = way
         soma.loc[:, 'Date/Time'] = unique_datetime
         soma.loc[:, 'zone'] = 'no zone'
-        soma = way_breaker(df=soma, way=way)
         soma = zone_breaker(df=soma)
+        soma = way_breaker(df=soma)
         for row in soma.index:
             day = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'day'] = day[4:6]
@@ -200,12 +192,11 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, way: str, name: str) ->
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = adjust_values(df=soma)
         soma = hei(df=soma)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
     df_total = concatenator()
-    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'type', 'zone', 'gains_losses', 'value', 'absolute', 'SUM', 'HEI', 'case']]
+    df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
 def hei(df: pd.DataFrame) -> pd.DataFrame:
@@ -217,6 +208,7 @@ def hei(df: pd.DataFrame) -> pd.DataFrame:
     module_total = df['absolute'].sum()
     for j in df.index:
         df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+    df.drop(columns='absolute', axis=1, inplace=True)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone: list, coverage: str):
@@ -260,12 +252,10 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     soma = basic_manipulator(df=df)
                     print('- Gains and losses separated and calculated')
                     soma.loc[:, 'case'] = i.split('\\')[1]
-                    soma.loc[:, 'type'] = way
                     soma.loc[:, 'zone'] = 'no zone'
-                    soma = way_breaker(df=soma, way=way)
                     soma = zone_breaker(df=soma)
+                    soma = way_breaker(df=soma)
                     print('- Case, type and zone added')
-                    soma = adjust_values(df=soma)
                     soma = hei(df=soma)
                     print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
@@ -283,13 +273,11 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                         soma = basic_manipulator(df=df_monthly)
                         print(f'- Gains and losses separated and calculated for month {unique_month}')
                         soma.loc[:, 'case'] = i.split('\\')[1]
-                        soma.loc[:, 'type'] = way
                         soma.loc[:, 'month'] = unique_month
                         soma.loc[:, 'zone'] = 'no zone'
-                        soma = way_breaker(df=soma, way=way)
                         soma = zone_breaker(df=soma)
+                        soma = way_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
-                        soma = adjust_values(df=soma)
                         soma = hei(df=soma)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
@@ -305,7 +293,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max value: {days_list[0]} as [{max_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
@@ -316,7 +304,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
@@ -349,7 +337,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     # Min amp
@@ -358,6 +346,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, way=way, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
         separators()
