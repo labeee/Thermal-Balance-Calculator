@@ -128,7 +128,7 @@ sala = {
         'SALA_PORTAEX_0_00D:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?east_extwalls',
         'SALA_PISO:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_floor',
         'SALA_COB_1:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof',
-        'SALA_COB_0:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof',
+        'SALA_COB_0:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof'
     }
 }
 dorm1 = {
@@ -192,7 +192,7 @@ dorm1 = {
         'DORM1_PAREX_00I:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?south_extwalls',
         'DORM1_PAREX_00D:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?east_extwalls',
         'DORM1_PISO:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_floor',
-        'DORM1_COB:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof',
+        'DORM1_COB:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof'
     }
 }
 dorm2 = {
@@ -216,7 +216,54 @@ dorm2 = {
         'DORM2:Zone Air System Sensible Heating': 'convection?heating',
         'DORM2:Zone Air System Sensible Cooling': 'convection?cooling'},
     "surface": {
-
+        'DORM2_PARIN_00I:Surface Inside Face Convection Heat Gain Rate': 'convection?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Convection Heat Gain Rate': 'convection?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Convection Heat Gain Rate': 'convection?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Convection Heat Gain Rate': 'convection?west_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Convection Heat Gain Rate': 'convection?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Convection Heat Gain Rate': 'convection?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Convection Heat Gain Rate': 'convection?none_floor',
+        'DORM2_COB:Surface Inside Face Convection Heat Gain Rate': 'convection?none_roof',
+        'DORM2_PARIN_00I:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?west_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?none_floor',
+        'DORM2_COB:Surface Inside Face Conduction Heat Transfer Rate': 'conduction?none_roof',
+        'DORM2_PARIN_00I:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?west_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?none_floor',
+        'DORM2_COB:Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad?none_roof',
+        'DORM2_PARIN_00I:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?west_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?none_floor',
+        'DORM2_COB:Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights?none_roof',
+        'DORM2_PARIN_00I:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?west_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?east_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_floor',
+        'DORM2_COB:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_roof',
+        'DORM2_PARIN_00I:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
+        'DORM2_PARIN_01E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
+        'DORM2_PORTAIN_0_01E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
+        'DORM2_PAREX_00E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?west_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?east_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?north_extwalls',
+        'DORM2_PISO:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_floor',
+        'DORM2_COB:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof'
     }
 }
 all = {
