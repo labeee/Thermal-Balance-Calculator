@@ -16,7 +16,7 @@ def menu():
         clear_screen()
         print(software_name)
         separators()
-        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\tDataframe type: {df_type}\n\n\n\n\t[1] Generate dataframes for surface (maintenance)\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Change dataframe type\n\t[5] Personalize separators\n\n\n\t[ENTER] End software\n')
+        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\tDataframe type: {df_type}\n\n\n\n\t[1] Generate dataframes for surface\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Change dataframe type\n\t[5] Personalize separators\n\n\n\t[ENTER] End software\n')
         separators()
         opt = input('...')
         if opt == '':
@@ -26,12 +26,6 @@ def menu():
         elif opt == '1':
             clear_screen()
             generate_df(path=surface_input_path, output=surface_output_path, way="surface", type_name='_surface_', zone=zones, coverage=df_type)
-            clear_screen()
-            print(warn)
-            separators()
-            print('\nFUNCTION NOT YET READY\n')
-            separators()
-            time.sleep(2)
         elif opt == '2':
             clear_screen()
             generate_df(path=convection_input_path, output=convection_output_path, way="convection", type_name='_convection_', zone=zones, coverage=df_type)
