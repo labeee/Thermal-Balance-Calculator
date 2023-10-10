@@ -154,7 +154,11 @@ def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
 def days_finder(date_str: str) -> list:
     """Busca e retorna uma lista contendo o dia, dia anterior e 
     dia seguinte ao evento"""
-    date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
+    date_str_splt = date_str.split(' ')
+    if date_str_splt[0] == '':
+        date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
+    else:
+        date_obj = datetime.strptime(date_str.split(' ')[0], '%m/%d')
     date_str = date_obj.strftime('%m/%d')
     day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
@@ -181,12 +185,12 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str) -> pd.DataFr
         soma = zone_breaker(df=soma)
         soma = way_breaker(df=soma)
         for row in soma.index:
-            day = str(soma.at[row, 'Date/Time'])
-            soma.at[row, 'day'] = day[4:6]
+            day = str(soma.at[row, 'Date/Time']).strip()
+            soma.at[row, 'day'] = day[3:5]
         soma.loc[:, 'month'] = 'no month'
         for row in soma.index:
             month = str(soma.at[row, 'Date/Time'])
-            soma.at[row, 'month'] = month[1:3]
+            soma.at[row, 'month'] = month.split('/')[0].strip()
         soma.loc[:, 'hour'] = 'no hour'
         for row in soma.index:
             hour = str(soma.at[row, 'Date/Time'])
@@ -264,7 +268,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
                         month = str(df.at[row, 'Date/Time'])
-                        df.at[row, 'month'] = month[1:3]
+                        df.at[row, 'month'] = month.split('/')[0].strip()
                     print('- Months column created')
                     months = df['month'].unique()
                     for unique_month in months:
@@ -285,8 +289,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print('- Final monthly dataframe created\n')
                 case 'daily':
                     ## Max
-                    max_temp_idx = df['temp_ext'].idxmax()
-                    max_value = df["temp_ext"].max()
+                    max_temp_idx = df[all['Environment']].idxmax()
+                    max_value = df[all['Environment']].max()
                     date_str = df.loc[max_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
                     print('\n')
@@ -297,8 +301,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
-                    min_temp_idx = df['temp_ext'].idxmin()
-                    min_value = df['temp_ext'].min()
+                    min_temp_idx = df[all['Environment']].idxmin()
+                    min_value = df[all['Environment']].min()
                     date_str = df.loc[min_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
@@ -311,16 +315,16 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     df_amp = df.copy()
                     df_amp.loc[:, 'date'] = 'no date'
                     for row in df_amp.index:
-                        date = str(df_amp.at[row, 'Date/Time'])
-                        df_amp.at[row, 'date'] = date[1:6]
+                        date = str(df_amp.at[row, 'Date/Time']).strip()
+                        df_amp.at[row, 'date'] = date[0:5]
                     max_amp = {'date': None, 'value': 0, 'index': 0}
                     min_amp = {'date': None, 'value': 1000, 'index': 0}
                     dates_list = df_amp['date'].unique()
                     for days in dates_list:
                         df_day = df_amp[df_amp['date'] == days]
-                        max_daily = df_day['temp_ext'].max()
-                        idx_daily = df_day['temp_ext'].idxmax()
-                        min_daily = df_day['temp_ext'].min()
+                        max_daily = df_day[all['Environment']].max()
+                        idx_daily = df_day[all['Environment']].idxmax()
+                        min_daily = df_day[all['Environment']].min()
                         total = abs(max_daily - min_daily)
                         if total > max_amp['value']:
                             max_amp['date'] = days
