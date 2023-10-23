@@ -71,6 +71,11 @@ def invert_values(dataframe: pd.DataFrame, way: str) -> pd.DataFrame:
         if not valid_cols:
             return df_copy
         df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
+        print('- Inverted specified columns')
+        df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+        print('- Intermediary dataframe created')
+    else:
+        df_copy = dataframe.copy()
     return df_copy
 
 def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame:
@@ -248,9 +253,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
             df = invert_values(dataframe=df, way=way)
-            print('- Inverted specified columns')
-            df.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
-            print('- Intermediary dataframe created')
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
