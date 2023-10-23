@@ -63,13 +63,14 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
     divided = divided[divided['value'] != 0]
     return divided
 
-def invert_values(dataframe: pd.DataFrame) -> pd.DataFrame:
+def invert_values(dataframe: pd.DataFrame, way: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
-    df_copy = dataframe.copy()
-    valid_cols = [col for col in df_copy.columns if col in multiply_list]
-    if not valid_cols:
-        return df_copy
-    df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
+    if way != 'surface':
+        df_copy = dataframe.copy()
+        valid_cols = [col for col in df_copy.columns if col in multiply_list]
+        if not valid_cols:
+            return df_copy
+        df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
     return df_copy
 
 def renamer_and_formater(df: pd.DataFrame, zone: list, way: str) -> pd.DataFrame:
@@ -246,7 +247,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
-            df = invert_values(df)
+            df = invert_values(dataframe=df, way=way)
             print('- Inverted specified columns')
             df.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Intermediary dataframe created')
