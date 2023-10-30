@@ -41,7 +41,9 @@ def sum_separated(coluna) -> pd.Series:
     Series contendo em uma coluna os positivos e em outra os negativos de cada linha
     """
     positivos = coluna[coluna >= 0].sum()
-    negativos = coluna[coluna < 0].sum()
+    negativos = coluna[coluna < 0]
+    negativos = negativos.multiply(-1).sum()
+    negativos = negativos.multiply(-1)
     return pd.Series([positivos, negativos])
 
 
@@ -246,7 +248,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df = df.dropna()
             print('- NaN rows removed')
             df = renamer_and_formater(df=df, zone=zone, way=way)
-            df = df.groupby(df.columns, axis=1).sum()
+            df = df.groupby(level=0, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
             df = reorderer(df=df)
