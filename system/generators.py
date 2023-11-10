@@ -62,7 +62,7 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
             divided[f'{column}_loss'] = df[column].apply(lambda item: item if item<0 else 0)
     divided = divided.sum().reset_index()
     divided.columns = ['gains_losses', 'value']
-    divided = divided[divided['value'] != 0]
+    # divided = divided[divided['value'] != 0]
     return divided
 
 def invert_values(dataframe: pd.DataFrame, way: str) -> pd.DataFrame:
