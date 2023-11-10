@@ -65,7 +65,7 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
     # divided = divided[divided['value'] != 0]
     return divided
 
-def invert_values(dataframe: pd.DataFrame, way: str) -> pd.DataFrame:
+def invert_values(dataframe: pd.DataFrame, way: str, output: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
     if way != 'surface':
         df_copy = dataframe.copy()
@@ -254,7 +254,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
-            df = invert_values(dataframe=df, way=way)
+            df = invert_values(dataframe=df, way=way, output=output)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':

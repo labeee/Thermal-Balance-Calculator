@@ -314,7 +314,6 @@ surface_output_path = r'output/surface/'
 convection_output_path = r'output/convection/'
 surface_input_path = r'input/surface/'
 convection_input_path = r'input/convection/'
-full_output_path = r'output/full/'
 organizer_path = r'system/organizer/'
 
 
