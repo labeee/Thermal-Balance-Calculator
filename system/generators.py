@@ -41,9 +41,9 @@ def sum_separated(coluna) -> pd.Series:
     Series contendo em uma coluna os positivos e em outra os negativos de cada linha
     """
     positivos = coluna[coluna >= 0].sum()
-    negativos = coluna[coluna < 0]
-    negativos = negativos.multiply(-1).sum()
-    negativos = negativos.multiply(-1)
+    negativos = coluna[coluna < 0] * -1
+    negativos = negativos.sum()
+    negativos = negativos * -1
     return pd.Series([positivos, negativos])
 
 
@@ -65,16 +65,16 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
     # divided = divided[divided['value'] != 0]
     return divided
 
-def invert_values(dataframe: pd.DataFrame, way: str, output: str) -> pd.DataFrame:
+def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
     if way != 'surface':
         df_copy = dataframe.copy()
         valid_cols = [col for col in df_copy.columns if col in multiply_list]
         if not valid_cols:
             return df_copy
-        df_copy[valid_cols] = df_copy[valid_cols].multiply(-1)
+        df_copy[valid_cols] = df_copy[valid_cols] * -1
         print('- Inverted specified columns')
-        df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+        df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+dataframe_name.split('\\')[1], sep=',')
         print('- Intermediary dataframe created')
     else:
         df_copy = dataframe.copy()
@@ -254,7 +254,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
-            df = invert_values(dataframe=df, way=way, output=output)
+            df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
