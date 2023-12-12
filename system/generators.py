@@ -173,7 +173,7 @@ def days_finder(date_str: str) -> list:
     days_list = [date_str, day_bf, day_af]
     return days_list
 
-def daily_manipulator(df: pd.DataFrame, days_list: list, name: str) -> pd.DataFrame:
+def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) -> pd.DataFrame:
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
@@ -204,23 +204,24 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str) -> pd.DataFr
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = hei(df=soma)
+        soma = hei(df=soma, type=way)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
-def hei(df: pd.DataFrame) -> pd.DataFrame:
+def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
     """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
-    df.loc[:, 'absolute'] = 'no abs'
-    df.loc[:, 'HEI'] = 'no HEI'
-    for j in df.index:
-        df.at[j, 'absolute'] = abs(df.at[j, 'value'])
-    module_total = df['absolute'].sum()
-    for j in df.index:
-        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-    df.drop(columns='absolute', axis=1, inplace=True)
+    if type == 'convection':
+        df.loc[:, 'absolute'] = 'no abs'
+        df.loc[:, 'HEI'] = 'no HEI'
+        for j in df.index:
+            df.at[j, 'absolute'] = abs(df.at[j, 'value'])
+        module_total = df['absolute'].sum()
+        for j in df.index:
+            df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+        df.drop(columns='absolute', axis=1, inplace=True)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone: list, coverage: str):
@@ -265,7 +266,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     soma = zone_breaker(df=soma)
                     soma = way_breaker(df=soma)
                     print('- Case, type and zone added')
-                    soma = hei(df=soma)
+                    soma = hei(df=soma, type=way)
                     print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     print('- Final annual dataframe created\n')
@@ -287,7 +288,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                         soma = zone_breaker(df=soma)
                         soma = way_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
-                        soma = hei(df=soma)
+                        soma = hei(df=soma, type=way)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
@@ -302,7 +303,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max value: {days_list[0]} as [{max_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
@@ -313,7 +314,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
@@ -346,7 +347,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     # Min amp
@@ -355,6 +356,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
         separators()
