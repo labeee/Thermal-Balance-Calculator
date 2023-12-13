@@ -213,15 +213,15 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) ->
 
 def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
     """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
+    df.loc[:, 'absolute'] = 'no abs'
+    df.loc[:, 'HEI'] = 'no HEI'
+    for j in df.index:
+        df.at[j, 'absolute'] = abs(df.at[j, 'value'])
     if type == 'convection':
-        df.loc[:, 'absolute'] = 'no abs'
-        df.loc[:, 'HEI'] = 'no HEI'
-        for j in df.index:
-            df.at[j, 'absolute'] = abs(df.at[j, 'value'])
         module_total = df['absolute'].sum()
         for j in df.index:
             df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-        df.drop(columns='absolute', axis=1, inplace=True)
+    df.drop(columns='absolute', axis=1, inplace=True)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone: list, coverage: str):
