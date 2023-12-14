@@ -308,6 +308,15 @@ for item in ref_multiply_list:
             multiply_list.append(i)
 multiply_list = list(set(multiply_list))
 
+items_list_for_surface = []
+for ref in sala['surface']:
+    items_list_for_surface.append(sala['surface'][ref].split('?')[1])
+for ref in dorm1['surface']:
+    items_list_for_surface.append(dorm1['surface'][ref].split('?')[1])
+for ref in dorm2['surface']:
+    items_list_for_surface.append(dorm2['surface'][ref].split('?')[1])
+items_list_for_surface.append(all['Environment'].split('?')[1])
+items_list_for_surface = list(set(items_list_for_surface))
 
 # Paths
 surface_output_path = r'output/surface/'

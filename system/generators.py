@@ -221,6 +221,15 @@ def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
         module_total = df['absolute'].sum()
         for j in df.index:
             df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+    elif type == 'surface':
+        for surf in items_list_for_surface:
+            module_total = 0
+            for j in df.index:
+                if surf in df.at[j, 'gains_losses']:
+                    module_total += int(df.at[j, 'absolute'])
+            for j in df.index:
+                if surf in df.at[j, 'gains_losses']:
+                    df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     df.drop(columns='absolute', axis=1, inplace=True)
     return df
 
