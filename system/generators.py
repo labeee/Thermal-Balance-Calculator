@@ -204,6 +204,7 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) ->
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
+        soma = proccess_windows_complex(soma)
         soma = hei(df=soma, type=way)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
@@ -231,6 +232,23 @@ def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
                 if surf in df.at[j, 'gains_losses']:
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     df.drop(columns='absolute', axis=1, inplace=True)
+    return df
+
+def proccess_windows_complex(df: pd.DataFrame) -> pd.DataFrame:
+    for window, frame in frames_and_windows.items():
+        zonas_da_janela = list(df.loc[df['gains_losses'] == window, 'zone'].values)
+        zonas_do_frame = list(df.loc[df['gains_losses'] == frame, 'zone'].values)
+        for cada_zona_janela in zonas_da_janela:
+            for cada_zona_frame in zonas_do_frame:
+                if cada_zona_frame == cada_zona_janela:
+                    index_frame = zonas_do_frame.index(cada_zona_frame)
+                    index_janela = zonas_da_janela.index(cada_zona_janela)
+                    janela = df.loc[df['gains_losses'] == window, 'value'].values
+                    frame_da_janela = df.loc[df['gains_losses'] == frame, 'value'].values
+                    index_do_frame = df.loc[df['gains_losses'] == frame, 'value'].index
+                    df.loc[df['gains_losses'] == window, 'value'] = janela[index_janela] + frame_da_janela[index_frame]
+                    df.drop(index=index_do_frame[index_frame], inplace=True)
+                    zonas_do_frame.pop(index_frame)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone: list, coverage: str):
@@ -274,6 +292,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     soma = zone_breaker(df=soma)
                     soma = way_breaker(df=soma)
                     print('- Case, type and zone added')
+                    soma = proccess_windows_complex(soma)
                     soma = hei(df=soma, type=way)
                     print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
@@ -296,6 +315,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                         soma = zone_breaker(df=soma)
                         soma = way_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
+                        soma = proccess_windows_complex(soma)
                         soma = hei(df=soma, type=way)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()

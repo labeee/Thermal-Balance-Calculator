@@ -260,16 +260,16 @@ dorm2 = {
         'DORM2_PARIN_01E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_intwalls',
         'DORM2_PORTAIN_0_01E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_intwalls',
         'DORM2_PAREX_00E:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?west_extwalls',
-        'DORM2_PAREX_00S:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?east_extwalls',
-        'DORM2_PAREX_00D:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?north_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?north_extwalls',
         'DORM2_PISO:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_floor',
         'DORM2_COB:Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces?none_roof',
         'DORM2_PARIN_00I:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
         'DORM2_PARIN_01E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
         'DORM2_PORTAIN_0_01E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_intwalls',
         'DORM2_PAREX_00E:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?west_extwalls',
-        'DORM2_PAREX_00S:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?east_extwalls',
-        'DORM2_PAREX_00D:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?north_extwalls',
+        'DORM2_PAREX_00D:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?east_extwalls',
+        'DORM2_PAREX_00S:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?north_extwalls',
         'DORM2_PISO:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_floor',
         'DORM2_COB:Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal?none_roof'
     }
@@ -317,6 +317,15 @@ for ref in dorm2['surface']:
     items_list_for_surface.append(dorm2['surface'][ref].split('?')[1])
 items_list_for_surface.append(all['Environment'].split('?')[1])
 items_list_for_surface = list(set(items_list_for_surface))
+
+frames_and_windows = {
+    'south_windows_gain': 'south_frame_gain',
+    'south_windows_loss': 'south_frame_loss',
+    'west_windows_gain': 'west_frame_gain',
+    'west_windows_loss': 'west_frame_loss',
+    'east_windows_gain': 'east_frame_gain',
+    'east_windows_loss': 'east_frame_loss'
+}
 
 # Paths
 surface_output_path = r'output/surface/'
