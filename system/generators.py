@@ -67,7 +67,7 @@ def divide(df: pd.DataFrame) -> pd.DataFrame:
 
 def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
-    if way != 'surface':
+    if way == 'convection':
         df_copy = dataframe.copy()
         valid_cols = [col for col in df_copy.columns if col in multiply_list]
         if not valid_cols:
@@ -204,7 +204,6 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) ->
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        # soma = proccess_windows_complex(soma)
         soma = hei(df=soma, type=way)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
@@ -222,16 +221,20 @@ def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
         module_total = df['absolute'].sum()
         for j in df.index:
             df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+        print(f'\nCONVECÇÃO OBTEVE SOMATORIO --> {module_total}\n')
     elif type == 'surface':
         for surf in items_list_for_surface:
             module_total = 0
             for j in df.index:
                 if surf in df.at[j, 'gains_losses']:
+                    print(f"\t-{df.at[j, 'gains_losses']} pertence à lista de superfícies {surf}, somando valor ao somatório ({module_total})")
                     module_total += int(df.at[j, 'absolute'])
             for j in df.index:
                 if surf in df.at[j, 'gains_losses']:
+                    print(f"\t-{df.at[j, 'absolute']} pertence à lista de superfícies {surf}, calculando seu HEI")
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-    df.drop(columns='absolute', axis=1, inplace=True)
+            print(f'\nSUPERFÍCIE {surf} OBTEVE SOMATÓRIO {module_total}\n')
+    # df.drop(columns='absolute', axis=1, inplace=True)
     return df
 
 def proccess_windows_complex(df: pd.DataFrame) -> pd.DataFrame:
