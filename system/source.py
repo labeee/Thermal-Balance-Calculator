@@ -318,15 +318,6 @@ for ref in dorm2['surface']:
 items_list_for_surface.append(all['Environment'].split('?')[1])
 items_list_for_surface = list(set(items_list_for_surface))
 
-frames_and_windows = {
-    'south_windows_gain': 'south_frame_gain',
-    'south_windows_loss': 'south_frame_loss',
-    'west_windows_gain': 'west_frame_gain',
-    'west_windows_loss': 'west_frame_loss',
-    'east_windows_gain': 'east_frame_gain',
-    'east_windows_loss': 'east_frame_loss'
-}
-
 # Paths
 surface_output_path = r'output/surface/'
 convection_output_path = r'output/convection/'
@@ -334,6 +325,12 @@ surface_input_path = r'input/surface/'
 convection_input_path = r'input/convection/'
 organizer_path = r'system/organizer/'
 
+frames_and_windows = {
+    'SALA_convection?south_frame': 'SALA_convection?south_windows',
+    'SALA_convection?west_frame': 'SALA_convection?west_windows',
+    'DORM1_convection?south_frame': 'DORM1_convection?south_windows',
+    'DORM2_convection?east_frame': 'DORM2_convection?east_windows' 
+}
 
 # Style
 software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█

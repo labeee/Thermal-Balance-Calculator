@@ -204,54 +204,49 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) ->
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = hei(df=soma, type=way)
+        soma = hei(df=soma, type=way, zone=zone)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
-def hei(df: pd.DataFrame, type: str) -> pd.DataFrame:
+def hei(df: pd.DataFrame, type: str, zone: list) -> pd.DataFrame:
     """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
     df.loc[:, 'absolute'] = 'no abs'
     df.loc[:, 'HEI'] = 'no HEI'
     for j in df.index:
         df.at[j, 'absolute'] = abs(df.at[j, 'value'])
     if type == 'convection':
-        module_total = df['absolute'].sum()
-        for j in df.index:
-            df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-        print(f'\nCONVECÇÃO OBTEVE SOMATORIO --> {module_total}\n')
-    elif type == 'surface':
-        for surf in items_list_for_surface:
+        for local in zone:
             module_total = 0
             for j in df.index:
-                if surf in df.at[j, 'gains_losses']:
-                    print(f"\t-{df.at[j, 'gains_losses']} pertence à lista de superfícies {surf}, somando valor ao somatório ({module_total})")
-                    module_total += int(df.at[j, 'absolute'])
+                if df.at[j, 'zone'] == local:
+                    module_total += df.at[j, 'absolute']
             for j in df.index:
-                if surf in df.at[j, 'gains_losses']:
-                    print(f"\t-{df.at[j, 'absolute']} pertence à lista de superfícies {surf}, calculando seu HEI")
+                if df.at[j, 'zone'] == local:
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-            print(f'\nSUPERFÍCIE {surf} OBTEVE SOMATÓRIO {module_total}\n')
-    # df.drop(columns='absolute', axis=1, inplace=True)
+    elif type == 'surface':
+        for local in zone:
+            for surf in items_list_for_surface:
+                module_total = 0
+                for j in df.index:
+                    if (surf in df.at[j, 'gains_losses']) and (local == df.at[j, 'zone']):
+                        module_total += int(df.at[j, 'absolute'])
+                for j in df.index:
+                    if (surf in df.at[j, 'gains_losses']) and (local == df.at[j, 'zone']):
+                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     return df
 
 def proccess_windows_complex(df: pd.DataFrame) -> pd.DataFrame:
-    for window, frame in frames_and_windows.items():
-        zonas_da_janela = list(df.loc[df['gains_losses'] == window, 'zone'].values)
-        zonas_do_frame = list(df.loc[df['gains_losses'] == frame, 'zone'].values)
-        for cada_zona_janela in zonas_da_janela:
-            for cada_zona_frame in zonas_do_frame:
-                if cada_zona_frame == cada_zona_janela:
-                    index_frame = zonas_do_frame.index(cada_zona_frame)
-                    index_janela = zonas_da_janela.index(cada_zona_janela)
-                    janela = df.loc[df['gains_losses'] == window, 'value'].values
-                    frame_da_janela = df.loc[df['gains_losses'] == frame, 'value'].values
-                    index_do_frame = df.loc[df['gains_losses'] == frame, 'value'].index
-                    df.loc[df['gains_losses'] == window, 'value'] = janela[index_janela] + frame_da_janela[index_frame]
-                    df.drop(index=index_do_frame[index_frame], inplace=True)
-                    zonas_do_frame.pop(index_frame)
+    lista_de_colunas = []
+    for colunas in df.columns:
+        if colunas in frames_and_windows:
+            lista_de_colunas.append(frames_and_windows[colunas])
+        else:
+            lista_de_colunas.append(colunas)
+    df.columns = lista_de_colunas
+    df = df.groupby(level=0, axis=1).sum()
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone: list, coverage: str):
@@ -285,6 +280,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
             df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i)
+            df = proccess_windows_complex(df)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
@@ -296,7 +292,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     soma = way_breaker(df=soma)
                     print('- Case, type and zone added')
                     # soma = proccess_windows_complex(soma)
-                    soma = hei(df=soma, type=way)
+                    soma = hei(df=soma, type=way, zone=zone)
                     print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     print('- Final annual dataframe created\n')
@@ -319,7 +315,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                         soma = way_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
                         # soma = proccess_windows_complex(soma)
-                        soma = hei(df=soma, type=way)
+                        soma = hei(df=soma, type=way, zone=zone)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
