@@ -6,7 +6,7 @@ conn = sqlite3.connect('database.sql')
 cursor = conn.cursor()
 
 cursor.execute("SELECT * FROM sqlite_master WHERE type='table';")
-# cursor.execute("SELECT * FROM ")
+# cursor.execute("SELECT * FROM Zones;")
 result = cursor.fetchall()
 result = pd.DataFrame(result)
 
