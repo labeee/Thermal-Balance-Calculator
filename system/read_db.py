@@ -52,7 +52,10 @@ for key, value in zones_dict.items():
 zones_final = {}
 for key, value in surfaces_dict.items():
     for idx in value.index:
-        zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"
+        if 'Frame' in zones_final[value.at[idx, 'SurfaceName']]:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_frame"
+        else:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"
 
 zones_final = pd.DataFrame([zones_final])
 zones_final.to_csv('zones_final.csv', index=False)
