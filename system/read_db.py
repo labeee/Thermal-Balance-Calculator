@@ -49,7 +49,7 @@ for key, value in zones_dict.items():
             case 'Ceiling':
                 surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
 
-print(surfaces_dict)
+print(surfaces_dict,'\n')
 
 alt_dict = {
             'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
