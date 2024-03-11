@@ -49,11 +49,30 @@ for key, value in zones_dict.items():
             case 'Ceiling':
                 surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
 
+print(surfaces_dict)
+
+alt_dict = {
+            'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
+            'AFN Zone Ventilation Sensible Heat Gain Rate': 'convection?vn_window_gain',
+            'AFN Zone Ventilation Sensible Heat Loss Rate': 'convection?vn_window_loss',
+            'AFN Zone Mixing Sensible Heat Gain Rate': 'convection?vc_interzone_gain',
+            'AFN Zone Mixing Sensible Heat Loss Rate': 'convection?vc_interzone_loss',
+            'Zone Air System Sensible Heating Rate': 'convection?heating',
+            'Zone Air System Sensible Cooling Rate': 'convection?cooling'
+            }
 zones_final = {}
 for key, value in surfaces_dict.items():
     for idx in value.index:
-        if 'Frame' in zones_final[value.at[idx, 'SurfaceName']]:
-            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_frame"
+        if value.at[idx, 'SurfaceName'] in alt_dict:
+            zones_final[value.at[idx, 'SurfaceName']] = alt_dict[value.at[idx, 'SurfaceName']]
+        elif 'Frame' in value.at[idx, 'SurfaceName']:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_Frame"
+        elif 'GlassDoor' in value.at[idx, 'SurfaceName']:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_GlassDoor"
+        elif 'Door' in value.at[idx, 'SurfaceName']:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_Door"
+        elif 'Window' in value.at[idx, 'SurfaceName']:
+            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_Window"
         else:
             zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"
 
