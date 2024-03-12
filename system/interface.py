@@ -9,6 +9,7 @@ def menu():
     usuário deseja e administrando adequada e automaticamente as funções a serem
     executadas.
     """
+    clean_cache()
     zones = [sala['ZONE'], dorm1['ZONE'], dorm2['ZONE']]
     df_type = 'annual'
     execute = True

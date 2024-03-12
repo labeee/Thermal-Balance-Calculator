@@ -1,5 +1,74 @@
 from system.source import *
 
+def read_db():
+    conn = sqlite3.connect(r'input/database.sql')
+
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT ZoneIndex, ZoneName FROM Zones;")
+    result = cursor.fetchall()
+    zones_dict = {}
+    for i in result:
+        zones_dict[i[1]] = i[0]
+
+    surfaces_dict = {}
+    for key, value in zones_dict.items():
+        cursor.execute(f"SELECT ZoneIndex, SurfaceName, ClassName, Azimuth, ExtBoundCond FROM Surfaces WHERE ZoneIndex={value};")
+        result = cursor.fetchall()
+        surfaces_dict[key] = pd.DataFrame(result, columns=['ZoneIndex', 'SurfaceName', 'ClassName', 'Azimuth', 'ExtBoundCond'])
+        for idx in surfaces_dict[key].index:
+
+            if surfaces_dict[key].at[idx, 'ExtBoundCond'] == 0:
+                surfaces_dict[key].at[idx, 'ExtBoundCond'] = 'ext'
+            else:
+                surfaces_dict[key].at[idx, 'ExtBoundCond'] = 'int'
+                
+            azimuth = surfaces_dict[key].at[idx, 'Azimuth']
+            if azimuth < 22.5 or azimuth >= 337.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'north'
+            elif azimuth >= 22.5 and azimuth < 67.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'northeast'
+            elif azimuth >= 67.5 and azimuth < 112.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'east'
+            elif azimuth >= 112.5 and azimuth < 157.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'southeast'
+            elif azimuth >= 157.5 and azimuth < 202.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'south'
+            elif azimuth >= 202.5 and azimuth < 247.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'southwest'
+            elif azimuth >= 247.5 and azimuth < 292.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'west'
+            elif azimuth >= 292.5 and azimuth < 337.5:
+                surfaces_dict[key].at[idx, 'Azimuth'] = 'northwest'
+
+            match surfaces_dict[key].at[idx, 'ClassName']:
+                case 'Door':
+                    surfaces_dict[key].at[idx, 'ClassName'] = 'Wall'
+                case 'Ceiling':
+                    surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
+    cursor.close()
+    conn.close() 
+    return surfaces_dict
+
+
+def rename_cols(columns_list: list, df: pd.DataFrame, way: str, surfaces_dict: dict, zones_list: dict) -> pd.DataFrame:
+    """Renomeia todas as colunas de acordo com o dicionário de renomeação"""
+    for item in columns_list:
+        for zone_name in surfaces_dict:
+            for verify in zones_list[zone_name][way]:
+                if verify in item:
+                    for key, value in surfaces_dict.items():
+                        for idx in value.index:
+                            if 'Frame' in value.at[idx, 'SurfaceName']:
+                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Frame"}, inplace=True)
+                            elif 'GlassDoor' in value.at[idx, 'SurfaceName']:
+                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Window"}, inplace=True)
+                            elif 'Window' in value.at[idx, 'SurfaceName']:
+                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Window"}, inplace=True)
+                            else:
+                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"}, inplace=True)
+    return df
+
 
 def rename_sala(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
     """Renomeia todos os itens em SALA"""
@@ -26,6 +95,7 @@ def rename_dorm2(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame
             if new_name in item:
                 df.rename(columns={item: f"{dorm2['ZONE']}_{dorm2[way][new_name]}"}, inplace=True)
     return df
+
 
 def rename_special(columns_list: list, df: pd.DataFrame) -> pd.DataFrame:
     """Renomeia todos os itens em ALL (itens especiais fora de categorias de zonas específicas)"""
@@ -259,7 +329,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
     zone: lista de zonas (SALA, DORM1, DORM2)
     coverage: annual/monthly/daily
     """
-    clean_cache()
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
     print(f'Found inputs: {globed}\n\n')
