@@ -49,35 +49,34 @@ for key, value in zones_dict.items():
             case 'Ceiling':
                 surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
 
+
+# zones_final = {
+#             'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
+#             'AFN Zone Ventilation Sensible Heat Gain Rate': 'convection?vn_window_gain',
+#             'AFN Zone Ventilation Sensible Heat Loss Rate': 'convection?vn_window_loss',
+#             'AFN Zone Mixing Sensible Heat Gain Rate': 'convection?vc_interzone_gain',
+#             'AFN Zone Mixing Sensible Heat Loss Rate': 'convection?vc_interzone_loss',
+#             'Zone Air System Sensible Heating Rate': 'convection?heating',
+#             'Zone Air System Sensible Cooling Rate': 'convection?cooling'
+#             }
+# for key, value in surfaces_dict.items():
+#     for idx in value.index:
+#         if 'Frame' in value.at[idx, 'SurfaceName']:
+#             zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_Frame"
+
+#         elif 'GlassDoor' in value.at[idx, 'SurfaceName']:
+#             zones_final[value.at[idx, 'SurfaceName']] = [f"{value.at[idx, 'Azimuth']}_Window", f"{value.at[idx, 'Azimuth']}_Frame"]
+        
+#         elif 'Window' in value.at[idx, 'SurfaceName']:
+#             zones_final[value.at[idx, 'SurfaceName']] = [f"{value.at[idx, 'Azimuth']}_Window", f"{value.at[idx, 'Azimuth']}_Frame"]
+        
+#         else:
+#             zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"
+
 for i in surfaces_dict:
-    print(surfaces_dict[i],'\n')
-
-zones_final = {
-            'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
-            'AFN Zone Ventilation Sensible Heat Gain Rate': 'convection?vn_window_gain',
-            'AFN Zone Ventilation Sensible Heat Loss Rate': 'convection?vn_window_loss',
-            'AFN Zone Mixing Sensible Heat Gain Rate': 'convection?vc_interzone_gain',
-            'AFN Zone Mixing Sensible Heat Loss Rate': 'convection?vc_interzone_loss',
-            'Zone Air System Sensible Heating Rate': 'convection?heating',
-            'Zone Air System Sensible Cooling Rate': 'convection?cooling'
-            }
-for key, value in surfaces_dict.items():
-    for idx in value.index:
-        if 'Frame' in value.at[idx, 'SurfaceName']:
-            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_Frame"
-
-        elif 'GlassDoor' in value.at[idx, 'SurfaceName']:
-            zones_final[value.at[idx, 'SurfaceName']] = [f"{value.at[idx, 'Azimuth']}_Window", f"{value.at[idx, 'Azimuth']}_Frame"]
-        
-        elif 'Window' in value.at[idx, 'SurfaceName']:
-            zones_final[value.at[idx, 'SurfaceName']] = [f"{value.at[idx, 'Azimuth']}_Window", f"{value.at[idx, 'Azimuth']}_Frame"]
-        
-        else:
-            zones_final[value.at[idx, 'SurfaceName']] = f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"
-
-zones_final = pd.DataFrame([zones_final])
-zones_final.to_csv('zones_final.csv', index=False)
-print(zones_final)
+    df = pd.DataFrame(surfaces_dict[i])
+    print(df)
+    df.to_csv(f'system/organizer/ZONE_{i}.csv', index=False)
 
 cursor.close()
 conn.close() 
