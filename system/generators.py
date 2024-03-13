@@ -399,7 +399,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max value: {days_list[0]} as [{max_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone)
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
@@ -410,7 +410,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone)
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
@@ -443,7 +443,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone)
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     # Min amp
@@ -452,6 +452,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone: list, co
                     print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone)
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
         separators()
