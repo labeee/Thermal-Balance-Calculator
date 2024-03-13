@@ -60,13 +60,28 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, surfaces_dict: d
                     for key, value in surfaces_dict.items():
                         for idx in value.index:
                             if 'Frame' in value.at[idx, 'SurfaceName']:
-                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Frame"}, inplace=True)
-                            elif 'GlassDoor' in value.at[idx, 'SurfaceName']:
-                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Window"}, inplace=True)
+                                new_name = f'{value.at[idx, "Azimuth"]}_Frame'
+                            elif 'GlassDoor' in value.at[idx, "SurfaceName"]:
+                                new_name = f'{value.at[idx, "Azimuth"]}_Frame'
                             elif 'Window' in value.at[idx, 'SurfaceName']:
-                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_Window"}, inplace=True)
+                                new_name = f'{value.at[idx, "Azimuth"]}_Window'
                             else:
-                                df.rename(columns={item: f"{value.at[idx, 'Azimuth']}_{value.at[idx, 'ExtBoundCond']}{value.at[idx, 'ClassName']}"}, inplace=True)
+                                new_name = f'{value.at[idx, "Azimuth"]}_{value.at[idx, "ExtBoundCond"]}{value.at[idx, 'ClassName']}'
+                    if 'Convection' in item:
+                        new_name = f'convection?{new_name}'
+                    elif 'Conduction' in item:
+                        new_name = f'conduction?{new_name}'
+                    elif 'Solar' in item:
+                        new_name = f'solarrad?{new_name}'
+                    elif 'Lights' in item:
+                        new_name = f'swlights?{new_name}'
+                    elif 'Thermal' in item:
+                        new_name = f'lwsurfaces?{new_name}'
+                    elif 'Internal Gains' in item:
+                        new_name = f'lwinternal?{new_name}'
+                    else:
+                        new_name = f'none?{new_name}'
+                    df.rename(columns={item: new_name}, inplace=True)
     return df
 
 
