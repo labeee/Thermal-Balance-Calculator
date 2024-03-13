@@ -243,7 +243,7 @@ def days_finder(date_str: str) -> list:
     days_list = [date_str, day_bf, day_af]
     return days_list
 
-def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str) -> pd.DataFrame:
+def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zone: list) -> pd.DataFrame:
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
