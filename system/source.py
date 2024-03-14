@@ -6,9 +6,29 @@ import os
 from datetime import datetime, timedelta
 warnings.filterwarnings("ignore")
 
-zone_addons = [
-    ''
-]
+zone_addons = {
+    'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
+    'AFN Zone Ventilation Sensible Heat Gain Rate': 'convection?vn_window_gain',
+    'AFN Zone Ventilation Sensible Heat Loss Rate': 'convection?vn_window_loss',
+    'AFN Zone Mixing Sensible Heat Gain Rate': 'convection?vn_interzone_gain',
+    'AFN Zone Mixing Sensible Heat Loss Rate': 'convection?vn_interzone_loss',
+    'Zone Air System Sensible Heating Rate': 'convection?heating',
+    'Zone Air System Sensible Cooling Rate': 'convection?cooling'
+}
+
+convection_addons = {
+    'default': 'Surface Inside Face Convection Heat Gain Rate',
+    'frame': 'Surface Window Inside Face Frame and Divider Zone Heat Gain Rate'
+}
+
+surface_addons = {
+    'Surface Inside Face Convection Heat Gain Rate': 'convection',
+    'Surface Inside Face Conduction Heat Transfer Rate': 'conduction',
+    'Surface Inside Face Solar Radiation Heat Gain Rate': 'solarrad',
+    'Surface Inside Face Lights Radiation Heat Gain Rate': 'swlights',
+    'Surface Inside Face Net Surface Thermal Radiation Heat Gain Rate': 'lwsurfaces',
+    'Surface Inside Face Internal Gains Radiation Heat Gain Rate': 'lwinternal'
+}
 
 def read_db(selected_zones: list = None):
     conn = sqlite3.connect(r'input/database.sql')
@@ -63,18 +83,23 @@ def read_db(selected_zones: list = None):
     cursor.close()
     conn.close()
 
-    dicionario = {}
-
-    # dicionario = {
-    #     'SALA': {
-    #         'conection': [
-                
-    #         ],
-    #         'surface': [
-
-    #         ]
-    #     }
-    # }
+    dicionario = {'ALL ZONES': {'Environment': 'drybulb?temp_ext'}}
+    for zone, dataframe in surfaces_dict.items():
+        dicionario[zone] = {'convection': {}, 'surface': {}}
+        for zone_specific, zone_transform in zone_addons.items():
+            dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
+        for idx in dataframe.index():
+            surf_name = dataframe.at[idx, 'SurfaceName']
+            surf_type = dataframe.at[idx, 'ClassName']
+            surf_bound = dataframe.at[idx, 'ExtBoundCond']
+            surf_azimuth = dataframe.at[idx, 'Azimuth']
+            #convection
+            if surf_type in ['Window', 'GlassDoor']:
+                dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
+            dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
+            #surface
+            for surface_specific, surf_transf in surface_addons.items():
+                dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
     return dicionario
 
 
