@@ -83,12 +83,12 @@ def read_db(selected_zones: list = None):
     cursor.close()
     conn.close()
 
-    dicionario = {'ALL ZONES': {'Environment': 'drybulb?temp_ext'}}
+    dicionario = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
         for zone_specific, zone_transform in zone_addons.items():
             dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
-        for idx in dataframe.index():
+        for idx in dataframe.index:
             surf_name = dataframe.at[idx, 'SurfaceName']
             surf_type = dataframe.at[idx, 'ClassName']
             surf_bound = dataframe.at[idx, 'ExtBoundCond']
