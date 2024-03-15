@@ -1,6 +1,20 @@
 from system.source import *
 
 
+def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict, drybulb_rename: dict) -> pd.DataFrame:
+    """Renomeia todas as colunas"""
+    for item in columns_list:
+        for specific_zone in dicionario:
+            for new_name in dicionario[specific_zone][way]:
+                if new_name in item:
+                    df.rename(columns={item: f"{specific_zone}_{new_name}"}, inplace=True)
+    searchword, new_name = drybulb_rename['EXTERNAL'].items()
+    columns_list = df.columns
+    for item in columns_list:
+        if searchword[0] in item:
+            df.rename(columns={item: new_name[0]}, inplace=True)
+    return df
+
 def rename_sala(columns_list: list, df: pd.DataFrame, way: str) -> pd.DataFrame:
     """Renomeia todos os itens em SALA"""
     for item in columns_list:

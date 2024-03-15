@@ -83,7 +83,7 @@ def read_db(selected_zones: list = None):
     cursor.close()
     conn.close()
 
-    dicionario = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
+    dicionario = {}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
         for zone_specific, zone_transform in zone_addons.items():
@@ -100,8 +100,8 @@ def read_db(selected_zones: list = None):
             #surface
             for surface_specific, surf_transf in surface_addons.items():
                 dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
-    return dicionario
-
+    drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
+    return dicionario, drybulb_rename
 
 # Columns per zone  
 sala = {
