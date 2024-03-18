@@ -34,18 +34,21 @@ def menu():
             zone_select = True
             while zone_select:
                 clear_screen()
+                if zones == []:
+                    zones = 'All'
                 separators()
-                print(f'\nCurrent zones: {zones}\n\n\tChoose and option:\n\n[1] Add items to zones list\n[2] Reset zones list to all zones\n\n\t[ENTER] Exit\n')
+                print(f'\n\tCurrent zones: {zones}\n\tChoose and option:\n\n\t[1] Add items to zones list\n\t[2] Reset zones list to all zones\n\n\t[ENTER] Exit\n')
                 separators()
                 options = input('...')
                 if options == '':
                     zone_select = False
                 elif options == '1':
+                    clear_screen()
                     escolhendo = True
                     if zones == 'All':
                         zones = []
                     separators()
-                    print(f'\nCurrent zones: {zones}\n\nSimply type the name of the zone you wish to add to\nthe list and press ENTER to save it.\n\nWhen finished, press ENTER without any typing anything and\nyour choises will be saved.\n')
+                    print(f'\n\tCurrent zones: {zones}\n\n\tSimply type the name of the zone you wish to add to\nthe list and press ENTER to save it.\n\n\tWhen finished, press ENTER without any typing anything and\nyour choises will be saved.\n')
                     separators()
                     while escolhendo:
                         nova_zona = str(input('/ '))
@@ -59,7 +62,7 @@ def menu():
         elif opt == '4':
             clear_screen()
             separators()
-            print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
+            print(f'\n\tChoose your desired type of calculation\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
             separators()
             options = input('...')
             if options == '':
