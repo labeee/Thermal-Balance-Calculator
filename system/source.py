@@ -130,8 +130,8 @@ def read_db_and_build_dicts(selected_zones):
 # Paths
 surface_output_path = r'output/surface/'
 convection_output_path = r'output/convection/'
-surface_input_path = r'input/surface/'
-convection_input_path = r'input/convection/'
+surface_input_path = r'input/'
+convection_input_path = r'input/'
 organizer_path = r'system/organizer/'
 
 frames_and_windows = {
