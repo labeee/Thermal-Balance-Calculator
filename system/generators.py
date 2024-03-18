@@ -226,7 +226,7 @@ def proccess_windows_complex(df: pd.DataFrame) -> pd.DataFrame:
     df = df.groupby(level=0, axis=1).sum()
     return df
 
-def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str, zones_dict: dict):
+def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
     path: path do input
