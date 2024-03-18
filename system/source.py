@@ -33,8 +33,9 @@ surface_addons = {
 drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
 def read_db_and_build_dicts(selected_zones):
+    englob = glob(r'input/*.sql')
     print('\nConnecting to database...')
-    conn = sqlite3.connect(r'input/database.sql')
+    conn = sqlite3.connect(englob[0])
 
     cursor = conn.cursor()
 
