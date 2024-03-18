@@ -4,3 +4,4 @@ __pycache__
 Letícia
 *.csv
 test.py
+*.sql
