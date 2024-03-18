@@ -10,7 +10,7 @@ def menu():
     executadas.
     """
     clean_cache()
-    zones = [sala['ZONE'], dorm1['ZONE'], dorm2['ZONE']]
+    zones = 'All'
     df_type = 'annual'
     execute = True
     while execute:
@@ -35,34 +35,27 @@ def menu():
             while zone_select:
                 clear_screen()
                 separators()
-                print(f'\n\tSelect or remove your desired zones\n\n\tSelected: {zones}\n\n\t[1] {sala["ZONE"]}\n\t[2] {dorm1["ZONE"]}\n\t[3] {dorm2["ZONE"]}\n\n\t[ENTER] Exit\n')
+                print(f'\nCurrent zones: {zones}\n\n\tChoose and option:\n\n[1] Add items to zones list\n[2] Reset zones list to all zones\n\n\t[ENTER] Exit\n')
                 separators()
                 options = input('...')
                 if options == '':
-                    if zones == []:
-                        clear_screen()
-                        print(warn)
-                        separators()
-                        print('\nSELECT AT LEAST ONE ZONE\n')
-                        separators()
-                        time.sleep(3)
-                    else:
-                        zone_select = False
+                    zone_select = False
                 elif options == '1':
-                    if sala['ZONE'] in zones:
-                        zones.remove(sala['ZONE'])
-                    else:
-                        zones.append(sala["ZONE"])
+                    escolhendo = True
+                    if zones == 'All':
+                        zones = []
+                    separators()
+                    print(f'\nCurrent zones: {zones}\n\nSimply type the name of the zone you wish to add to\nthe list and press ENTER to save it.\n\nWhen finished, press ENTER without any typing anything and\nyour choises will be saved.\n')
+                    separators()
+                    while escolhendo:
+                        nova_zona = str(input('/ '))
+                        if nova_zona != '':
+                            zones.append(nova_zona)
+                        else:
+                            escolhendo = False
+                    clear_screen()
                 elif options == '2':
-                    if dorm1['ZONE'] in zones:
-                        zones.remove(dorm1['ZONE'])
-                    else:
-                        zones.append(dorm1["ZONE"])
-                elif options == '3':
-                    if dorm2['ZONE'] in zones:
-                        zones.remove(dorm2['ZONE'])
-                    else:
-                        zones.append(dorm2["ZONE"])
+                    zones = 'All'
         elif opt == '4':
             clear_screen()
             separators()
