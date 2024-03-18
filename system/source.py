@@ -33,6 +33,7 @@ surface_addons = {
 drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
 def read_db_and_build_dicts(selected_zones):
+    print('\nConnecting to database...')
     conn = sqlite3.connect(r'input/database.sql')
 
     cursor = conn.cursor()
@@ -46,9 +47,10 @@ def read_db_and_build_dicts(selected_zones):
     zones_dict = {}
     for i in result:
         zones_dict[i[1]] = i[0]
-
+    print(f'\nReturned {zones_dict}')
     surfaces_dict = {}
     for key, value in zones_dict.items():
+        print(f'Building dataframe of information for {key} of value {value}')
         cursor.execute(f"SELECT ZoneIndex, SurfaceName, ClassName, Azimuth, ExtBoundCond FROM Surfaces WHERE ZoneIndex={value};")
         result = cursor.fetchall()
         surfaces_dict[key] = pd.DataFrame(result, columns=['ZoneIndex', 'SurfaceName', 'ClassName', 'Azimuth', 'ExtBoundCond'])
@@ -84,12 +86,14 @@ def read_db_and_build_dicts(selected_zones):
                     surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
     cursor.close()
     conn.close()
-
+    print('\nBuilding dictionary of names to rename...')
     dicionario = {}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
+        print('\nCreating zones...')
         for zone_specific, zone_transform in zone_addons.items():
             dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
+        print('\nCreating surfaces...')
         for idx in dataframe.index:
             surf_name = dataframe.at[idx, 'SurfaceName']
             surf_type = dataframe.at[idx, 'ClassName']
@@ -103,6 +107,7 @@ def read_db_and_build_dicts(selected_zones):
             for surface_specific, surf_transf in surface_addons.items():
                 dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
     wanted_list = ['drybulb?temp_ext']
+    print('\nBuilding utility dicts...')
     for key in dicionario:
         for j in dicionario[key]:
             for k in dicionario[key][j]:
@@ -119,6 +124,7 @@ def read_db_and_build_dicts(selected_zones):
             if item in i:
                 multiply_list.append(i)
     multiply_list = list(set(multiply_list))
+    print('\nFinished processing')
     return dicionario, wanted_list, dont_change_list, multiply_list
 
 # Paths
