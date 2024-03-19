@@ -8,11 +8,11 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict
             for new_name in dicionario[specific_zone][way]:
                 if new_name in item:
                     df.rename(columns={item: f"{specific_zone}_{new_name}"}, inplace=True)
-    searchword, new_name = drybulb_rename['EXTERNAL'].items()
+    searchword, new_name = list(drybulb_rename['EXTERNAL'].keys())[0], drybulb_rename['EXTERNAL']['Environment']
     columns_list = df.columns
     for item in columns_list:
-        if searchword[0] in item:
-            df.rename(columns={item: new_name[0]}, inplace=True)
+        if searchword in item:
+            df.rename(columns={item: new_name}, inplace=True)
     return df
 
 def sum_separated(coluna) -> pd.Series:
@@ -249,10 +249,22 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df = df.dropna()
             print('- NaN rows removed')
             dicionario, wanted_list, dont_change_list, multiply_list = read_db_and_build_dicts(selected_zones=zone)
+            print('\n\n')
+            print(dicionario)
+            print('\n\n')
+            print(wanted_list)
+            print('\n\n')
+            print(dont_change_list)
+            print('\n\n')
+            print(multiply_list)
+            print('\n\n')
             df = renamer_and_formater(df=df, way=way, zones_dict=dicionario, wanted_list=wanted_list)
             df = df.groupby(level=0, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
+            print('\n\n')
+            print(df.columns)
+            print('\n\n')
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
