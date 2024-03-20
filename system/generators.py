@@ -3,17 +3,37 @@ from system.source import *
 
 def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict) -> pd.DataFrame:
     """Renomeia todas as colunas"""
-    for item in columns_list:
-        for specific_zone in dicionario:
-            for new_name in dicionario[specific_zone][way]:
-                if new_name in item:
-                    df.rename(columns={item: f"{specific_zone}_{new_name}"}, inplace=True)
+    wanted_list = ['drybulb?temp_ext', 'Date/Time']
+    for specific_zone in dicionario:
+        for item in columns_list:
+                for new_name in dicionario[specific_zone][way]:
+                    if new_name in item:
+                        oficial = f"{specific_zone}_{dicionario[specific_zone][way][new_name]}"
+                        df.rename(columns={item: oficial}, inplace=True)
+                        wanted_list.append(oficial)
     searchword, new_name = list(drybulb_rename['EXTERNAL'].keys())[0], drybulb_rename['EXTERNAL']['Environment']
     columns_list = df.columns
     for item in columns_list:
         if searchword in item:
             df.rename(columns={item: new_name}, inplace=True)
-    return df
+
+    print('\n- Building utility dicts')
+
+    dont_change_list = ['drybulb?temp_ext']
+    for item in wanted_list:
+        if item.endswith('loss') or item.endswith('gains') or item.endswith('gain') or item.endswith('cooling') or item.endswith('heating'):
+            dont_change_list.append(item)
+    dont_change_list = list(set(dont_change_list))
+
+    ref_multiply_list = ["heating", "vn_window_gain", "vn_interzone_gain", "frame"]
+    multiply_list = []
+    for item in ref_multiply_list:
+        for i in wanted_list:
+            if item in i:
+                multiply_list.append(i)
+    multiply_list = list(set(multiply_list))
+
+    return df, wanted_list, dont_change_list, multiply_list
 
 def sum_separated(coluna) -> pd.Series:
     """
@@ -49,11 +69,11 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, ty
     """Multiplica as colunas específicas por -1."""
     if way == 'convection':
         df_copy = dataframe.copy()
-        for idx in df_copy.index():
-            surface = df_copy.at[idx, 'gains_losses']
-            for verify in multiply_list:
-                if verify not in surface:
-                    df_copy.at[idx, 'value'] = df_copy.at[idx, 'value'] *-1
+        colunas = df_copy.columns
+        for coluna in colunas:
+            for item in multiply_list:
+                if item not in coluna:
+                    df_copy[coluna] = df_copy[coluna] *-1
         print('- Inverted specific columns')
         df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+dataframe_name.split('\\')[1], sep=',')
         print('- Intermediary dataframe created')
@@ -61,20 +81,20 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, ty
         df_copy = dataframe.copy()
     return df_copy
 
-def renamer_and_formater(df: pd.DataFrame, way: str, zones_dict: dict, wanted_list: list) -> pd.DataFrame:
+def renamer_and_formater(df: pd.DataFrame, way: str, zones_dict: dict) -> pd.DataFrame:
     """
     Recebe o dataframe e uma lista de zonas, então manipula-o renomeando cada lista de 
     colunas e excluindo as colunas desnecessárias 
     """
     columns_list = df.columns
-    df = rename_cols(columns_list=columns_list, df=df, way=way, dicionario=zones_dict)
+    df, wanted_list, dont_change_list, multiply_list = rename_cols(columns_list=columns_list, df=df, way=way, dicionario=zones_dict)
     columns_list = df.columns
     unwanted_list = []
     for item in columns_list:
         if item not in wanted_list:
             unwanted_list.append(item)
     df.drop(columns=unwanted_list, axis=1, inplace=True)
-    return df
+    return df, dont_change_list, multiply_list
 
 def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     """Reordena as colunas do dataframe para o Date/Time ser o primeiro item"""
@@ -98,8 +118,8 @@ def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
     também o gains_losses para remover a zona nele aplicada
     """
     for j in df.index:
-        if df.at[j, 'gains_losses'] in all['Environment']:
-            df.at[j, 'zone'] = all['ZONE']
+        if drybulb_rename['EXTERNAL']['Environment'] in df.at[j, 'gains_losses']:
+            df.at[j, 'zone'] = 'EXTERNAL'
         else:
             zones = df.at[j, 'gains_losses'].split('_')[0]
             lenght = (len(zones)+1)
@@ -130,8 +150,10 @@ def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
     df.loc[:, 'flux'] = 'Empty'
     for i in df.index:
-            df.at[i, 'flux'] = df.at[i, 'gains_losses'].split('?')[0]
-            df.at[i, 'gains_losses'] = df.at[i, 'gains_losses'].split('?')[1] 
+            splited = df.at[i, 'gains_losses'].split('?')
+            print(splited)
+            df.at[i, 'flux'] = splited[0]
+            df.at[i, 'gains_losses'] = splited[1] 
     return df
 
 def days_finder(date_str: str) -> list:
@@ -148,7 +170,7 @@ def days_finder(date_str: str) -> list:
     days_list = [date_str, day_bf, day_af]
     return days_list
 
-def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zone: list, dont_change_list: list) -> pd.DataFrame:
+def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zone: list, dont_change_list: list, dicionario: dict) -> pd.DataFrame:
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
@@ -179,7 +201,7 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = hei(df=soma, type=way, zone=zone)
+        soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     print('\n')
     df_total = concatenator()
@@ -204,7 +226,7 @@ def hei(df: pd.DataFrame, type: str, zone: list, dicionario: dict) -> pd.DataFra
     elif type == 'surface':
         surf_list = []
         for i in zone:    
-            surf_list.append(dicionario[i]['surface'].values())
+            surf_list.append(dicionario[i]['surface'].keys())
         for local in zone:
             for surf in surf_list:
                 module_total = 0
@@ -249,23 +271,11 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             print(f'\n\n- CSV read {i}')
             df = df.dropna()
             print('- NaN rows removed')
-            dicionario, wanted_list, dont_change_list, multiply_list = read_db_and_build_dicts(selected_zones=zone)
-            print('\n\n')
-            print(dicionario)
-            print('\n\n')
-            print(wanted_list)
-            print('\n\n')
-            print(dont_change_list)
-            print('\n\n')
-            print(multiply_list)
-            print('\n\n')
-            df = renamer_and_formater(df=df, way=way, zones_dict=dicionario, wanted_list=wanted_list)
+            dicionario = read_db_and_build_dicts(selected_zones=zone, way=way)
+            df, dont_change_list, multiply_list = renamer_and_formater(df=df, way=way, zones_dict=dicionario)
             df = df.groupby(level=0, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
-            print('\n\n')
-            print(df.columns)
-            print('\n\n')
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
@@ -282,7 +292,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     soma = way_breaker(df=soma)
                     print('- Case, type and zone added')
                     # soma = proccess_windows_complex(soma)
-                    soma = hei(df=soma, type=way, zone=zone)
+                    soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
                     print('- Absolute and HEI calculated')
                     soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     print('- Final annual dataframe created\n')
@@ -305,7 +315,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = way_breaker(df=soma)
                         print(f'- Case, type and zone added for month {unique_month}')
                         # soma = proccess_windows_complex(soma)
-                        soma = hei(df=soma, type=way, zone=zone)
+                        soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
@@ -320,7 +330,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Date with max value: {days_list[0]} as [{max_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
@@ -331,7 +341,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
@@ -364,7 +374,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
 
                     # Min amp
@@ -373,6 +383,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
-                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list)
+                    df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
         separators()

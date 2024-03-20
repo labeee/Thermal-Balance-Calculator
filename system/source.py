@@ -32,7 +32,7 @@ surface_addons = {
 
 drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
-def read_db_and_build_dicts(selected_zones):
+def read_db_and_build_dicts(selected_zones, way):
     englob = glob(r'input/*.sql')
     print('\nConnecting to database...')
     conn = sqlite3.connect(englob[0])
@@ -100,33 +100,18 @@ def read_db_and_build_dicts(selected_zones):
             surf_type = dataframe.at[idx, 'ClassName']
             surf_bound = dataframe.at[idx, 'ExtBoundCond']
             surf_azimuth = dataframe.at[idx, 'Azimuth']
-            #convection
-            if surf_type in ['Window', 'GlassDoor']:
-                dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
-            dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
-            #surface
-            for surface_specific, surf_transf in surface_addons.items():
-                dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
-    wanted_list = ['drybulb?temp_ext']
-    print('\nBuilding utility dicts...')
-    for key in dicionario:
-        for j in dicionario[key]:
-            for k in dicionario[key][j]:
-                wanted_list.append(dicionario[key][j][k])
-    dont_change_list = ['drybulb?temp_ext']
-    for item in wanted_list:
-        if item.endswith('loss') or item.endswith('gains') or item.endswith('gain') or item.endswith('cooling') or item.endswith('heating'):
-            dont_change_list.append(item)
-    dont_change_list = list(set(dont_change_list))
-    ref_multiply_list = ["heating", "vn_window_gain", "vn_interzone_gain", "frame"]
-    multiply_list = []
-    for item in ref_multiply_list:
-        for i in wanted_list:
-            if item in i:
-                multiply_list.append(i)
-    multiply_list = list(set(multiply_list))
+            match way:
+                case 'convection':
+                    #convection
+                    if surf_type in ['Window', 'GlassDoor']:
+                        dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
+                    dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
+                case 'surface':
+                    #surface
+                    for surface_specific, surf_transf in surface_addons.items():
+                        dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
     print('\nFinished processing')
-    return dicionario, wanted_list, dont_change_list, multiply_list
+    return dicionario
 
 # Paths
 surface_output_path = r'output/surface/'
