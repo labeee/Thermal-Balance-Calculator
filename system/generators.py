@@ -49,11 +49,12 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, ty
     """Multiplica as colunas específicas por -1."""
     if way == 'convection':
         df_copy = dataframe.copy()
-        valid_cols = [col for col in df_copy.columns if col in multiply_list]
-        if not valid_cols:
-            return df_copy
-        df_copy[valid_cols] = df_copy[valid_cols] * -1
-        print('- Inverted specified columns')
+        for idx in df_copy.index():
+            surface = df_copy.at[idx, 'gains_losses']
+            for verify in multiply_list:
+                if verify not in surface:
+                    df_copy.at[idx, 'value'] = df_copy.at[idx, 'value'] *-1
+        print('- Inverted specific columns')
         df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+dataframe_name.split('\\')[1], sep=',')
         print('- Intermediary dataframe created')
     else:

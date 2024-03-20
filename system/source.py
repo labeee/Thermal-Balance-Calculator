@@ -118,7 +118,7 @@ def read_db_and_build_dicts(selected_zones):
         if item.endswith('loss') or item.endswith('gains') or item.endswith('gain') or item.endswith('cooling') or item.endswith('heating'):
             dont_change_list.append(item)
     dont_change_list = list(set(dont_change_list))
-    ref_multiply_list = ["none_intwalls", "south_extwalls", "north_extwalls", "west_extwalls", "east_extwalls", "none_floor", "none_roof", "south_windows", "west_windows", "east_windows", "east_windows", "vn_window_loss", "vn_interzone_loss", "cooling"]
+    ref_multiply_list = ["heating", "vn_window_gain", "vn_interzone_gain", "frame"]
     multiply_list = []
     for item in ref_multiply_list:
         for i in wanted_list:
