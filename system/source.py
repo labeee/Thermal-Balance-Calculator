@@ -34,7 +34,7 @@ drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
 def read_db_and_build_dicts(selected_zones, way):
     englob = glob(r'input/*.sql')
-    print('\nConnecting to database...')
+    print('\n- Connecting to database...')
     conn = sqlite3.connect(englob[0])
 
     cursor = conn.cursor()
@@ -48,10 +48,10 @@ def read_db_and_build_dicts(selected_zones, way):
     zones_dict = {}
     for i in result:
         zones_dict[i[1]] = i[0]
-    print(f'\nReturned {zones_dict}')
+    print(f'- Returned {zones_dict}')
     surfaces_dict = {}
     for key, value in zones_dict.items():
-        print(f'Building dataframe of information for {key} of value {value}')
+        print(f'/ Building dataframe of information for {key} of value {value}')
         cursor.execute(f"SELECT ZoneIndex, SurfaceName, ClassName, Azimuth, ExtBoundCond FROM Surfaces WHERE ZoneIndex={value};")
         result = cursor.fetchall()
         surfaces_dict[key] = pd.DataFrame(result, columns=['ZoneIndex', 'SurfaceName', 'ClassName', 'Azimuth', 'ExtBoundCond'])
@@ -87,14 +87,14 @@ def read_db_and_build_dicts(selected_zones, way):
                     surfaces_dict[key].at[idx, 'ClassName'] = 'Roof'
     cursor.close()
     conn.close()
-    print('\nBuilding dictionary of names to rename...')
+    print('- Building dictionary of names to rename...')
     dicionario = {}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
-        print('\nCreating zones...')
+        print('- Creating zones...')
         for zone_specific, zone_transform in zone_addons.items():
             dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
-        print('\nCreating surfaces...')
+        print('- Creating surfaces...')
         for idx in dataframe.index:
             surf_name = dataframe.at[idx, 'SurfaceName']
             surf_type = dataframe.at[idx, 'ClassName']
@@ -110,7 +110,7 @@ def read_db_and_build_dicts(selected_zones, way):
                     #surface
                     for surface_specific, surf_transf in surface_addons.items():
                         dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
-    print('\nFinished processing')
+    print('- Finished processing\n')
     return dicionario
 
 # Paths

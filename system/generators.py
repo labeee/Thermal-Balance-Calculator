@@ -65,17 +65,18 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     # divided = divided[divided['value'] != 0]
     return divided
 
-def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str, multiply_list: list) -> pd.DataFrame:
+def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str, multiply_list: list, zones_for_name: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
     if way == 'convection':
         df_copy = dataframe.copy()
-        colunas = df_copy.columns
+        colunas = list(df_copy.columns)
+        colunas.remove('Date/Time')
         for coluna in colunas:
             for item in multiply_list:
                 if item not in coluna:
                     df_copy[coluna] = df_copy[coluna] *-1
         print('- Inverted specific columns')
-        df_copy.to_csv(output+'intermediary_'+'-'.join(zone)+type_name+dataframe_name.split('\\')[1], sep=',')
+        df_copy.to_csv(output+'intermediary_'+zones_for_name+type_name+dataframe_name.split('\\')[1], sep=',')
         print('- Intermediary dataframe created')
     else:
         df_copy = dataframe.copy()
@@ -151,7 +152,6 @@ def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
     df.loc[:, 'flux'] = 'Empty'
     for i in df.index:
             splited = df.at[i, 'gains_losses'].split('?')
-            print(splited)
             df.at[i, 'flux'] = splited[0]
             df.at[i, 'gains_losses'] = splited[1] 
     return df
@@ -161,9 +161,9 @@ def days_finder(date_str: str) -> list:
     dia seguinte ao evento"""
     date_str_splt = date_str.split(' ')
     if date_str_splt[0] == '':
-        date_obj = datetime.strptime(date_str.split(' ')[1], '%m/%d')
+        date_obj = datetime.strptime(date_str_splt[1], '%m/%d')
     else:
-        date_obj = datetime.strptime(date_str.split(' ')[0], '%m/%d')
+        date_obj = datetime.strptime(date_str_splt[0], '%m/%d')
     date_str = date_obj.strftime('%m/%d')
     day_bf = (date_obj - timedelta(days=1)).strftime('%m/%d')
     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
@@ -272,14 +272,21 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df = df.dropna()
             print('- NaN rows removed')
             dicionario = read_db_and_build_dicts(selected_zones=zone, way=way)
+            if zone == 'All':
+                zones_for_name = 'All-Zones'
+            else:
+                zones_for_name = []
+                for key in dicionario.keys():
+                    zones_for_name.append(key)
+                zones_for_name = '-'.join(zones_for_name)
             df, dont_change_list, multiply_list = renamer_and_formater(df=df, way=way, zones_dict=dicionario)
             df = df.groupby(level=0, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
             df = reorderer(df=df)
-            df.to_csv(output+'initial_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+            df.to_csv(output+'initial_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
             print('- Initial dataframe created')
-            df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i, multiply_list=multiply_list)
+            df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
             df = proccess_windows_complex(df)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
@@ -294,7 +301,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     # soma = proccess_windows_complex(soma)
                     soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
                     print('- Absolute and HEI calculated')
-                    soma.to_csv(output+'final_annual_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    soma.to_csv(output+'final_annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- Final annual dataframe created\n')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
@@ -318,12 +325,12 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
-                    df_total.to_csv(output+'final_monthly_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    df_total.to_csv(output+'final_monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- Final monthly dataframe created\n')
                 case 'daily':
                     ## Max
-                    max_temp_idx = df[all['Environment']].idxmax()
-                    max_value = df[all['Environment']].max()
+                    max_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmax()
+                    max_value = df[drybulb_rename['EXTERNAL']['Environment']].max()
                     date_str = df.loc[max_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
                     print('\n')
@@ -331,18 +338,18 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_max_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    df_total.to_csv(output+'final_max_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     
                     ## Min
-                    min_temp_idx = df[all['Environment']].idxmin()
-                    min_value = df[all['Environment']].min()
+                    min_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmin()
+                    min_value = df[drybulb_rename['EXTERNAL']['Environment']].min()
                     date_str = df.loc[min_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
                     print(f'- Date with min value: {days_list[0]} as [{min_value}]')
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_min_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    df_total.to_csv(output+'final_min_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
 
                     ## Max and Min amp locator
                     df_amp = df.copy()
@@ -355,9 +362,9 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     dates_list = df_amp['date'].unique()
                     for days in dates_list:
                         df_day = df_amp[df_amp['date'] == days]
-                        max_daily = df_day[all['Environment']].max()
-                        idx_daily = df_day[all['Environment']].idxmax()
-                        min_daily = df_day[all['Environment']].min()
+                        max_daily = df_day[drybulb_rename['EXTERNAL']['Environment']].max()
+                        idx_daily = df_day[drybulb_rename['EXTERNAL']['Environment']].idxmax()
+                        min_daily = df_day[drybulb_rename['EXTERNAL']['Environment']].min()
                         total = abs(max_daily - min_daily)
                         if total > max_amp['value']:
                             max_amp['date'] = days
@@ -375,7 +382,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_max_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    df_total.to_csv(output+'final_max_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
@@ -384,5 +391,5 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day before: {days_list[1]}')
                     print(f'- Day after: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_min_amp_daily_'+'-'.join(zone)+type_name+i.split('\\')[1], sep=',')
+                    df_total.to_csv(output+'final_min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
         separators()
