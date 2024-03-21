@@ -4,7 +4,15 @@ import sqlite3
 from glob import glob
 import os
 from datetime import datetime, timedelta
+from rich.progress import track
+from rich import print
+from rich.traceback import install 
+install()
 warnings.filterwarnings("ignore")
+
+track_bar_color = 'bright_white'
+track_complete_color = 'bright_blue'
+track_background_color = 'bright_white'
 
 zone_addons = {
     'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
@@ -48,10 +56,10 @@ def read_db_and_build_dicts(selected_zones, way):
     zones_dict = {}
     for i in result:
         zones_dict[i[1]] = i[0]
-    print(f'- Returned {zones_dict}')
+    print(f'- Returned [bright_cyan]{zones_dict}[/bright_cyan]')
     surfaces_dict = {}
     for key, value in zones_dict.items():
-        print(f'/ Building dataframe of information for {key} of value {value}')
+        print(f'[bright_magenta]/ Building dataframe of information for [bright_blue]{key}[/bright_blue] of value[/bright_magenta] {value}')
         cursor.execute(f"SELECT ZoneIndex, SurfaceName, ClassName, Azimuth, ExtBoundCond FROM Surfaces WHERE ZoneIndex={value};")
         result = cursor.fetchall()
         surfaces_dict[key] = pd.DataFrame(result, columns=['ZoneIndex', 'SurfaceName', 'ClassName', 'Azimuth', 'ExtBoundCond'])
@@ -91,10 +99,10 @@ def read_db_and_build_dicts(selected_zones, way):
     dicionario = {}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
-        print('- Creating zones...')
+        print('- Creating [bright_blue]zones[/bright_blue]...')
         for zone_specific, zone_transform in zone_addons.items():
             dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
-        print('- Creating surfaces...')
+        print('- Creating [bright_blue]surfaces[/bright_blue]...')
         for idx in dataframe.index:
             surf_name = dataframe.at[idx, 'SurfaceName']
             surf_type = dataframe.at[idx, 'ClassName']
@@ -110,7 +118,7 @@ def read_db_and_build_dicts(selected_zones, way):
                     #surface
                     for surface_specific, surf_transf in surface_addons.items():
                         dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
-    print('- Finished processing\n')
+    print('- [bright_green]Finished reading database\n')
     return dicionario
 
 # Paths
@@ -120,31 +128,24 @@ surface_input_path = r'input/'
 convection_input_path = r'input/'
 organizer_path = r'system/organizer/'
 
-frames_and_windows = {
-    'SALA_convection?south_frame': 'SALA_convection?south_windows',
-    'SALA_convection?west_frame': 'SALA_convection?west_windows',
-    'DORM1_convection?south_frame': 'DORM1_convection?south_windows',
-    'DORM2_convection?east_frame': 'DORM2_convection?east_windows' 
-}
-
 # Style
-software_name = """▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
+software_name = """[bright_green]▀█▀ █░█ █▀▀ █▀█ █▀▄▀█ ▄▀█ █░░   █▄▄ ▄▀█ █░░ ▄▀█ █▄░█ █▀▀ █▀▀   █▀▀ ▄▀█ █░░ █▀▀ █░█ █░░ ▄▀█ ▀█▀ █▀█ █▀█
 ░█░ █▀█ ██▄ █▀▄ █░▀░█ █▀█ █▄▄   █▄█ █▀█ █▄▄ █▀█ █░▀█ █▄▄ ██▄   █▄▄ █▀█ █▄▄ █▄▄ █▄█ █▄▄ █▀█ ░█░ █▄█ █▀▄"""
-end_message = """▀█▀ █░█ ▄▀█ █▄░█ █▄▀   █▄█ █▀█ █░█
-░█░ █▀█ █▀█ █░▀█ █░█   ░█░ █▄█ █▄█
+end_message = """[bright_green]▀█▀ █░█ ▄▀█ █▄░█ █▄▀   █▄█ █▀█ █░█
+░█░ █▀█ █▀█ █░▀█ █░█   ░█░ █▄█ █▄█[/bright_green]
 ----------------------------------
-LabEEE - Thermal Balance Calculator
+[bright_green]LabEEE - Thermal Balance Calculator[/bright_green]
 
-    Developed by Zac   -    https://www.linkedin.com/in/zac-milioli
+    [bright_yellow]Developed by Zac[/bright_yellow]   -    https://www.linkedin.com/in/zac-milioli
                        -    zacmilioli@gmail.com
 
-    Created and directed by Letícia  -  https://www.linkedin.com/in/letícia-gabriela-eli-347063b0
+    [bright_magenta]Created and directed by Letícia[/bright_magenta]  -  https://www.linkedin.com/in/letícia-gabriela-eli-347063b0
 
 
     Texts from https://fsymbols.com/generators/blocky/
-    Free of copyright
+    [underline]Free of copyright[underline]
 """
-warn = """█░█░█ ▄▀█ █▀█ █▄░█ █ █▄░█ █▀▀
+warn = """[bright_red]█░█░█ ▄▀█ █▀█ █▄░█ █ █▄░█ █▀▀
 ▀▄▀▄▀ █▀█ █▀▄ █░▀█ █ █░▀█ █▄█"""
 def clear_screen():
     """Limpa a tela"""

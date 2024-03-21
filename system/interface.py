@@ -17,7 +17,7 @@ def menu():
         clear_screen()
         print(software_name)
         separators()
-        print(f'\n\n\tWhat would you like to do?\n\n\n\tZones: {zones}\n\n\tDataframe type: {df_type}\n\n\n\n\t[1] Generate dataframes for surface\n\t[2] Generate dataframes for convection\n\t[3] Change zones\n\t[4] Change dataframe type\n\t[5] Personalize separators\n\n\n\t[ENTER] End software\n')
+        print(f'\n\n\tZones: [bright_blue]{zones}[/bright_blue]\n\n\tDataframe type: [bright_green]{df_type}[/bright_green]\n\n\t[bright_yellow underline]What would you like to do?[/bright_yellow underline]\n\n\n\t[1] Generate dataframes for surface\n\t[2] Generate dataframes for convection\n\n\t[3] Change zones\n\t[4] Change dataframe type\n\t[5] Customize screen separators\n\n\n\t[ENTER] [bright_red]End software[/bright_red]\n')
         separators()
         opt = input('...')
         if opt == '':
@@ -37,7 +37,7 @@ def menu():
                 if zones == []:
                     zones = 'All'
                 separators()
-                print(f'\n\tCurrent zones: {zones}\n\tChoose and option:\n\n\t[1] Add items to zones list\n\t[2] Reset zones list to all zones\n\n\t[ENTER] Exit\n')
+                print(f'\n\tCurrent zones: [bright_blue]{zones}[/bright_blue]\n\t[bright_yellow]Choose and option:[/bright_yellow]\n\n\t[1] [bright_green]Add items to zones list[/bright_green]\n\t[2] [bright_magenta]Reset zones list to all zones[/bright_magenta]\n\n\t[ENTER] [bright_red]Exit[/bright_red]\n')
                 separators()
                 options = input('...')
                 if options == '':
@@ -48,7 +48,7 @@ def menu():
                     if zones == 'All':
                         zones = []
                     separators()
-                    print(f'\n\tCurrent zones: {zones}\n\n\tSimply type the name of the zone you wish to add to\nthe list and press ENTER to save it.\n\n\tWhen finished, press ENTER without any typing anything and\nyour choises will be saved.\n')
+                    print(f'\n\tCurrent zones: [bright_blue]{zones}[/bright_blue]\n\n\tSimply [bright_yellow underline]type the name of the zone[/bright_yellow underline] you wish to add to\n\tthe list and [bright_yellow underline]press ENTER to save it[/bright_yellow underline].\n\n\tWhen finished, [bright_yellow underline]press ENTER without any typing anything[/bright_yellow underline] and\n\tyour choises will be saved.\n')
                     separators()
                     while escolhendo:
                         nova_zona = str(input('/ '))
@@ -62,7 +62,7 @@ def menu():
         elif opt == '4':
             clear_screen()
             separators()
-            print(f'\n\tChoose your desired type of calculation\n\n\tSelected: {df_type}\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] Exit\n')
+            print(f'\n\t[bright_yellow]Choose your desired type of calculation[/bright_yellow]\n\n\tSelected: [bright_green]{df_type}[/bright_green]\n\n\t[1] annual\n\t[2] monthly\n\t[3] daily\n\n\t[ENTER] [bright_red]Exit[/bright_red]\n')
             separators()
             options = input('...')
             if options == '':
@@ -76,8 +76,8 @@ def menu():
         elif opt == '5':
             clear_screen()
             separators()
-            print(f'\n\tInsert your desired separators\n\n\t[ENTER] Exit\n')
+            print(f'\n\t[bright_yellow]Insert your desired separators and press [bright_green underline]ENTER[/bright_green underline] to apply and save it[/bright_yellow]\n\n\t[ENTER] [bright_red]Exit[/bright_red]\n')
             separators()
-            new = input('...')
+            new = input('/ ')
             if new != '':
                 open('system/separators.txt', 'w').write(new*(round(100/len(new))))

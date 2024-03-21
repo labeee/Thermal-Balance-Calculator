@@ -62,7 +62,6 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
             divided[f'{column}_loss'] = df[column].apply(lambda item: item if item<0 else 0)
     divided = divided.sum().reset_index()
     divided.columns = ['gains_losses', 'value']
-    # divided = divided[divided['value'] != 0]
     return divided
 
 def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str, multiply_list: list, zones_for_name: str) -> pd.DataFrame:
@@ -77,7 +76,7 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, ty
                     df_copy[coluna] = df_copy[coluna] *-1
         print('- Inverted specific columns')
         df_copy.to_csv(output+'intermediary_'+zones_for_name+type_name+dataframe_name.split('\\')[1], sep=',')
-        print('- Intermediary dataframe created')
+        print('- [bright_green]Intermediary dataframe created')
     else:
         df_copy = dataframe.copy()
     return df_copy
@@ -174,14 +173,14 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
-    for j in new_daily_df.index:
+    for j in track(new_daily_df.index, description=f'[bright_blue]Deleting unwanted DateTimes[/bright_blue]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color, ):
         date_splited = new_daily_df.at[j, 'Date/Time'].split(' ')[1]
         if date_splited not in days_list:
             new_daily_df.drop(j, axis=0, inplace=True)
-            print(f'- Removing date {date_splited}', end='\r')
+            # print(f'/ {date_splited}', end='\r')
     days = new_daily_df['Date/Time'].unique()
-    for unique_datetime in days:
-        print(f'- Manipulating {unique_datetime}', end='\r')
+    for unique_datetime in track(days, description=f'[bright_cyan]Manipulating DateTimes[/bright_cyan]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color):
+        # print(f'/ {unique_datetime}', end='\r')
         df_daily = new_daily_df[new_daily_df['Date/Time'] == unique_datetime]
         soma = basic_manipulator(df=df_daily, dont_change_list=dont_change_list)
         soma.loc[:, 'case'] = name.split('\\')[1]
@@ -203,7 +202,6 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
         soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
-    print('\n')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
@@ -238,17 +236,6 @@ def hei(df: pd.DataFrame, type: str, zone: list, dicionario: dict) -> pd.DataFra
                         df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     return df
 
-def proccess_windows_complex(df: pd.DataFrame) -> pd.DataFrame:
-    lista_de_colunas = []
-    for colunas in df.columns:
-        if colunas in frames_and_windows:
-            lista_de_colunas.append(frames_and_windows[colunas])
-        else:
-            lista_de_colunas.append(colunas)
-    df.columns = lista_de_colunas
-    df = df.groupby(level=0, axis=1).sum()
-    return df
-
 def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
     """
     Irá gerar os dataframes, separando por zona.
@@ -261,16 +248,16 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
     """
     # Engloba arquivos dentro de input
     globed = glob(f'{path}*.csv')
-    print(f'Found inputs: {globed}\n\n')
-    print(f'Choosen zones: {zone}\n\n')
-    print(f'Choosen type: {coverage}\n\n')
+    print(f'Found inputs: [bright_magenta]{globed}[/bright_magenta]\n\n')
+    print(f'Choosen zones: [bright_blue]{zone}[/bright_blue]\n\n')
+    print(f'Choosen type: [bright_green]{coverage}[/bright_green]\n\n')
     if globed != []:
         for i in globed:
             separators()
             df = pd.read_csv(i)
-            print(f'\n\n- CSV read {i}')
+            print(f'\n\n- CSV beign used: [bright_blue]{i}[/bright_blue]')
             df = df.dropna()
-            print('- NaN rows removed')
+            print('- [bright_yellow]NaN[/bright_yellow] rows removed')
             dicionario = read_db_and_build_dicts(selected_zones=zone, way=way)
             if zone == 'All':
                 zones_for_name = 'All-Zones'
@@ -285,24 +272,22 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df.drop(columns='index', axis=1, inplace=True)
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-            print('- Initial dataframe created')
+            print('- [bright_green]Initial dataframe created[/bright_green]')
             df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
-            df = proccess_windows_complex(df)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
                     soma = basic_manipulator(df=df, dont_change_list=dont_change_list)
-                    print('- Gains and losses separated and calculated')
+                    print('- [bright_green]Gains[/bright_green] and [bright_red]losses[/bright_red] separated and calculated')
                     soma.loc[:, 'case'] = i.split('\\')[1]
                     soma.loc[:, 'zone'] = 'no zone'
                     soma = zone_breaker(df=soma)
                     soma = way_breaker(df=soma)
-                    print('- Case, type and zone added')
-                    # soma = proccess_windows_complex(soma)
+                    print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
                     soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
-                    print('- Absolute and HEI calculated')
+                    print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
                     soma.to_csv(output+'final_annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- Final annual dataframe created\n')
+                    print('- [bright_green]Final annual dataframe created\n')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
@@ -310,23 +295,22 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         df.at[row, 'month'] = month.split('/')[0].strip()
                     print('- Months column created')
                     months = df['month'].unique()
-                    for unique_month in months:
+                    for unique_month in track(months, description=f'[bright_cyan]Processing each month[/bright_cyan]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color):
                         df_monthly = df[df['month'] == unique_month]
                         df_monthly.drop(columns='month', axis=1, inplace=True)
                         soma = basic_manipulator(df=df_monthly, dont_change_list=dont_change_list)
-                        print(f'- Gains and losses separated and calculated for month {unique_month}')
+                        print(f'- [bright_green]Gains[/bright_green] and [bright_red]losses[/bright_red] separated and calculated for month {unique_month}')
                         soma.loc[:, 'case'] = i.split('\\')[1]
                         soma.loc[:, 'month'] = unique_month
                         soma.loc[:, 'zone'] = 'no zone'
                         soma = zone_breaker(df=soma)
                         soma = way_breaker(df=soma)
-                        print(f'- Case, type and zone added for month {unique_month}')
-                        # soma = proccess_windows_complex(soma)
+                        print(f'- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added for month {unique_month}')
                         soma = hei(df=soma, type=way, zone=zone, dicionario=dicionario)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- Final monthly dataframe created\n')
+                    print('- [bright_green]Final monthly dataframe created\n')
                 case 'daily':
                     ## Max
                     max_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmax()
@@ -334,22 +318,24 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     date_str = df.loc[max_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
                     print('\n')
-                    print(f'- Date with max value: {days_list[0]} as [{max_value}]')
-                    print(f'- Day before: {days_list[1]}')
-                    print(f'- Day after: {days_list[2]}')
+                    print(f'- Date with [bright_magenta]max value[/bright_magenta]: {days_list[0]} as [{max_value}]')
+                    print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
+                    print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_max_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Final daily MAX dataframe created\n')
                     
                     ## Min
                     min_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmin()
                     min_value = df[drybulb_rename['EXTERNAL']['Environment']].min()
                     date_str = df.loc[min_temp_idx, 'Date/Time']
                     days_list = days_finder(date_str=date_str)
-                    print(f'- Date with min value: {days_list[0]} as [{min_value}]')
-                    print(f'- Day before: {days_list[1]}')
-                    print(f'- Day after: {days_list[2]}')
+                    print(f'- Date with [bright_magenta]min value[/bright_magenta]: {days_list[0]} as [{min_value}]')
+                    print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
+                    print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_min_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Final daily MIN dataframe created\n')
 
                     ## Max and Min amp locator
                     df_amp = df.copy()
@@ -378,18 +364,20 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     # Max amp
                     date_str = df.loc[max_amp['index'], 'Date/Time']
                     days_list = days_finder(date_str=date_str)
-                    print(f'- Date with max amplitude value: {days_list[0]} as [{max_amp["value"]}]')
-                    print(f'- Day before: {days_list[1]}')
-                    print(f'- Day after: {days_list[2]}')
+                    print(f'- Date with [bright_magenta]max amplitude value[/bright_magenta]: {days_list[0]} as [{max_amp["value"]}]')
+                    print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
+                    print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_max_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Final daily MAX AMP dataframe created\n')
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
                     days_list = days_finder(date_str=date_str)
-                    print(f'- Date with min amplitude value: {days_list[0]} as [{min_amp["value"]}]')
-                    print(f'- Day before: {days_list[1]}')
-                    print(f'- Day after: {days_list[2]}')
+                    print(f'- Date with [bright_magenta]min amplitude value[/bright_magenta]: {days_list[0]} as [{min_amp["value"]}]')
+                    print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
+                    print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
                     df_total.to_csv(output+'final_min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Final daily MIN AMP dataframe created\n')
         separators()
