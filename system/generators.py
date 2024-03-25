@@ -17,7 +17,7 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict
         if searchword in item:
             df.rename(columns={item: new_name}, inplace=True)
 
-    print('\n- Building utility dicts')
+    print('- Building utility dicts\n')
 
     dont_change_list = ['drybulb?temp_ext']
     for item in wanted_list:
@@ -206,13 +206,13 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
-def hei(df: pd.DataFrame, type: str, zone: list, dicionario: dict) -> pd.DataFrame:
+def hei(df: pd.DataFrame, type: str, zone, dicionario: dict) -> pd.DataFrame:
     """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
     df.loc[:, 'absolute'] = 'no abs'
     df.loc[:, 'HEI'] = 'no HEI'
     for j in df.index:
         df.at[j, 'absolute'] = abs(df.at[j, 'value'])
-    if type == 'convection':
+    if zone != 'All':
         for local in zone:
             module_total = 0
             for j in df.index:
@@ -221,19 +221,19 @@ def hei(df: pd.DataFrame, type: str, zone: list, dicionario: dict) -> pd.DataFra
             for j in df.index:
                 if df.at[j, 'zone'] == local:
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-    elif type == 'surface':
+    else:
         surf_list = []
-        for i in zone:    
-            surf_list.append(dicionario[i]['surface'].keys())
-        for local in zone:
-            for surf in surf_list:
-                module_total = 0
-                for j in df.index:
-                    if (surf in df.at[j, 'gains_losses']) and (local == df.at[j, 'zone']):
-                        module_total += int(df.at[j, 'absolute'])
-                for j in df.index:
-                    if (surf in df.at[j, 'gains_losses']) and (local == df.at[j, 'zone']):
-                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+        for i in dicionario:
+            for j in dicionario[i][type]:
+                surf_list.append(dicionario[i][type][j])
+        for local in surf_list:
+            module_total = 0
+            for j in df.index:
+                if df.at[j, 'zone'] == local:
+                    module_total += df.at[j, 'absolute']
+            for j in df.index:
+                if df.at[j, 'zone'] == local:
+                    df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
@@ -251,6 +251,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
     print(f'Found inputs: [bright_magenta]{globed}[/bright_magenta]\n\n')
     print(f'Choosen zones: [bright_blue]{zone}[/bright_blue]\n\n')
     print(f'Choosen type: [bright_green]{coverage}[/bright_green]\n\n')
+    print(f'Generating for: [bright_cyan]{type_name}[/bright_cyan]\n\n')
     if globed != []:
         for i in globed:
             separators()
