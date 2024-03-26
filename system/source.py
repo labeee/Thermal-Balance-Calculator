@@ -99,9 +99,10 @@ def read_db_and_build_dicts(selected_zones, way):
     dicionario = {}
     for zone, dataframe in surfaces_dict.items():
         dicionario[zone] = {'convection': {}, 'surface': {}}
-        print('- Creating [bright_blue]zones[/bright_blue]...')
-        for zone_specific, zone_transform in zone_addons.items():
-            dicionario[zone]['convection'][f'{zone}:{zone_specific}'] = zone_transform
+        match way:
+            case 'convection':    
+                for zone_specific, zone_transform in zone_addons.items():
+                    dicionario[zone]['convection'][zone_specific] = zone_transform
         print('- Creating [bright_blue]surfaces[/bright_blue]...')
         for idx in dataframe.index:
             surf_name = dataframe.at[idx, 'SurfaceName']
