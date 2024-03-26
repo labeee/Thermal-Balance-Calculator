@@ -125,8 +125,8 @@ def read_db_and_build_dicts(selected_zones, way):
 # Paths
 surface_output_path = r'output/surface/'
 convection_output_path = r'output/convection/'
-surface_input_path = r'input/' 
-convection_input_path = r'input/'
+surface_input_path = r'input/surface/' 
+convection_input_path = r'input/convection/'
 organizer_path = r'system/organizer/'
 
 # Style
