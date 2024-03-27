@@ -15,13 +15,13 @@ track_complete_color = 'bright_blue'
 track_background_color = 'bright_white'
 
 zone_addons = {
-    'Zone Total Internal Convective Heating Rate': 'convection?internal_gains',
+    'Zone Total Internal Convective Heating Rate': 'convection?internal_gain',
     'AFN Zone Ventilation Sensible Heat Gain Rate': 'convection?vn_window_gain',
     'AFN Zone Ventilation Sensible Heat Loss Rate': 'convection?vn_window_loss',
     'AFN Zone Mixing Sensible Heat Gain Rate': 'convection?vn_interzone_gain',
     'AFN Zone Mixing Sensible Heat Loss Rate': 'convection?vn_interzone_loss',
-    'Zone Air System Sensible Heating Rate': 'convection?heating',
-    'Zone Air System Sensible Cooling Rate': 'convection?cooling'
+    'Zone Air System Sensible Heating Rate': 'convection?heating_gain',
+    'Zone Air System Sensible Cooling Rate': 'convection?cooling_loss'
 }
 
 convection_addons = {

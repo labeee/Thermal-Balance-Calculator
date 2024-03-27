@@ -54,6 +54,9 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """
     divided = pd.DataFrame()
     col = df.columns
+    for item in dont_change_list:
+        if item.endswith('temp_ext'):
+            dont_change_list.remove(item)
     for column in col:
         if column in dont_change_list:
             divided[column] = df[column]
