@@ -158,6 +158,24 @@ def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
             df.at[i, 'gains_losses'] = splited[1] 
     return df
 
+def heat_direction_breaker(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Irá formatar o arquivo adicionando adequadamente o sentido de transferência de calor
+    """
+    df.loc[:, 'heat_direction'] = 'no direction'
+    verification = drybulb_rename['EXTERNAL']['Environment'].split('?')[-1]
+    for j in df.index:
+        name = df.at[j, 'gains_losses']
+        if verification in name:
+            continue
+        else:
+            heat_direction = name.split('_')[-1]
+            lenght = (len(heat_direction)+1)
+            new_name = name[:-lenght]
+            df.at[j, 'heat_direction'] = heat_direction
+            df.at[j, 'gains_losses'] = new_name
+    return df
+
 def days_finder(date_str: str) -> list:
     """Busca e retorna uma lista contendo o dia, dia anterior e 
     dia seguinte ao evento"""
@@ -191,6 +209,7 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
         soma.loc[:, 'zone'] = 'no zone'
         soma = zone_breaker(df=soma)
         soma = way_breaker(df=soma)
+        soma = heat_direction_breaker(df=soma)
         for row in soma.index:
             day = str(soma.at[row, 'Date/Time']).strip()
             soma.at[row, 'day'] = day[3:5]
@@ -287,6 +306,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     soma.loc[:, 'zone'] = 'no zone'
                     soma = zone_breaker(df=soma)
                     soma = way_breaker(df=soma)
+                    soma = heat_direction_breaker(df=soma)
                     print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
                     soma = hei(df=soma, way=way, zone=zone, dicionario=dicionario)
                     print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
@@ -309,6 +329,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma.loc[:, 'zone'] = 'no zone'
                         soma = zone_breaker(df=soma)
                         soma = way_breaker(df=soma)
+                        soma = heat_direction_breaker(df=soma)
                         print(f'- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added for month {unique_month}')
                         soma = hei(df=soma, way=way, zone=zone, dicionario=dicionario)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
