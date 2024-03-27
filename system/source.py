@@ -141,7 +141,7 @@ end_message = """[bright_green]▀█▀ █░█ ▄▀█ █▄░█�
     [bright_yellow]Developed by Zac[/bright_yellow]   -    https://www.linkedin.com/in/zac-milioli
                        -    zacmilioli@gmail.com
 
-    [bright_magenta]Created and directed by Letícia[/bright_magenta]  -  https://www.linkedin.com/in/letícia-gabriela-eli-347063b0
+    [bright_magenta]Created and directed by Letícia[/bright_magenta]  - [blue underline] https://www.linkedin.com/in/letícia-gabriela-eli-347063b0 [/blue underline]
 
 
     Texts from https://fsymbols.com/generators/blocky/
