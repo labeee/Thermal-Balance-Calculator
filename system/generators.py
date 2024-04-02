@@ -54,9 +54,6 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """
     divided = pd.DataFrame()
     col = df.columns
-    for item in dont_change_list:
-        if item.endswith('temp_ext'):
-            dont_change_list.remove(item)
     for column in col:
         if column in dont_change_list:
             divided[column] = df[column]
@@ -238,24 +235,25 @@ def hei(df: pd.DataFrame, way: str, zone, dicionario: dict) -> pd.DataFrame:
         for local in zone:
             module_total = 0
             for j in df.index:
-                if df.at[j, 'zone'] == local:
+                if df.at[j, 'gains_losses'] in local:
                     module_total += df.at[j, 'absolute']
             for j in df.index:
-                if df.at[j, 'zone'] == local:
+                if df.at[j, 'gains_losses'] in local:
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
     else:
         surf_list = []
         for i in dicionario:
             for j in dicionario[i][way]:
-                surf_list.append(dicionario[i][way][j])
+                surf_list.append(dicionario[i][way][j].split('?')[1])
         for local in surf_list:
             module_total = 0
             for j in df.index:
-                if df.at[j, 'zone'] == local:
+                if df.at[j, 'gains_losses'] in local:
                     module_total += df.at[j, 'absolute']
             for j in df.index:
-                if df.at[j, 'zone'] == local:
+                if df.at[j, 'gains_losses'] in local:
                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+    df.drop(['absolute'], axis=1, inplace=True)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
