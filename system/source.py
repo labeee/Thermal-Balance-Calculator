@@ -112,11 +112,11 @@ def read_db_and_build_dicts(selected_zones, way):
             match way:
                 case 'convection':
                     #convection
-                    if surf_type in ['Window', 'GlassDoor']:
-                        dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
                     if surf_type in ['Roof', 'Floor']:	
                         dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?none_{surf_bound}{surf_type}'
                     else:
+                        if surf_type in ['Window', 'GlassDoor']:
+                            dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
                         dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
                 case 'surface':
                     #surface
