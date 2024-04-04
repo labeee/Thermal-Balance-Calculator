@@ -114,12 +114,18 @@ def read_db_and_build_dicts(selected_zones, way):
                     #convection
                     if surf_type in ['Window', 'GlassDoor']:
                         dicionario[zone]['convection'][f'{surf_name}:{convection_addons["frame"]}'] = f'convection?{surf_azimuth}_frame'
-                    dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
+                    if surf_type in ['Roof', 'Floor']:	
+                        dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?none_{surf_bound}{surf_type}'
+                    else:
+                        dicionario[zone]['convection'][f'{surf_name}:{convection_addons["default"]}'] = f'convection?{surf_azimuth}_{surf_bound}{surf_type}'
                 case 'surface':
                     #surface
                     if surf_type not in ['Window', 'GlassDoor']:
                         for surface_specific, surf_transf in surface_addons.items():
-                            dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
+                            if surf_type in ['Roof', 'Floor']:
+                                dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?none_{surf_bound}{surf_type}'
+                            else:
+                                dicionario[zone]['surface'][f'{surf_name}:{surface_specific}'] = f'{surf_transf}?{surf_azimuth}_{surf_bound}{surf_type}'
     print('- [bright_green]Finished reading database')
     return dicionario
 
