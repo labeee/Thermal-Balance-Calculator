@@ -25,7 +25,7 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict
             dont_change_list.append(item)
     dont_change_list = list(set(dont_change_list))
 
-    ref_multiply_list = ["heating", "vn_window_gain", "vn_interzone_gain", "frame"]
+    ref_multiply_list = ["heating", "vn_window_gain", "vn_interzone_gain", "frame", "internal"]
     multiply_list = []
     for item in ref_multiply_list:
         for i in wanted_list:
@@ -64,7 +64,7 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     divided.columns = ['gains_losses', 'value']
     return divided
 
-def invert_values(dataframe: pd.DataFrame, way: str, output: str, zone: list, type_name: str, dataframe_name: str, multiply_list: list, zones_for_name: str) -> pd.DataFrame:
+def invert_values(dataframe: pd.DataFrame, way: str, output: str, type_name: str, dataframe_name: str, multiply_list: list, zones_for_name: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
     if way == 'convection':
         df_copy = dataframe.copy()
@@ -294,7 +294,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df = reorderer(df=df)
             df.to_csv(output+'initial_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
             print('- [bright_green]Initial dataframe created[/bright_green]')
-            df = invert_values(dataframe=df, way=way, output=output, zone=zone, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
+            df = invert_values(dataframe=df, way=way, output=output, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
                 case 'annual':
