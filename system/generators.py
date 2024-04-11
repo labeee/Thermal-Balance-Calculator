@@ -55,11 +55,16 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     divided = pd.DataFrame()
     col = df.columns
     for column in col:
+        # minha lógica aqui: Vou ver se é window ou glassdoor. Se for, EXISTE um frame, portanto, eu quebro o nome
+        # da coluna e troco os devidos dados por "frame" e aí renomeio essa coluna frame para a coluna window ou glassdoor
+        # if column in ["Window", "GlassDoor"]:
+            
         if column in dont_change_list:
             divided[column] = df[column]
         else:
             divided[f'{column}_gain'] = df[column].apply(lambda item: item if item>0 else 0)
             divided[f'{column}_loss'] = df[column].apply(lambda item: item if item<0 else 0)
+    # Se azimuth_frame ele vai mudar pra azimuth_extWindow 
     divided = divided.sum().reset_index()
     divided.columns = ['gains_losses', 'value']
     return divided
