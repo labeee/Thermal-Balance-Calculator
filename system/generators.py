@@ -2,7 +2,7 @@ from system.source import *
 
 
 def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict) -> pd.DataFrame:
-    """Renomeia todas as colunas"""
+    """Renomeia todas as colunas e gera as listas de configurações"""
     wanted_list = ['drybulb?temp_ext', 'Date/Time']
     for specific_zone in dicionario:
         for item in columns_list:
@@ -50,21 +50,29 @@ def sum_separated(coluna) -> pd.Series:
 def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """
     Divide algumas colunas em gain e loss. Ao fim, adiciona às colunas os nomes de 
-    gains_losses e value, além de excluir os valores iguais a zero
+    gains_losses e value
     """
     divided = pd.DataFrame()
     col = df.columns
+    windows_and_frames = {}
     for column in col:
-        # minha lógica aqui: Vou ver se é window ou glassdoor. Se for, EXISTE um frame, portanto, eu quebro o nome
-        # da coluna e troco os devidos dados por "frame" e aí renomeio essa coluna frame para a coluna window ou glassdoor
-        # if column in ["Window", "GlassDoor"]:
-            
+        if column in dont_change_list:
+            pass
+        elif "Window" in column or "GlassDoor" in column:
+            azimuth_boundsurface = column.split("_")[-1]
+            configs_name = column.replace(azimuth_boundsurface, "frame")
+            windows_and_frames[f"{configs_name}_gain"] = f"{column}_gain"
+            windows_and_frames[f"{configs_name}_loss"] = f"{column}_loss"
+    for column in col:
         if column in dont_change_list:
             divided[column] = df[column]
         else:
             divided[f'{column}_gain'] = df[column].apply(lambda item: item if item>0 else 0)
             divided[f'{column}_loss'] = df[column].apply(lambda item: item if item<0 else 0)
-    # Se azimuth_frame ele vai mudar pra azimuth_extWindow 
+    divided.rename(columns=windows_and_frames, inplace=True)
+    divided = divided.groupby(level=0, axis=1).sum()
+    divided.reset_index(inplace=True)
+    divided.drop(columns='index', axis=1, inplace=True)
     divided = divided.sum().reset_index()
     divided.columns = ['gains_losses', 'value']
     return divided
@@ -293,6 +301,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     zones_for_name.append(key)
                 zones_for_name = '-'.join(zones_for_name)
             df, dont_change_list, multiply_list = renamer_and_formater(df=df, way=way, zones_dict=dicionario)
+            # São agrupadas e somadas as colunas iguais
             df = df.groupby(level=0, axis=1).sum()
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
