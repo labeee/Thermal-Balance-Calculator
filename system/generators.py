@@ -122,7 +122,9 @@ def basic_manipulator(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """Faz o procedimento básico para todos os dataframes serem manipulados"""
     df.drop(columns='Date/Time', axis=1, inplace=True)
     df = df.apply(sum_separated)
+    df.to_csv(f"{organizer_path}DEBUG_sum_separated.csv", sep=',')
     df = divide(df, dont_change_list=dont_change_list)
+    df.to_csv(f"{organizer_path}DEBUG_divide.csv", sep=',')
     return df
 
 def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
