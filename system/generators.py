@@ -40,10 +40,10 @@ def sum_separated(coluna) -> pd.Series:
     Soma separadamente os positivos e os negativos, retornando um objeto 
     Series contendo em uma coluna os positivos e em outra os negativos de cada linha
     """
-    positivos = coluna[coluna >= 0].sum()
-    negativos = coluna[coluna < 0] * -1
-    negativos = negativos.sum()
-    negativos = negativos * -1
+    positivos = coluna[coluna >= 0].sum() * -1
+    negativos = coluna[coluna < 0].sum() * -1
+    # negativos = negativos.sum()
+    # negativos = negativos * -1
     return pd.Series([positivos, negativos])
 
 
