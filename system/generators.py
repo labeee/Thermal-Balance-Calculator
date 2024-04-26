@@ -122,9 +122,7 @@ def basic_manipulator(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """Faz o procedimento básico para todos os dataframes serem manipulados"""
     df.drop(columns='Date/Time', axis=1, inplace=True)
     df = df.apply(sum_separated)
-    df.to_csv(f"{organizer_path}DEBUG_sum_separated.csv", sep=',')
     df = divide(df, dont_change_list=dont_change_list)
-    df.to_csv(f"{organizer_path}DEBUG_divide.csv", sep=',')
     return df
 
 def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
@@ -234,41 +232,38 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = hei(df=soma, way=way, zone=zone, dicionario=dicionario)
+        soma = hei(df=soma, way=way, zone=zone)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
-def hei(df: pd.DataFrame, way: str, zone, dicionario: dict) -> pd.DataFrame:
+def hei(df: pd.DataFrame, way: str, zone) -> pd.DataFrame:
     """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
-    df.loc[:, 'absolute'] = 'no abs'
-    df.loc[:, 'HEI'] = 'no HEI'
-    for j in df.index:
-        df.at[j, 'absolute'] = abs(df.at[j, 'value'])
-    if zone != 'All':
-        for local in zone:
-            module_total = 0
-            for j in df.index:
-                if df.at[j, 'gains_losses'] in local:
-                    module_total += df.at[j, 'absolute']
-            for j in df.index:
-                if df.at[j, 'gains_losses'] in local:
-                    df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-    else:
-        surf_list = []
-        for i in dicionario:
-            for j in dicionario[i][way]:
-                surf_list.append(dicionario[i][way][j].split('?')[1])
-        for local in surf_list:
-            module_total = 0
-            for j in df.index:
-                if df.at[j, 'gains_losses'] in local:
-                    module_total += df.at[j, 'absolute']
-            for j in df.index:
-                if df.at[j, 'gains_losses'] in local:
-                    df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-    df.drop(['absolute'], axis=1, inplace=True)
+    if way == 'convection':
+        df.loc[:, 'absolute'] = 'no abs'
+        df.loc[:, 'HEI'] = 'no HEI'
+        for j in df.index:
+            df.at[j, 'absolute'] = abs(df.at[j, 'value'])
+        if zone != 'All':
+            for local in zone:
+                module_total = 0
+                for j in df.index:
+                    if df.at[j, 'zone'] in local:
+                        module_total += df.at[j, 'absolute']
+                for j in df.index:
+                    if df.at[j, 'zone'] in local:
+                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+        else:
+            for local in df['zone'].unique():
+                module_total = 0
+                for j in df.index:
+                    if df.at[j, 'zone'] in local:
+                        module_total += df.at[j, 'absolute']
+                for j in df.index:
+                    if df.at[j, 'zone'] in local:
+                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+        df.drop(['absolute'], axis=1, inplace=True)
     return df
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
@@ -322,7 +317,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     soma = way_breaker(df=soma)
                     soma = heat_direction_breaker(df=soma)
                     print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
-                    soma = hei(df=soma, way=way, zone=zone, dicionario=dicionario)
+                    soma = hei(df=soma, way=way, zone=zone)
                     print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
                     soma.to_csv(output+'final_annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- [bright_green]Final annual dataframe created\n')
@@ -345,7 +340,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = way_breaker(df=soma)
                         soma = heat_direction_breaker(df=soma)
                         print(f'- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added for month {unique_month}')
-                        soma = hei(df=soma, way=way, zone=zone, dicionario=dicionario)
+                        soma = hei(df=soma, way=way, zone=zone)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
