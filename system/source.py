@@ -40,6 +40,8 @@ surface_addons = {
 
 drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
+opaque = ['Wall', 'Floor', 'Roof']
+
 def read_db_and_build_dicts(selected_zones, way):
     englob = glob(r'input/*.sql')
     print('\n- Connecting to database...')
