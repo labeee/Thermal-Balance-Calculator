@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import warnings
 import sqlite3
 from glob import glob
@@ -40,7 +41,9 @@ surface_addons = {
 
 drybulb_rename = {'EXTERNAL': {'Environment': 'drybulb?temp_ext'}}
 
-opaque = ['Wall', 'Floor', 'Roof']
+WALL = 'Wall'
+FLOOR = 'Floor'
+ROOF = 'Roof'
 
 def read_db_and_build_dicts(selected_zones, way):
     englob = glob(r'input/*.sql')

@@ -35,6 +35,7 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict
 
     return df, wanted_list, dont_change_list, multiply_list
 
+
 def sum_separated(coluna) -> pd.Series:
     """
     Soma separadamente os positivos e os negativos, retornando um objeto 
@@ -77,6 +78,7 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     divided.columns = ['gains_losses', 'value']
     return divided
 
+
 def invert_values(dataframe: pd.DataFrame, way: str, output: str, type_name: str, dataframe_name: str, multiply_list: list, zones_for_name: str) -> pd.DataFrame:
     """Multiplica as colunas específicas por -1."""
     if way == 'convection':
@@ -94,6 +96,7 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, type_name: str
         df_copy = dataframe.copy()
     return df_copy
 
+
 def renamer_and_formater(df: pd.DataFrame, way: str, zones_dict: dict) -> pd.DataFrame:
     """
     Recebe o dataframe e uma lista de zonas, então manipula-o renomeando cada lista de 
@@ -109,6 +112,7 @@ def renamer_and_formater(df: pd.DataFrame, way: str, zones_dict: dict) -> pd.Dat
     df.drop(columns=unwanted_list, axis=1, inplace=True)
     return df, dont_change_list, multiply_list
 
+
 def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     """Reordena as colunas do dataframe para o Date/Time ser o primeiro item"""
     reorder = ['Date/Time']
@@ -118,12 +122,14 @@ def reorderer(df: pd.DataFrame) -> pd.DataFrame:
     df = df[reorder]
     return df
 
+
 def basic_manipulator(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """Faz o procedimento básico para todos os dataframes serem manipulados"""
     df.drop(columns='Date/Time', axis=1, inplace=True)
     df = df.apply(sum_separated)
     df = divide(df, dont_change_list=dont_change_list)
     return df
+
 
 def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -141,6 +147,7 @@ def zone_breaker(df: pd.DataFrame) -> pd.DataFrame:
             df.at[j, 'gains_losses'] = new_name
     return df
 
+
 def concatenator() -> pd.DataFrame:
     """
     Concatena todos os itens dentro de organizer e retorna o 
@@ -156,6 +163,7 @@ def concatenator() -> pd.DataFrame:
     clean_cache()
     return df
 
+
 def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
     Irá formatar o arquivo adicionando adequadamente o tipo de
@@ -167,6 +175,7 @@ def way_breaker(df: pd.DataFrame) -> pd.DataFrame:
             df.at[i, 'flux'] = splited[0]
             df.at[i, 'gains_losses'] = splited[1] 
     return df
+
 
 def heat_direction_breaker(df: pd.DataFrame) -> pd.DataFrame:
     """
@@ -186,6 +195,7 @@ def heat_direction_breaker(df: pd.DataFrame) -> pd.DataFrame:
             df.at[j, 'gains_losses'] = new_name
     return df
 
+
 def days_finder(date_str: str) -> list:
     """Busca e retorna uma lista contendo o dia, dia anterior e 
     dia seguinte ao evento"""
@@ -199,6 +209,7 @@ def days_finder(date_str: str) -> list:
     day_af = (date_obj + timedelta(days=1)).strftime('%m/%d')
     days_list = [date_str, day_bf, day_af]
     return days_list
+
 
 def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zone: list, dont_change_list: list, dicionario: dict) -> pd.DataFrame:
     """Manipula e gera os dataframes para cada datetime 
@@ -232,39 +243,42 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
             hour = str(soma.at[row, 'Date/Time'])
             soma.at[row, 'hour'] = hour[8:10]
         unique_datetime = unique_datetime.replace('/', '-').replace('  ', '_').replace(' ', '_').replace(':', '-')
-        soma = hei(df=soma, way=way, zone=zone)
+        soma = hei_organizer(df=soma, way=way, zone=zone)
         soma.to_csv(organizer_path+'_datetime'+unique_datetime+'.csv', sep=',')
     df_total = concatenator()
     df_total = df_total[['Date/Time', 'month', 'day', 'hour', 'flux', 'zone', 'gains_losses', 'value', 'HEI', 'case']]
     return df_total
 
-def hei(df: pd.DataFrame, way: str, zone) -> pd.DataFrame:
-    """Cria uma coluna módulo e HEI e efetua os cálculos HEI"""
-    if way == 'convection':
-        df.loc[:, 'absolute'] = 'no abs'
-        df.loc[:, 'HEI'] = 'no HEI'
-        for j in df.index:
-            df.at[j, 'absolute'] = abs(df.at[j, 'value'])
-        if zone != 'All':
-            for local in zone:
-                module_total = 0
-                for j in df.index:
-                    if df.at[j, 'zone'] in local:
-                        module_total += df.at[j, 'absolute']
-                for j in df.index:
-                    if df.at[j, 'zone'] in local:
-                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-        else:
-            for local in df['zone'].unique():
-                module_total = 0
-                for j in df.index:
-                    if df.at[j, 'zone'] in local:
-                        module_total += df.at[j, 'absolute']
-                for j in df.index:
-                    if df.at[j, 'zone'] in local:
-                        df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-        df.drop(['absolute'], axis=1, inplace=True)
+
+def calculate_module_total_and_hei(df):
+    module_total = df.groupby('zone')['absolute'].transform('sum')
+    df['HEI'] = df['absolute'] / module_total
     return df
+
+
+def hei_organizer(df: pd.DataFrame, way: str, zone) -> pd.DataFrame:
+    df['absolute'] = df['value'].abs()
+    df['HEI'] = np.nan
+
+    if zone == 'All':
+        zones_to_consider = df['zone'].unique()
+    else:
+        zones_to_consider = zone
+
+    if way == 'convection':
+        for local in zones_to_consider:
+            df.loc[df['zone'] == local] = calculate_module_total_and_hei(df.loc[df['zone'] == local])
+
+    if way == 'surface':
+        for local in zones_to_consider:
+            for superficie in df['gains_losses'].unique():
+                if WALL in superficie or FLOOR in superficie or ROOF in superficie:
+                    mask = (df['zone'] == local) & (df['gains_losses'] == superficie)
+                    df.loc[mask] = calculate_module_total_and_hei(df.loc[mask])
+
+    df.drop(['absolute'], axis=1, inplace=True)
+    return df
+
 
 def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage: str):
     """
@@ -317,7 +331,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     soma = way_breaker(df=soma)
                     soma = heat_direction_breaker(df=soma)
                     print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
-                    soma = hei(df=soma, way=way, zone=zone)
+                    soma = hei_organizer(df=soma, way=way, zone=zone)
                     print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
                     soma.to_csv(output+'final_annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- [bright_green]Final annual dataframe created\n')
@@ -340,7 +354,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = way_breaker(df=soma)
                         soma = heat_direction_breaker(df=soma)
                         print(f'- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added for month {unique_month}')
-                        soma = hei(df=soma, way=way, zone=zone)
+                        soma = hei_organizer(df=soma, way=way, zone=zone)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
                     df_total.to_csv(output+'final_monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
@@ -415,3 +429,71 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     df_total.to_csv(output+'final_min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- [bright_green]Final daily MIN AMP dataframe created\n')
         separators()
+
+
+#OLD HEI:
+
+# df['absolute'] = df['value'].abs()
+# df['HEI'] = 'no HEI'
+# if way == 'convection':
+#     if zone != 'All':
+#         for local in zone:
+#             module_total = 0
+#             for j in df.index:
+#                 if df.at[j, 'zone'] in local:
+#                     module_total += df.at[j, 'absolute']
+#             for j in df.index:
+#                 if df.at[j, 'zone'] in local:
+#                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+#     else:
+#         for local in df['zone'].unique():
+#             module_total = 0
+#             for j in df.index:
+#                 if df.at[j, 'zone'] in local:
+#                     module_total += df.at[j, 'absolute']
+#             for j in df.index:
+#                 if df.at[j, 'zone'] in local:
+#                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+# # Buscar uma forma de otimizar esta parte
+# if way == 'surface':
+#     if zone != 'All':
+#         for local in zone:
+#             for superficie in df['gains_losses'].unique():
+#                 module_total = 0
+#                 for j in df.index:
+#                     iteration_s = df.at[j, 'gains_losses']
+#                     for opaca in opaque:
+#                         if opaca in iteration_s:
+#                             if iteration_s in superficie:
+#                                 if df.at[j, 'zone'] in local:
+#                                     module_total += df.at[j, 'absolute']
+#                             break
+#                 for j in df.index:
+#                     iteration_s = df.at[j, 'gains_losses']
+#                     for opaca in opaque:
+#                         if opaca in iteration_s:
+#                             if iteration_s in superficie:
+#                                 if df.at[j, 'zone'] in local:
+#                                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+#                             break
+#     else:
+#         for local in df['zone'].unique():
+#             for superficie in df['gains_losses'].unique():
+#                 module_total = 0
+#                 for j in df.index:
+#                     iteration_s = df.at[j, 'gains_losses']
+#                     for opaca in opaque:
+#                         if opaca in iteration_s:
+#                             if iteration_s in superficie:
+#                                 if df.at[j, 'zone'] in local:
+#                                     module_total += df.at[j, 'absolute']
+#                             break
+#                 for j in df.index:
+#                     iteration_s = df.at[j, 'gains_losses']
+#                     for opaca in opaque:
+#                         if opaca in iteration_s:
+#                             if iteration_s in superficie:
+#                                 if df.at[j, 'zone'] in local:
+#                                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
+#                             break
+# df.drop(['absolute'], axis=1, inplace=True)
