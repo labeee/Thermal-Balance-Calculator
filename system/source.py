@@ -1,3 +1,6 @@
+# AQUI DENTRO ENCONTRAM-SE VARIÁVEIS GLOBAIS, FUNÇÕES GERAIS
+# E TODOS OS IMPORTS NECESSÁRIOS AO PROGRAMA
+
 import pandas as pd
 import numpy as np
 import warnings
@@ -45,7 +48,12 @@ WALL = 'Wall'
 FLOOR = 'Floor'
 ROOF = 'Roof'
 
-def read_db_and_build_dicts(selected_zones, way):
+def read_db_and_build_dicts(selected_zones, way: str) -> dict:
+    """Lê o arquivo .sql inserido em input e constrói
+    os dicionários de valores que aparecem nas planilhas
+    e valores em que se transformam.
+    selected_zones: "All" ou lista de zonas
+    way: convection ou surface"""
     englob = glob(r'input/*.sql')
     print('\n- Connecting to database...')
     conn = sqlite3.connect(englob[0])

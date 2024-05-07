@@ -250,13 +250,21 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
     return df_total
 
 
-def calculate_module_total_and_hei(df):
+def calculate_module_total_and_hei(df: pd.DataFrame) -> pd.DataFrame:
+    """Cálculo do HEI em si
+    df: pd.DataFrame"""
     module_total = df.groupby('zone')['absolute'].transform('sum')
     df['HEI'] = df['absolute'] / module_total
     return df
 
 
 def hei_organizer(df: pd.DataFrame, way: str, zone) -> pd.DataFrame:
+    """
+    Prepara a planilha para o cálculo do HEI.
+    df (pd.DataFrame): O dataframe contendo os dados a serem organizados.
+    way (str): O método de organização, pode ser 'convection' ou 'surface'.
+    zone: A zona a ser considerada, pode ser 'All' ou uma lista de zonas.
+    """
     df['absolute'] = df['value'].abs()
     df['HEI'] = np.nan
 
@@ -429,71 +437,3 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     df_total.to_csv(output+'final_min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
                     print('- [bright_green]Final daily MIN AMP dataframe created\n')
         separators()
-
-
-#OLD HEI:
-
-# df['absolute'] = df['value'].abs()
-# df['HEI'] = 'no HEI'
-# if way == 'convection':
-#     if zone != 'All':
-#         for local in zone:
-#             module_total = 0
-#             for j in df.index:
-#                 if df.at[j, 'zone'] in local:
-#                     module_total += df.at[j, 'absolute']
-#             for j in df.index:
-#                 if df.at[j, 'zone'] in local:
-#                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-#     else:
-#         for local in df['zone'].unique():
-#             module_total = 0
-#             for j in df.index:
-#                 if df.at[j, 'zone'] in local:
-#                     module_total += df.at[j, 'absolute']
-#             for j in df.index:
-#                 if df.at[j, 'zone'] in local:
-#                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-# # Buscar uma forma de otimizar esta parte
-# if way == 'surface':
-#     if zone != 'All':
-#         for local in zone:
-#             for superficie in df['gains_losses'].unique():
-#                 module_total = 0
-#                 for j in df.index:
-#                     iteration_s = df.at[j, 'gains_losses']
-#                     for opaca in opaque:
-#                         if opaca in iteration_s:
-#                             if iteration_s in superficie:
-#                                 if df.at[j, 'zone'] in local:
-#                                     module_total += df.at[j, 'absolute']
-#                             break
-#                 for j in df.index:
-#                     iteration_s = df.at[j, 'gains_losses']
-#                     for opaca in opaque:
-#                         if opaca in iteration_s:
-#                             if iteration_s in superficie:
-#                                 if df.at[j, 'zone'] in local:
-#                                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-#                             break
-#     else:
-#         for local in df['zone'].unique():
-#             for superficie in df['gains_losses'].unique():
-#                 module_total = 0
-#                 for j in df.index:
-#                     iteration_s = df.at[j, 'gains_losses']
-#                     for opaca in opaque:
-#                         if opaca in iteration_s:
-#                             if iteration_s in superficie:
-#                                 if df.at[j, 'zone'] in local:
-#                                     module_total += df.at[j, 'absolute']
-#                             break
-#                 for j in df.index:
-#                     iteration_s = df.at[j, 'gains_losses']
-#                     for opaca in opaque:
-#                         if opaca in iteration_s:
-#                             if iteration_s in superficie:
-#                                 if df.at[j, 'zone'] in local:
-#                                     df.at[j, 'HEI'] = df.at[j, 'absolute'] / module_total
-#                             break
-# df.drop(['absolute'], axis=1, inplace=True)
