@@ -90,8 +90,6 @@ def invert_values(dataframe: pd.DataFrame, way: str, output: str, type_name: str
                 if item not in coluna:
                     df_copy[coluna] = df_copy[coluna] *-1
         print('- Inverted specific columns')
-        df_copy.to_csv(output+'intermediary_'+zones_for_name+type_name+dataframe_name.split('\\')[1], sep=',')
-        print('- [bright_green]Intermediary dataframe created')
     else:
         df_copy = dataframe.copy()
     return df_copy
@@ -325,8 +323,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df.reset_index(inplace=True)
             df.drop(columns='index', axis=1, inplace=True)
             df = reorderer(df=df)
-            df.to_csv(output+'initial_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-            print('- [bright_green]Initial dataframe created[/bright_green]')
             df = invert_values(dataframe=df, way=way, output=output, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
             # Verifica o tipo de dataframe selecionado e cria-o
             match coverage:
