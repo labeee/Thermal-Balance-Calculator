@@ -337,8 +337,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
                     soma = hei_organizer(df=soma, way=way, zone=zone)
                     print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
-                    soma.to_csv(output+'final_annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final annual dataframe created\n')
+                    soma.to_csv(output+'annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Annual dataframe created\n')
                 case 'monthly':
                     df.loc[:, 'month'] = 'no month'
                     for row in df.index:
@@ -361,8 +361,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = hei_organizer(df=soma, way=way, zone=zone)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
-                    df_total.to_csv(output+'final_monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final monthly dataframe created\n')
+                    df_total.to_csv(output+'monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Monthly dataframe created\n')
                 case 'daily':
                     ## Max
                     max_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmax()
@@ -374,8 +374,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_max_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final daily MAX dataframe created\n')
+                    df_total.to_csv(output+'max_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Daily MAX dataframe created\n')
                     
                     ## Min
                     min_temp_idx = df[drybulb_rename['EXTERNAL']['Environment']].idxmin()
@@ -386,8 +386,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_min_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final daily MIN dataframe created\n')
+                    df_total.to_csv(output+'min_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Daily MIN dataframe created\n')
 
                     ## Max and Min amp locator
                     df_amp = df.copy()
@@ -420,8 +420,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_max_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final daily MAX AMP dataframe created\n')
+                    df_total.to_csv(output+'max_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Daily MAX AMP dataframe created\n')
 
                     # Min amp
                     date_str = df.loc[min_amp['index'], 'Date/Time']
@@ -430,6 +430,6 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
-                    df_total.to_csv(output+'final_min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
-                    print('- [bright_green]Final daily MIN AMP dataframe created\n')
+                    df_total.to_csv(output+'min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',')
+                    print('- [bright_green]Daily MIN AMP dataframe created\n')
         separators()
