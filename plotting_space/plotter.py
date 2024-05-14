@@ -6,10 +6,10 @@ from matplotlib import pyplot as plt
 
 
 class HeatMap:
-    def __init__(self, local: str, file_name: str, zones: list = 0):
-        self.local = local
+    def __init__(self, file_path: str, file_name: str, zones: list = 0):
+        self.file_path = file_path
         self.file_name = file_name
-        self.df = pd.read_csv(f'{self.local}{self.file_name}', sep=',', index_col=0)
+        self.df = pd.read_csv(f'{self.file_path}{self.file_name}', sep=',', index_col=0)
         self.df['gains_losses'] = self.df['gains_losses'].apply(lambda name: name.replace("_", " ").title())
         self.df['gains_losses'] = self.df.apply(lambda row: f'{row["gains_losses"]} +' if row['heat_direction'] == 'gain' else f'{row["gains_losses"]} - ', axis=1)
         self.copy_df = self.df.copy()
@@ -36,5 +36,5 @@ class HeatMap:
         return heatmap
 
 if __name__ == "__main__":
-    annual = HeatMap(local=r'plotting_space/anual_conv/', file_name='anual_conv.csv', zones=['DORM1', 'DORM2', 'BWC'])
+    annual = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', zones=['DORM1', 'DORM2', 'BWC'])
     annual.convection_annual(show=True)
