@@ -10,6 +10,8 @@ class HeatMap:
         self.local = local
         self.file_name = file_name
         self.df = pd.read_csv(f'{self.local}{self.file_name}', sep=',', index_col=0)
+        self.df['gains_losses'] = self.df['gains_losses'].apply(lambda name: name.replace("_", " ").title())
+        self.df['gains_losses'] = self.df.apply(lambda row: f'{row["gains_losses"]} +' if row['heat_direction'] == 'gain' else f'{row["gains_losses"]} - ', axis=1)
         self.copy_df = self.df.copy()
         self.zones = zones
 
@@ -17,10 +19,10 @@ class HeatMap:
         match self.zones:
             case 0:
                 self.copy_df = self.df.loc[self.df['zone'] != 'EXTERNAL']
-                title = f'Heatmap total'
+                title = f'Heatmap total anual de convecção'
             case _:
                 self.copy_df = self.df.loc[self.df['zone'].isin(self.zones)]    
-                title = f'Heatmap para {", ".join(self.zones)}'
+                title = f'Heatmap para {", ".join(self.zones)} anual de convecção'
         self.copy_df = self.copy_df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
         heatmap = sns.heatmap(data=self.copy_df, vmax=1, vmin=0, cmap='Spectral_r', linewidths=1)
         heatmap.set_xlabel('')
@@ -34,5 +36,5 @@ class HeatMap:
         return heatmap
 
 if __name__ == "__main__":
-    annual = HeatMap(local=r'plotting_space/anual_conv/', file_name='anual_conv.csv')
+    annual = HeatMap(local=r'plotting_space/anual_conv/', file_name='anual_conv.csv', zones=['DORM1', 'DORM2', 'BWC'])
     annual.convection_annual(show=True)
