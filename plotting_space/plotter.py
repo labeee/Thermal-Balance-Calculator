@@ -33,7 +33,7 @@ class HeatMap:
         cbar = heatmap.collections[0].colorbar
         cbar.outline.set_edgecolor('black')
         cbar.outline.set_linewidth(1)
-        heatmap.tick_params(left=False, bottom=False)
+        heatmap.tick_params(left=False, bottom=True)
         plt.xticks(rotation=90, fontsize=self.sizefont)
         plt.yticks(fontsize=self.sizefont)
         if self.tight:
@@ -41,7 +41,11 @@ class HeatMap:
         if self.show:
             plt.show()
         return heatmap
-    
+
+    def month_number(self, column_name):
+        month_num = int(column_name.split(' ')[1])
+        return month_num
+
     def convection_annual(self) -> sns.heatmap:
         match self.zones:
             case 0:
@@ -62,14 +66,16 @@ class HeatMap:
             case _:
                 self.df = self.df.loc[self.df['zone'].isin(self.zones)]    
                 title = f'Heatmap para {", ".join(self.zones)} mensal de convecção'
-        self.df['zone'] = self.df.apply(lambda row: f'{row["month"]} {row["zone"]}', axis=1)
+        self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]} {row["month"]}', axis=1)
         self.df = self.df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
+        self.df = self.df[sorted(self.df.columns, key=self.month_number)]
+        self.df.columns = [column.replace(column.split(' ')[1], num_to_month[int(column.split(' ')[1])]) for column in self.df.columns]
         map_obj = self.plot_heatmap(title = title)
         return map_obj
 
 
 if __name__ == "__main__":
-    # annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', show=True)
-    # annual_conv.convection_annual()
+    annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', show=True)
+    annual_conv.convection_annual()
     mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', show=True)
     mensal_conv.convection_monthly()
