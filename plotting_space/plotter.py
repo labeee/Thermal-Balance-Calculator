@@ -20,7 +20,7 @@ class HeatMap:
         self.tight = tight
         self.show = show
 
-    def plot_heatmap(self, title: str) -> sns.heatmap:
+    def plot_heatmap(self, title: str, month_plot: bool = False) -> sns.heatmap:
         spectral_r = plt.get_cmap('Spectral_r')
         colors = spectral_r(np.arange(spectral_r.N))
         colors[0] = np.array([1, 1, 1, 1])
@@ -30,12 +30,28 @@ class HeatMap:
         heatmap.set_ylabel('Heat Exchanges')
         heatmap.set_title(title)
         heatmap.collections[0].colorbar.set_label('HEI')
+        heatmap.tick_params(left=False, bottom=True)
         cbar = heatmap.collections[0].colorbar
         cbar.outline.set_edgecolor('black')
         cbar.outline.set_linewidth(1)
-        heatmap.tick_params(left=False, bottom=True)
         plt.xticks(rotation=90, fontsize=self.sizefont)
         plt.yticks(fontsize=self.sizefont)
+        if month_plot:
+            ax = plt.gca()
+            labels = ax.get_xticklabels()
+            splited = [label.get_text().split(' ') for label in labels]
+            new_labels = [name[0] for name in splited]
+            heatmap.set_xticklabels(new_labels, rotation=90, fontsize=self.sizefont)
+
+            ax2 = ax.twiny()
+            ax2.set_xticks(ax.get_xticks())
+            new_labels2 = [name[1] for name in splited]
+            ax2.set_xticklabels(new_labels2, rotation=90, fontsize=self.sizefont)
+
+            ax.xaxis.tick_bottom()
+            ax2.xaxis.tick_top()
+            ax.tick_params(bottom=False)
+            ax2.tick_params(top=False)
         if self.tight:
             plt.tight_layout()
         if self.show:
@@ -69,13 +85,13 @@ class HeatMap:
         self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]} {row["month"]}', axis=1)
         self.df = self.df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
         self.df = self.df[sorted(self.df.columns, key=self.month_number)]
-        self.df.columns = [column.replace(column.split(' ')[1], num_to_month[int(column.split(' ')[1])]) for column in self.df.columns]
-        map_obj = self.plot_heatmap(title = title)
+        self.df.columns = [f'{column.split(" ")[0]} {column.split(" ")[1].replace(column.split(" ")[1], num_to_month[int(column.split(" ")[1])])}' for column in self.df.columns]
+        map_obj = self.plot_heatmap(title = title, month_plot=True)
         return map_obj
 
 
 if __name__ == "__main__":
-    annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', show=True)
-    annual_conv.convection_annual()
+    # annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', show=True)
+    # annual_conv.convection_annual()
     mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', show=True)
     mensal_conv.convection_monthly()
