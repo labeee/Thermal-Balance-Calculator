@@ -9,11 +9,14 @@ from matplotlib.colors import LinearSegmentedColormap
 num_to_month = {1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun', 7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec'}
 
 class HeatMap:
-    def __init__(self, file_path: str, file_name: str, zones: list = 0, sizefont: float = 10, tight: bool = False, show: bool = False, cbar_orientation: str = 'right', months: list = 0):
+    def __init__(self, file_path: str, file_name: str, target_type: str, zones: list = 0, sizefont: float = 10, tight: bool = False, show: bool = False, cbar_orientation: str = 'right', months: list = 0):
         self.file_path = file_path
         self.file_name = file_name
+        self.target_type = target_type
         self.df = pd.read_csv(f'{self.file_path}{self.file_name}', sep=',', index_col=0)
         self.df['gains_losses'] = self.df['gains_losses'].apply(lambda name: name.replace("_", " ").title())
+        if self.target_type == 'surface':
+            self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]}|{row["flux"]}', axis=1)
         self.df['gains_losses'] = self.df.apply(lambda row: f'{row["gains_losses"]} +' if row['heat_direction'] == 'gain' else f'{row["gains_losses"]} -', axis=1)
         self.zones = zones
         self.sizefont = sizefont
@@ -21,7 +24,7 @@ class HeatMap:
         self.months = months
         self.cbar_orientation = cbar_orientation
         if self.cbar_orientation in ['top', 'bottom']:
-            self.cbar_kws = {"location": self.cbar_orientation, 'shrink': 0.6}
+            self.cbar_kws = {"location": self.cbar_orientation, 'shrink': 0.5}
             self.tight = False
         else:
             self.cbar_kws = {"location": self.cbar_orientation}
@@ -43,21 +46,32 @@ class HeatMap:
         heatmap.tick_params(left=False, bottom=True)
         plt.xticks(rotation=90, fontsize=self.sizefont)
         plt.yticks(fontsize=self.sizefont)
-        if month_plot:
+        if self.target_type == 'surface':
             ax = plt.gca()
             labels = ax.get_xticklabels()
-            splited = [label.get_text().split(' ') for label in labels]
+            splited = [label.get_text().split('|') for label in labels]
             new_labels = [name[0] for name in splited]
             heatmap.set_xticklabels(new_labels, rotation=90, fontsize=self.sizefont)
-
             ax2 = ax.twiny()
             ax2.set_xticks(ax.get_xticks())
             new_labels2 = [name[1] for name in splited]
             ax2.set_xticklabels(new_labels2, rotation=60, fontsize=self.sizefont)
-
             ax.xaxis.tick_bottom()
             ax2.xaxis.tick_top()
-            ax.tick_params(bottom=False)
+            ax.tick_params(bottom=False) 
+        if month_plot:
+            ax = plt.gca()
+            labels = ax.get_xticklabels()
+            splited = [label.get_text().split('?') for label in labels]
+            new_labels = [name[0] for name in splited]
+            heatmap.set_xticklabels(new_labels, rotation=90, fontsize=self.sizefont)
+            ax2 = ax.twiny()
+            ax2.set_xticks(ax.get_xticks())
+            new_labels2 = [name[1] for name in splited]
+            ax2.set_xticklabels(new_labels2, rotation=60, fontsize=self.sizefont)
+            ax.xaxis.tick_bottom()
+            ax2.xaxis.tick_top()
+            ax.tick_params(bottom=False) 
         if self.tight:
             plt.tight_layout()
         if self.show:
@@ -65,7 +79,7 @@ class HeatMap:
         return heatmap
 
     def month_number(self, column_name):
-        month_num = int(column_name.split(' ')[1])
+        month_num = int(column_name.split('?')[1])
         return month_num
     
     def order_sign(self):
@@ -85,7 +99,7 @@ class HeatMap:
         self.order_sign()
         map_obj = self.plot_heatmap(title = title)
         return map_obj
-    
+
     def convection_monthly(self) -> sns.heatmap:
         match self.zones:
             case 0:
@@ -99,17 +113,32 @@ class HeatMap:
                 pass
             case _:
                 self.df = self.df.loc[self.df['month'].isin(self.months)] 
-        self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]} {row["month"]}', axis=1)
+        self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]}?{row["month"]}', axis=1)
         self.df = self.df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
         self.df = self.df[sorted(self.df.columns, key=self.month_number)]
         self.order_sign()
-        self.df.columns = [f'{column.split(" ")[0]} {column.split(" ")[1].replace(column.split(" ")[1], num_to_month[int(column.split(" ")[1])])}' for column in self.df.columns]
+        self.df.columns = [f'{column.split("?")[0]}?{column.split("?")[1].replace(column.split("?")[1], num_to_month[int(column.split("?")[1])])}' for column in self.df.columns]
         map_obj = self.plot_heatmap(title = title, month_plot=True)
+        return map_obj
+    
+    def surface_annual(self) -> sns.heatmap:
+        match self.zones:
+            case 0:
+                self.df = self.df.loc[self.df['zone'] != 'EXTERNAL']
+                title = f'Heatmap total anual de superfície'
+            case _:
+                self.df = self.df.loc[self.df['zone'].isin(self.zones)]    
+                title = f'Heatmap para {", ".join(self.zones)} anual de superfície'
+        self.df = self.df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
+        self.order_sign()
+        map_obj = self.plot_heatmap(title = title)
         return map_obj
 
 
 if __name__ == "__main__":
-    annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', show=True, cbar_orientation='bottom')
-    annual_conv.convection_annual()
-    # mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', show=True, cbar_orientation='bottom')
+    # annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', target_type='convection', show=True, cbar_orientation='bottom')
+    # annual_conv.convection_annual()
+    # mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', target_type='convection', show=True, cbar_orientation='bottom')
     # mensal_conv.convection_monthly()
+    annual_surf = HeatMap(file_path=r'plotting_space/anual_surf/', file_name='anual_surf.csv', target_type='surface', show=True, cbar_orientation='bottom')
+    annual_surf.surface_annual()
