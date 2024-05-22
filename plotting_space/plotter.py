@@ -46,7 +46,7 @@ class HeatMap:
             self.tight = tight
 
     def plot_heatmap(self, month_plot: bool = False) -> sns.heatmap:
-        colors = ["#FFFFFF", "#496DDB", "#00CC66", "#FFFF00", "#F98016", "#F2002B"] if self.target_type == 'convection' else ["#FFFFFF","#FFCF70","#FF931F","#B81702","#7A0103"]
+        colors = ["#FFFFFF", "#496DDB", "#00CC66", "#FFFF00", "#F98016", "#F2002B"] if self.target_type == 'convection' else ["#FFFFFF","#A8DADC","#1D3557","#FFBA49","#EC9A9A","#D13440"]
         cmap = LinearSegmentedColormap.from_list('Custom_cmap', colors)
         heatmap = sns.heatmap(data=self.df, vmax=1, vmin=0, cmap=cmap, linewidths=1, xticklabels=True, yticklabels=True, cbar_kws = self.cbar_kws)
         heatmap.set_xlabel('')
