@@ -36,6 +36,11 @@ class HeatMap:
             case _:
                 self.df = self.df.loc[self.df['zone'].isin(self.zones)]    
                 self.title = f'HeatMap of {self.target_type} for zones {", ".join(self.zones)}'
+        match self.months:
+            case 0:
+                pass
+            case _:
+                self.df = self.df.loc[self.df['month'].isin(self.months)]
         if self.target_type == 'surface':
             self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]}|{row["flux"]}', axis=1)
         if self.cbar_orientation in ['top', 'bottom']:
@@ -53,10 +58,6 @@ class HeatMap:
         heatmap.set_ylabel('Heat Exchanges')
         heatmap.set_title(self.title)
         heatmap.collections[0].colorbar.set_label('HEI')
-        # Este código serve para adicionar uma borda à cbar
-        # cbar = heatmap.collections[0].colorbar
-        # cbar.outline.set_edgecolor('black')
-        # cbar.outline.set_linewidth(1)
         heatmap.tick_params(left=False, bottom=True)
         plt.xticks(rotation=90, fontsize=self.sizefont)
         plt.yticks(fontsize=self.sizefont)
@@ -109,11 +110,6 @@ class HeatMap:
         return map_obj
 
     def monthly(self) -> sns.heatmap:
-        match self.months:
-            case 0:
-                pass
-            case _:
-                self.df = self.df.loc[self.df['month'].isin(self.months)]
         self.df['zone'] = self.df.apply(lambda row: f'{row["zone"]}?{row["month"]}', axis=1)
         self.df = self.df[['gains_losses', 'zone', 'HEI']].pivot_table(index='gains_losses', columns='zone', values='HEI').fillna(0)
         self.df = self.df[sorted(self.df.columns, key=self.month_number)]
@@ -126,9 +122,10 @@ class HeatMap:
 if __name__ == "__main__":
     annual_conv = HeatMap(file_path=r'plotting_space/anual_conv/', file_name='anual_conv.csv', target_type='convection', show=True, cbar_orientation='bottom')
     annual_conv.annual()
-    mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', target_type='convection', show=True, cbar_orientation='bottom')
-    mensal_conv.monthly()
     annual_surf = HeatMap(file_path=r'plotting_space/anual_surf/', file_name='anual_surf.csv', target_type='surface', show=True, cbar_orientation='bottom')
     annual_surf.annual()
-    mensal_surf = HeatMap(file_path=r'plotting_space/mensal_surf/', file_name='mensal_surf.csv', target_type='surface', show=True, zones=['SALA', 'BWC'], months=[1,2], cbar_orientation='bottom')
+    mensal_conv = HeatMap(file_path=r'plotting_space/mensal_conv/', file_name='mensal_conv.csv', target_type='convection', show=True, cbar_orientation='bottom')
+    mensal_conv.monthly()
+    mensal_surf = HeatMap(file_path=r'plotting_space/mensal_surf/', file_name='mensal_surf.csv', target_type='surface', show=True, cbar_orientation='bottom')
     mensal_surf.monthly()
+    
