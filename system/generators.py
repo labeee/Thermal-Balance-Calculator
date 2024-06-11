@@ -213,11 +213,14 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
     """Manipula e gera os dataframes para cada datetime 
     dentro do período do evento"""
     new_daily_df = df.copy()
-    for j in track(new_daily_df.index, description=f'[bright_blue]Deleting unwanted DateTimes[/bright_blue]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color, ):
-        date_splited = new_daily_df.at[j, 'Date/Time'].split(' ')[1]
-        if date_splited not in days_list:
-            new_daily_df.drop(j, axis=0, inplace=True)
-            # print(f'/ {date_splited}', end='\r')
+    # VERSÃO ANTIGA DO MÉTODO
+    # for j in track(new_daily_df.index, description=f'[bright_blue]Deleting unwanted DateTimes[/bright_blue]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color, ):
+    #     date_splited = new_daily_df.at[j, 'Date/Time'].split(' ')[1]
+    #     if date_splited not in days_list:
+    #         new_daily_df.drop(j, axis=0, inplace=True)
+    print("\n\t- Separating correct [bright_blue]timestamps[/bright_blue]...")
+    mask = new_daily_df['Date/Time'].str.split(' ').str.get(1).isin(days_list)
+    new_daily_df = new_daily_df[mask]
     days = new_daily_df['Date/Time'].unique()
     for unique_datetime in track(days, description=f'[bright_cyan]Manipulating DateTimes[/bright_cyan]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color):
         # print(f'/ {unique_datetime}', end='\r')
