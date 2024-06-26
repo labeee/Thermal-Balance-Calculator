@@ -9,13 +9,13 @@ def rename_cols(columns_list: list, df: pd.DataFrame, way: str, dicionario: dict
                 for new_name in dicionario[specific_zone][way]:
                     if new_name in item:
                         oficial = f"{specific_zone}_{dicionario[specific_zone][way][new_name]}"
-                        df.rename(columns={item: oficial}, inplace=True)
+                        df = df.rename(columns={item: oficial})
                         wanted_list.append(oficial)
     searchword, new_name = list(drybulb_rename['EXTERNAL'].keys())[0], drybulb_rename['EXTERNAL']['Environment']
     columns_list = df.columns
     for item in columns_list:
         if searchword in item:
-            df.rename(columns={item: new_name}, inplace=True)
+            df = df.rename(columns={item: new_name})
 
     print('- Building utility dicts\n')
 
@@ -70,10 +70,10 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
         else:
             divided[f'{column}_gain'] = df[column].apply(lambda item: item if item>0 else 0)
             divided[f'{column}_loss'] = df[column].apply(lambda item: item if item<0 else 0)
-    divided.rename(columns=windows_and_frames, inplace=True)
+    divided = divided.rename(columns=windows_and_frames)
     divided = divided.groupby(level=0, axis=1).sum()
-    divided.reset_index(inplace=True)
-    divided.drop(columns='index', axis=1, inplace=True)
+    divided = divided.reset_index()
+    divided = divided.drop(columns='index', axis=1)
     divided = divided.sum().reset_index()
     divided.columns = ['gains_losses', 'value']
     return divided
@@ -107,7 +107,7 @@ def renamer_and_formater(df: pd.DataFrame, way: str, zones_dict: dict) -> pd.Dat
     for item in columns_list:
         if item not in wanted_list:
             unwanted_list.append(item)
-    df.drop(columns=unwanted_list, axis=1, inplace=True)
+    df = df.drop(columns=unwanted_list, axis=1)
     return df, dont_change_list, multiply_list
 
 
@@ -123,7 +123,7 @@ def reorderer(df: pd.DataFrame) -> pd.DataFrame:
 
 def basic_manipulator(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     """Faz o procedimento básico para todos os dataframes serem manipulados"""
-    df.drop(columns='Date/Time', axis=1, inplace=True)
+    df = df.drop(columns='Date/Time', axis=1)
     df = df.apply(sum_separated)
     df = divide(df, dont_change_list=dont_change_list)
     return df
@@ -157,7 +157,7 @@ def concatenator() -> pd.DataFrame:
     for item in glob_organizer:
         each_df = pd.read_csv(item, sep=',')
         df = pd.concat([df, each_df], axis=0, ignore_index=True)
-    df.drop(columns='Unnamed: 0', axis=1, inplace=True)
+    df = df.drop(columns='Unnamed: 0', axis=1)
     clean_cache()
     return df
 
@@ -217,7 +217,7 @@ def daily_manipulator(df: pd.DataFrame, days_list: list, name: str, way: str, zo
     # for j in track(new_daily_df.index, description=f'[bright_blue]Deleting unwanted DateTimes[/bright_blue]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color, ):
     #     date_splited = new_daily_df.at[j, 'Date/Time'].split(' ')[1]
     #     if date_splited not in days_list:
-    #         new_daily_df.drop(j, axis=0, inplace=True)
+    #         new_daily_df = new_daily_df.drop(j, axis=0)
     print("\n\t- Separating correct [bright_blue]timestamps[/bright_blue]...")
     mask = new_daily_df['Date/Time'].str.split(' ').str.get(1).isin(days_list)
     new_daily_df = new_daily_df[mask]
@@ -285,7 +285,7 @@ def hei_organizer(df: pd.DataFrame, way: str, zone) -> pd.DataFrame:
                     mask = (df['zone'] == local) & (df['gains_losses'] == superficie)
                     df.loc[mask] = calculate_module_total_and_hei(df.loc[mask])
 
-    df.drop(['absolute'], axis=1, inplace=True)
+    df = df.drop(['absolute'], axis=1)
     return df
 
 
@@ -323,8 +323,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df, dont_change_list, multiply_list = renamer_and_formater(df=df, way=way, zones_dict=dicionario)
             # São agrupadas e somadas as colunas iguais
             df = df.groupby(level=0, axis=1).sum()
-            df.reset_index(inplace=True)
-            df.drop(columns='index', axis=1, inplace=True)
+            df = df.reset_index()
+            df = df.drop(columns='index', axis=1)
             df = reorderer(df=df)
             df = invert_values(dataframe=df, way=way, output=output, type_name=type_name, dataframe_name=i, multiply_list=multiply_list, zones_for_name=zones_for_name)
             # Verifica o tipo de dataframe selecionado e cria-o
@@ -351,7 +351,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     months = df['month'].unique()
                     for unique_month in track(months, description=f'[bright_cyan]Processing each month[/bright_cyan]', style=track_bar_color, complete_style=track_complete_color, finished_style=track_complete_color):
                         df_monthly = df[df['month'] == unique_month]
-                        df_monthly.drop(columns='month', axis=1, inplace=True)
+                        df_monthly = df_monthly.drop(columns='month', axis=1)
                         soma = basic_manipulator(df=df_monthly, dont_change_list=dont_change_list)
                         print(f'- [bright_green]Gains[/bright_green] and [bright_red]losses[/bright_red] separated and calculated for month {unique_month}')
                         soma.loc[:, 'case'] = i.split('\\')[1]
