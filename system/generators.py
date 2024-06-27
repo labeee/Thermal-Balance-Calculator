@@ -59,7 +59,7 @@ def divide(df: pd.DataFrame, dont_change_list: list) -> pd.DataFrame:
     for column in col:
         if column in dont_change_list:
             pass
-        elif "Window" in column or "GlassDoor" in column:
+        elif column in ['Window', 'GlassDoor']:
             azimuth_boundsurface = column.split("_")[-1]
             configs_name = column.replace(azimuth_boundsurface, "frame")
             windows_and_frames[f"{configs_name}_gain"] = f"{column}_gain"
