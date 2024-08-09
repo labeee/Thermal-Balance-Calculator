@@ -339,6 +339,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print('- [bright_blue]Case[/bright_blue], [bright_blue]type[/bright_blue] and [bright_blue]zone[/bright_blue] added')
                     soma = hei_organizer(df=soma, way=way, zone=zone)
                     print('- [bright_blue]Absolute[/bright_blue] and [bright_blue]HEI[/bright_blue] calculated')
+                    soma['value'] = soma['value'] / 1000
+                    soma = soma.rename(columns={'value': 'value [kWh]'})
                     soma.to_csv(output+'annual_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Annual dataframe created\n')
                 case 'monthly':
@@ -363,6 +365,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                         soma = hei_organizer(df=soma, way=way, zone=zone)
                         soma.to_csv(organizer_path+'_month'+unique_month+'.csv', sep=',')
                     df_total = concatenator()
+                    df_total['value'] = df_total['value'] / 1000
+                    df_total = df_total.rename(columns={'value': 'value [kWh]'})
                     df_total.to_csv(output+'monthly_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Monthly dataframe created\n')
                 case 'daily':
@@ -376,6 +380,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
+                    df_total['value'] = df_total['value'] / 1000
+                    df_total = df_total.rename(columns={'value': 'value [kWh]'})
                     df_total.to_csv(output+'max_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Daily MAX dataframe created\n')
                     
@@ -388,6 +394,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
+                    df_total['value'] = df_total['value'] / 1000
+                    df_total = df_total.rename(columns={'value': 'value [kWh]'})
                     df_total.to_csv(output+'min_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Daily MIN dataframe created\n')
 
@@ -422,6 +430,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
+                    df_total['value'] = df_total['value'] / 1000
+                    df_total = df_total.rename(columns={'value': 'value [kWh]'})
                     df_total.to_csv(output+'max_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Daily MAX AMP dataframe created\n')
 
@@ -432,6 +442,8 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
                     print(f'- Day [bright_yellow]before[/bright_yellow]: {days_list[1]}')
                     print(f'- Day [bright_yellow]after[/bright_yellow]: {days_list[2]}')
                     df_total = daily_manipulator(df=df, days_list=days_list, name=i, way=way, zone=zone, dont_change_list=dont_change_list, dicionario=dicionario)
+                    df_total['value'] = df_total['value'] / 1000
+                    df_total = df_total.rename(columns={'value': 'value [kWh]'})
                     df_total.to_csv(output+'min_amp_daily_'+zones_for_name+type_name+i.split('\\')[1], sep=',', index=False)
                     print('- [bright_green]Daily MIN AMP dataframe created\n')
         separators()
