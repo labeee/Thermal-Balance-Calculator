@@ -312,13 +312,7 @@ def generate_df(path: str, output: str, way: str, type_name: str, zone, coverage
             df = df.dropna()
             print('- [bright_yellow]NaN[/bright_yellow] rows removed')
             dicionario = read_db_and_build_dicts(selected_zones=zone, way=way)
-            if zone == 'All':
-                zones_for_name = 'All-Zones'
-            else:
-                zones_for_name = []
-                for key in dicionario.keys():
-                    zones_for_name.append(key)
-                zones_for_name = '-'.join(zones_for_name)
+            zones_for_name = 'All-Zones' if zone == 'All' else 'Selected-Zones'
             df, dont_change_list, multiply_list = renamer_and_formater(df=df, way=way, zones_dict=dicionario)
             # São agrupadas e somadas as colunas iguais
             df = df.groupby(level=0, axis=1).sum()
