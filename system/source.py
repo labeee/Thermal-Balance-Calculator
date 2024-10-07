@@ -68,7 +68,7 @@ def read_db_and_build_dicts(selected_zones, way: str) -> dict:
     result = cursor.fetchall()
     zones_dict = {}
     for i in result:
-        zones_dict[i[1]] = i[0]
+        zones_dict[i[1].replace("_", '-')] = i[0]
     print(f'- Returned [bright_cyan]{zones_dict}[/bright_cyan]')
     surfaces_dict = {}
     for key, value in zones_dict.items():
